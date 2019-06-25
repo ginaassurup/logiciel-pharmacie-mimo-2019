@@ -147,7 +147,7 @@ public class SettingsWindow extends JDialog {
 		lblInSettings.setBounds(106, 10, 120, 14);
 		contentPanel.add(lblInSettings);
 
-		JLabel lblManageUsers = new JLabel("Manage users*:");
+		JLabel lblManageUsers = new JLabel("Manage listePhar*:");
 		lblManageUsers.setForeground(Color.LIGHT_GRAY);
 		lblManageUsers.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblManageUsers.setHorizontalAlignment(SwingConstants.LEFT);
@@ -196,7 +196,7 @@ public class SettingsWindow extends JDialog {
 		contentPanel.add(lblAdminOnly);
 	}
 
-	// opens users window
+	// opens listePhar window
 	private void openUsers() {
 		FenetrePharmaciens fenetrePharmaciens = new FenetrePharmaciens();
 		fenetrePharmaciens.setVisible(true);

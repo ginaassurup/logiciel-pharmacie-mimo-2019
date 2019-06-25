@@ -1,5 +1,5 @@
 /*
- * Users Window class
+ * Fenetre Liste des Pharmaciens
  */
 package view;
 
@@ -31,8 +31,6 @@ import dao.SQLiteCon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
-import java.awt.Window.Type;
-import java.awt.Dialog.ModalityType;
 import javax.swing.SwingConstants;
 
 public class FenetrePharmaciens extends JDialog {
@@ -45,11 +43,11 @@ public class FenetrePharmaciens extends JDialog {
 	// database connection declaration
 	SQLiteCon conn;
 
-	List<PharmacienDetail> users;
+	List<PharmacienDetail> listePhar;
 	String newUser = "";
 
 	// table
-	private JTable tableUsers;
+	private JTable tableListePhar;
 
 	/**
 	 * Launch the application.
@@ -80,7 +78,7 @@ public class FenetrePharmaciens extends JDialog {
 		conn = new SQLiteCon();
 
 		setIconImage(Toolkit.getDefaultToolkit().getImage(FenetrePharmaciens.class.getResource("/view/User.png")));
-		setTitle("Logiciel Gestion de pharmacie - Users");
+		setTitle("Liste des pharmaciens");
 		setModal(true);
 		setBounds(100, 100, 968, 500);
 		getContentPane().setBackground(Color.WHITE);
@@ -90,7 +88,7 @@ public class FenetrePharmaciens extends JDialog {
 		scrollPane.setBounds(204, 118, 623, 290);
 		getContentPane().add(scrollPane);
 
-		tableUsers = new JTable() {
+		tableListePhar = new JTable() {
 			/**
 			 * 
 			 */
@@ -102,15 +100,15 @@ public class FenetrePharmaciens extends JDialog {
 				super.changeSelection(rowIndex, columnIndex, !extend, extend);
 			}
 		};
-		tableUsers.setFocusable(false);
+		tableListePhar.setFocusable(false);
 
-		scrollPane.setViewportView(tableUsers);
+		scrollPane.setViewportView(tableListePhar);
 
-		tableUsers.setFillsViewportHeight(true);
-		tableUsers.setBackground(SystemColor.window);
-		tableUsers.setSelectionBackground(new Color(163, 193, 228));
-		tableUsers.setRequestFocusEnabled(false);
-		tableUsers.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tableListePhar.setFillsViewportHeight(true);
+		tableListePhar.setBackground(SystemColor.window);
+		tableListePhar.setSelectionBackground(new Color(163, 193, 228));
+		tableListePhar.setRequestFocusEnabled(false);
+		tableListePhar.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		JLabel label = new JLabel("");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -119,53 +117,52 @@ public class FenetrePharmaciens extends JDialog {
 		label.setBounds(56, 118, 95, 93);
 		getContentPane().add(label);
 
-		JButton btnAdd = new JButton("Ajouter");
-		btnAdd.setFocusPainted(false);
-		btnAdd.setBackground(new Color(204, 204, 204));
-		btnAdd.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnAdd.addActionListener(new ActionListener() {
+		JButton btnAjouter = new JButton("Ajouter");
+		btnAjouter.setFocusPainted(false);
+		btnAjouter.setBackground(new Color(204, 204, 204));
+		btnAjouter.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnAjouter.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// Add user
-				addUser();
+				ajouterUnPhar();
 			}
 		});
-		btnAdd.setBounds(49, 209, 113, 23);
-		getContentPane().add(btnAdd);
+		btnAjouter.setBounds(49, 209, 113, 23);
+		getContentPane().add(btnAjouter);
 
-		JButton btnRemove = new JButton("Supprimer");
-		btnRemove.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnRemove.setFocusPainted(false);
-		btnRemove.setBackground(new Color(204, 204, 204));
-		btnRemove.addActionListener(new ActionListener() {
+		JButton btnSupprimer = new JButton("Supprimer");
+		btnSupprimer.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnSupprimer.setFocusPainted(false);
+		btnSupprimer.setBackground(new Color(204, 204, 204));
+		btnSupprimer.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				removeUser();
+				supprimerUnPhar();
 			}
 		});
-		btnRemove.setBounds(49, 239, 113, 23);
-		getContentPane().add(btnRemove);
+		btnSupprimer.setBounds(49, 239, 113, 23);
+		getContentPane().add(btnSupprimer);
 
-		JButton btnEdit = new JButton("Modifier");
-		btnEdit.addActionListener(new ActionListener() {
+		JButton btnModifier = new JButton("Modifier");
+		btnModifier.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
-				updateUser();
+				modifierUnPhar();
 			}
 		});
-		btnEdit.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnEdit.setFocusPainted(false);
-		btnEdit.setBackground(new Color(204, 204, 204));
-		btnEdit.setBounds(49, 269, 113, 23);
-		getContentPane().add(btnEdit);
+		btnModifier.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnModifier.setFocusPainted(false);
+		btnModifier.setBackground(new Color(204, 204, 204));
+		btnModifier.setBounds(49, 269, 113, 23);
+		getContentPane().add(btnModifier);
 		
-		JLabel lblListeDesPharmaciens = new JLabel("Liste des pharmaciens");
-		lblListeDesPharmaciens.setHorizontalAlignment(SwingConstants.CENTER);
-		lblListeDesPharmaciens.setForeground(new Color(165, 42, 42));
-		lblListeDesPharmaciens.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblListeDesPharmaciens.setBounds(231, 43, 498, 25);
-		getContentPane().add(lblListeDesPharmaciens);
+		JLabel lbListeDesPharmaciens = new JLabel("Liste des pharmaciens");
+		lbListeDesPharmaciens.setHorizontalAlignment(SwingConstants.CENTER);
+		lbListeDesPharmaciens.setForeground(new Color(165, 42, 42));
+		lbListeDesPharmaciens.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lbListeDesPharmaciens.setBounds(231, 43, 498, 25);
+		getContentPane().add(lbListeDesPharmaciens);
 		
 		JButton btnRetour = new JButton("Retour");
 		btnRetour.addActionListener(new ActionListener() {
@@ -174,7 +171,7 @@ public class FenetrePharmaciens extends JDialog {
 				OuvrirMenuPrincipal();
 			}
 
-			// opens users window
+			// Ouvrir le menu principal
 			private void OuvrirMenuPrincipal() {
 				
 				MenuPrincipal menuPrincipal = new MenuPrincipal();
@@ -187,18 +184,18 @@ public class FenetrePharmaciens extends JDialog {
 
 		setLocationRelativeTo(null);
 
-		getUsersToTable();
+		getListePharToTable();
 
 	}
 
-	// get all users to a table
-	private void getUsersToTable() {
+	// get listePhar au tableau
+	private void getListePharToTable() {
 		try {
 
-			users = conn.getAllUsers();
+			listePhar = conn.getAllUsers();
 
-			ListePharmaciens model = new ListePharmaciens(users);
-			tableUsers.setModel(model);
+			ListePharmaciens model = new ListePharmaciens(listePhar);
+			tableListePhar.setModel(model);
 
 //			hideColumns();
 
@@ -207,68 +204,69 @@ public class FenetrePharmaciens extends JDialog {
 		}
 	}
 
-	// add user
-	private void addUser() {
-		AddUserWindow addUserWindow = new AddUserWindow();
-		addUserWindow.setVisible(true);
-		while (addUserWindow.isVisible()) {
+	// Ajouter un pharmacien
+	private void ajouterUnPhar() {
+		FenetreAjouterUnPhar fenetreAjouterUnPhar = new FenetreAjouterUnPhar();
+		dispose();
+		fenetreAjouterUnPhar.setVisible(true);
+		while (fenetreAjouterUnPhar.isVisible()) {
 
 		}
-		getUsersToTable();
+		getListePharToTable();
 	}
 
-	// remove user
-	private void removeUser() {
+	// Supprimer un pharmacien
+	private void supprimerUnPhar() {
 		int idCol = 0;
 		int nameCol = 1;
 
-		// if row selected
-		if (!(tableUsers.getSelectedRow() == -1)) {
+		// Si une ligne est sélectionnée
+		if (!(tableListePhar.getSelectedRow() == -1)) {
 
-			int selectedRow = tableUsers.getSelectedRow();
+			int selectedRow = tableListePhar.getSelectedRow();
 
-			String userId = tableUsers.getValueAt(selectedRow, idCol)
+			String num_phar = tableListePhar.getValueAt(selectedRow, idCol)
 					.toString();
 
-			String userName = tableUsers.getValueAt(selectedRow, nameCol)
+			String identifiant = tableListePhar.getValueAt(selectedRow, nameCol)
 					.toString();
 
-			if (userName.equalsIgnoreCase("admin")) {
+			if (identifiant.equalsIgnoreCase("admin")) {
 				JOptionPane.showMessageDialog(null,
-						"Administrator account can't be removed.");
+						"Impossible de supprimer l'admin");
 			} else {
 
 				int reply = JOptionPane.showConfirmDialog(null,
-						"Do you really want to remove this user?", "Remove?",
+						"Voulez-vous vraiment le supprimer ?", "Supprimer ?",
 						JOptionPane.YES_NO_OPTION);
 				if (reply == JOptionPane.YES_OPTION) {
 
 					try {
-						conn.removeUserQuery(userId, userName);
+						conn.supprimerUnPharQuery(num_phar, identifiant);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 
-					// refresh view here
-					getUsersToTable();
+					// Mise à jour la vue
+					getListePharToTable();
 
 				} else {
 					// do nothing
 				}
 			}
 		} else {
-			System.out.println("Nothing selected");
+			System.out.println("Aucune ligne est sélectionnée");
 			JOptionPane
 					.showMessageDialog(null,
-							"In order to remove user please select category row first.");
+							"Veuillez sélectionner un pharmacien à supprimer");
 		}
 	}
 
-	// edit user
-	private void updateUser() {
+	// Modifier un pharmacien
+	private void modifierUnPhar() {
 
-		if (!(tableUsers.getSelectedRow() == -1)) {
-			EditUserWindow editUserWindow = new EditUserWindow();
+		if (!(tableListePhar.getSelectedRow() == -1)) {
+			FenetreModifierUnPhar fenetreModifierUnPhar = new FenetreModifierUnPhar();
 
 			// insert data from table to the fields
 			int idCol = 0;
@@ -277,46 +275,47 @@ public class FenetrePharmaciens extends JDialog {
 			int firstNameCol = 3;
 			int surnameCol = 4;
 
-			int selectedRow = tableUsers.getSelectedRow();
+			int selectedRow = tableListePhar.getSelectedRow();
 
-			editUserWindow.textFieldUserName.setText(tableUsers
+			fenetreModifierUnPhar.textFieldIdentifiant.setText(tableListePhar
 					.getValueAt(selectedRow, userNameCol).toString().trim());
-			editUserWindow.passwordField.setText(tableUsers
+			fenetreModifierUnPhar.mdpField.setText(tableListePhar
 					.getValueAt(selectedRow, passwordCol).toString().trim());
-			editUserWindow.textFieldFirstName.setText(tableUsers
+			fenetreModifierUnPhar.textFieldPrenom.setText(tableListePhar
 					.getValueAt(selectedRow, firstNameCol).toString().trim());
-			editUserWindow.textFieldSurname.setText(tableUsers
+			fenetreModifierUnPhar.textFieldNom.setText(tableListePhar
 					.getValueAt(selectedRow, surnameCol).toString().trim());
 
-			editUserWindow.currentId = tableUsers
+			fenetreModifierUnPhar.mdpActuel = tableListePhar
 					.getValueAt(selectedRow, idCol).toString().trim();
-			editUserWindow.setVisible(true);
+			dispose();
+			fenetreModifierUnPhar.setVisible(true);
 
-			while (editUserWindow.isVisible()) {
+			while (fenetreModifierUnPhar.isVisible()) {
 
 			}
-			// refresh table
-			getUsersToTable();
+			// Mise à jour la vue
+			getListePharToTable();
 
 		} else {
 			JOptionPane.showMessageDialog(null,
-					"In order to edit please select user first.");
+					"Veuillez sélectionner un pharmacien à modifier !");
 		}
 	}
 
 	// hides columns
-	private void hideColumns() {
-		// remove/hide Id table
-		TableColumn myTableColumn0 = tableUsers.getColumnModel().getColumn(0);
-		TableColumn myTableColumn2 = tableUsers.getColumnModel().getColumn(2);
-
-		// tableCategories.getColumnModel().removeColumn(myTableColumn0);
-		myTableColumn0.setMaxWidth(0);
-		myTableColumn0.setMinWidth(0);
-		myTableColumn0.setPreferredWidth(0);
-
-		myTableColumn2.setMaxWidth(0);
-		myTableColumn2.setMinWidth(0);
-		myTableColumn2.setPreferredWidth(0);
-	}
+//	private void hideColumns() {
+//		// remove/hide Id table
+//		TableColumn myTableColumn0 = tableListePhar.getColumnModel().getColumn(0);
+//		TableColumn myTableColumn2 = tableListePhar.getColumnModel().getColumn(2);
+//
+//		// tableCategories.getColumnModel().removeColumn(myTableColumn0);
+//		myTableColumn0.setMaxWidth(0);
+//		myTableColumn0.setMinWidth(0);
+//		myTableColumn0.setPreferredWidth(0);
+//
+//		myTableColumn2.setMaxWidth(0);
+//		myTableColumn2.setMinWidth(0);
+//		myTableColumn2.setPreferredWidth(0);
+//	}
 }
