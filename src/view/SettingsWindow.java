@@ -76,7 +76,8 @@ public class SettingsWindow extends JDialog {
 		contentPanel.add(separator);
 
 		JButton btnUsers = new JButton("Users");
-
+		
+		// Si c'est l'admin, activer le boutton settings
 		if (conn.currentUser.equalsIgnoreCase("admin")) {
 			btnUsers.setEnabled(true);
 		} else {

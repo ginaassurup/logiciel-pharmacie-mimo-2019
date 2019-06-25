@@ -1,0 +1,12 @@
+CREATE TABLE IF NOT EXISTS PharmacienDetail(
+num_phar integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+identifiant VARCHAR(50) NOT NULL,
+mdp VARCHAR(50) NOT NULL,
+prenom_phar VARCHAR(50) NOT NULL,
+nom_phar VARCHAR(50) NOT NULL,
+statut_manager boolean NOT NULL);
+
+INSERT INTO PharmacienDetail(num_phar,identifiant, mdp, prenom_phar, nom_phar, statut_manager) values (1, "admin", "admin", "laurent", "boyer", 1)
+
+PRAGMA table_info(PharmacienDetail)
+select * from PharmacienDetail

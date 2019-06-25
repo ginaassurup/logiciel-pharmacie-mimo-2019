@@ -19,7 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 
 import dao.SQLiteCon;
-import model.User;
+import model.PharmacienDetail;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -35,7 +35,7 @@ public class EditUserWindow extends JDialog {
 	// database class declaration
 	SQLiteCon conn;
 
-	List<User> users;
+	List<PharmacienDetail> users;
 
 	JTextField textFieldUserName;
 	JPasswordField passwordField;

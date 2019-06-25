@@ -19,7 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 
 import dao.SQLiteCon;
-import model.User;
+import model.PharmacienDetail;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -35,7 +35,7 @@ public class AddUserWindow extends JDialog {
 	// database class declaration
 	SQLiteCon conn;
 
-	List<User> users;
+	List<PharmacienDetail> users;
 
 	private JTextField textFieldUserName;
 	private JPasswordField passwordField;
@@ -213,9 +213,9 @@ public class AddUserWindow extends JDialog {
 				// check if exists
 				boolean userExists = false;
 				for (int i = 0; i < users.size(); i++) {
-					if (users.get(i).getUserName().equalsIgnoreCase(userName)) {
+					if (users.get(i).getIdentifiant().equalsIgnoreCase(userName)) {
 
-						System.out.println("Exists " + users.get(i).getUserName()
+						System.out.println("Exists " + users.get(i).getIdentifiant()
 								+ " " + userName);
 						userExists = true;
 						break;

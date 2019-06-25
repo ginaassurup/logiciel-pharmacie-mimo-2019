@@ -20,8 +20,8 @@ import javax.swing.JButton;
 import javax.swing.ListSelectionModel;
 import javax.swing.WindowConstants;
 
-import model.User;
-import model.UserTableModel;
+import model.PharmacienDetail;
+import model.ListePharmaciens;
 
 import javax.swing.JScrollPane;
 import javax.swing.table.TableColumn;
@@ -42,7 +42,7 @@ public class UsersWindow extends JDialog {
 	// database connection declaration
 	SQLiteCon conn;
 
-	List<User> users;
+	List<PharmacienDetail> users;
 	String newUser = "";
 
 	// table
@@ -168,10 +168,10 @@ public class UsersWindow extends JDialog {
 
 			users = conn.getAllUsers();
 
-			UserTableModel model = new UserTableModel(users);
+			ListePharmaciens model = new ListePharmaciens(users);
 			tableUsers.setModel(model);
 
-			hideColumns();
+//			hideColumns();
 
 		} catch (Exception e) {
 			e.printStackTrace();

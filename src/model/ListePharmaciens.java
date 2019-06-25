@@ -8,7 +8,7 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-public class UserTableModel extends AbstractTableModel {
+public class ListePharmaciens extends AbstractTableModel {
 
 	/**
 	 * 
@@ -16,17 +16,17 @@ public class UserTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 
 	private static final int USER_ID_COL = 0;
-	private static final int USER_USERNAME_COL = 1;
+	private static final int PHARMACIENDETAIL_IDENTIFIANT_COL = 1;
 	private static final int USER_PASSWORD_COL = 2;
 	private static final int USER_FIRSTNAME_COL = 3;
 	private static final int USER_SURNAME_COL = 4;
 
-	private String[] columnNames = { "Id", "User Name", "Password",
-			"First Name", "Last Name" };
+	private String[] columnNames = { "numéro", "Identifiant", "Mot de passe",
+			"Prénom", "Nom" };
 
-	private List<User> users;
+	private List<PharmacienDetail> users;
 
-	public UserTableModel(List<User> theUsers) {
+	public ListePharmaciens(List<PharmacienDetail> theUsers) {
 		users = theUsers;
 	}
 
@@ -48,22 +48,22 @@ public class UserTableModel extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int row, int col) {
 
-		User tempUser = users.get(row);
+		PharmacienDetail tempUser = users.get(row);
 
 		switch (col) {
 		case USER_ID_COL:
-			return tempUser.getId();
-		case USER_USERNAME_COL:
-			return tempUser.getUserName();
+			return tempUser.getNum_phar();
+		case PHARMACIENDETAIL_IDENTIFIANT_COL:
+			return tempUser.getIdentifiant();
 		case USER_PASSWORD_COL:
-			return tempUser.getPassword();
+			return tempUser.getMdp();
 		case USER_FIRSTNAME_COL:
-			return tempUser.getFirstName();
+			return tempUser.getPrenom_phar();
 		case USER_SURNAME_COL:
-			return tempUser.getSurname();
+			return tempUser.getNom_phar();
 
 		default:
-			return tempUser.getUserName();
+			return tempUser.getIdentifiant();
 		}
 
 	}

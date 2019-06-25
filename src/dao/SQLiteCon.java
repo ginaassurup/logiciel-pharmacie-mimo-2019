@@ -23,7 +23,7 @@ import model.Category;
 import model.Product;
 import model.ProductJoin;
 import model.Unit;
-import model.User;
+import model.PharmacienDetail;
 import view.MainWindow;
 
 public class SQLiteCon {
@@ -82,7 +82,7 @@ public class SQLiteCon {
 	public void login(Connection conn, JTextField user, JPasswordField pswd) {
 		try {
 			// declare query that checks if user exists
-			String query = "SELECT  * FROM User where UserName=? AND Password=?";
+			String query = "SELECT  * FROM PharmacienDetail where identifiant=? AND mdp=?";
 			// put into prepared statement
 			PreparedStatement pst = conn.prepareStatement(query);
 
@@ -117,7 +117,7 @@ public class SQLiteCon {
 			}
 			// if don't match
 			else {
-				JOptionPane.showMessageDialog(null, "Wrong User or Password.");
+				JOptionPane.showMessageDialog(null, "Identifiant ou mot de passe incorrect");
 			}
 
 			rs.close();
@@ -136,9 +136,9 @@ public class SQLiteCon {
 	}
 
 	// gets all users to the list
-	public List<User> getAllUsers() throws Exception {
+	public List<PharmacienDetail> getAllUsers() throws Exception {
 
-		List<User> list = new ArrayList<>();
+		List<PharmacienDetail> list = new ArrayList<>();
 
 		Statement myStmt = null;
 		ResultSet myRs = null;
@@ -146,10 +146,10 @@ public class SQLiteCon {
 		try {
 			myStmt = myConn.createStatement();
 			myRs = myStmt
-					.executeQuery("SELECT * FROM User WHERE Id != 1 ORDER BY UserName COLLATE NOCASE");
+					.executeQuery("SELECT * FROM PharmacienDetail WHERE num_phar != 1 ORDER BY identifiant COLLATE NOCASE");
 
 			while (myRs.next()) {
-				User tempUser = convertRowToUser(myRs);
+				PharmacienDetail tempUser = convertRowToUser(myRs);
 				list.add(tempUser);
 			}
 
@@ -161,8 +161,8 @@ public class SQLiteCon {
 	}
 
 	// search users
-	public List<User> searchUsers(String userName) throws Exception {
-		List<User> list = new ArrayList<>();
+	public List<PharmacienDetail> searchUsers(String userName) throws Exception {
+		List<PharmacienDetail> list = new ArrayList<>();
 
 		PreparedStatement myStmt = null;
 		ResultSet myRs = null;
@@ -170,14 +170,14 @@ public class SQLiteCon {
 		try {
 			userName += "%";
 			myStmt = myConn
-					.prepareStatement("select * from User where UserName like ?");
+					.prepareStatement("select * from PharmacienDetail where identifiant like ?");
 
 			myStmt.setString(1, userName);
 
 			myRs = myStmt.executeQuery();
 
 			while (myRs.next()) {
-				User tempUser = convertRowToUser(myRs);
+				PharmacienDetail tempUser = convertRowToUser(myRs);
 				list.add(tempUser);
 			}
 
@@ -188,34 +188,36 @@ public class SQLiteCon {
 	}
 
 	// convert row to user
-	private User convertRowToUser(ResultSet myRs) throws SQLException {
+	private PharmacienDetail convertRowToUser(ResultSet myRs) throws SQLException {
 
-		int id = myRs.getInt("Id");
-		String userName = myRs.getString("UserName");
-		String password = myRs.getString("Password");
-		String firstName = myRs.getString("FirstName");
-		String surname = myRs.getString("Surname");
-
-		User tempUser = new User(id, userName, password, firstName, surname);
-
+		int num_phar = myRs.getInt("num_phar");
+		String identifiant = myRs.getString("identifiant");
+		String mdp = myRs.getString("mdp");
+		String prenom_phar = myRs.getString("prenom_phar");
+		String nom_phar = myRs.getString("nom_phar");
+//		boolean statut_manager = myRs.getBoolean("statut_manager");
+		
+		PharmacienDetail tempUser = new PharmacienDetail(num_phar, identifiant, mdp, prenom_phar, nom_phar);
+//		PharmacienDetail tempUser = new PharmacienDetail(num_phar, identifiant, mdp, prenom_phar, nom_phar, statut_manager);
+		// PharmacienDetail tempUser = new PharmacienDetail(id, userName, password, firstName, surname);
 		return tempUser;
 	}
 
 	// insert user
-	public void insertUserQuery(String userName, String password,
-			String firstName, String surname) throws Exception {
+	public void insertUserQuery(String identifiant, String mdp,
+			String prenom_phar, String nom_phar) throws Exception {
 
 		PreparedStatement myStmt = null;
 
 		try {
 			myStmt = myConn
-					.prepareStatement("INSERT INTO User (UserName, Password, FirstName, Surname)"
+					.prepareStatement("INSERT INTO PharmacienDetail (identifiant, mdp, prenom_phar, nom_phar)"
 							+ "VALUES (?, ?, ?, ?)");
 
-			myStmt.setString(1, userName);
-			myStmt.setString(2, password);
-			myStmt.setString(3, firstName);
-			myStmt.setString(4, surname);
+			myStmt.setString(1, identifiant);
+			myStmt.setString(2, mdp);
+			myStmt.setString(3, prenom_phar);
+			myStmt.setString(4, nom_phar);
 
 			myStmt.executeUpdate();
 		} finally {
@@ -224,7 +226,7 @@ public class SQLiteCon {
 	}
 
 	// remove user query
-	public void removeUserQuery(String userId, String userName)
+	public void removeUserQuery(String num_phar, String identifiant)
 			throws Exception {
 
 		PreparedStatement myStmt = null;
@@ -232,10 +234,10 @@ public class SQLiteCon {
 		try {
 
 			myStmt = myConn
-					.prepareStatement("DELETE FROM User WHERE Id = ? AND UserName = ?");
+					.prepareStatement("DELETE FROM PharmacienDetail WHERE num_phar = ? AND identifiant = ?");
 
-			myStmt.setString(1, userId);
-			myStmt.setString(2, userName);
+			myStmt.setString(1, num_phar);
+			myStmt.setString(2, identifiant);
 			myStmt.execute();
 
 		} catch (Exception e) {
@@ -247,22 +249,22 @@ public class SQLiteCon {
 	}
 
 	// update user
-	public void updateUserQuery(String id, String userName, String password,
-			String firstName, String surname) throws Exception {
+	public void updateUserQuery(String num_phar, String identifiant, String mdp,
+			String prenom_phar, String nom_phar) throws Exception {
 
 		PreparedStatement myStmt = null;
 
 		try {
 
 			myStmt = myConn
-					.prepareStatement("UPDATE User SET UserName = ?, Password = ?, FirstName = ?, Surname = ?"
-							+ "WHERE Id = ?");
+					.prepareStatement("UPDATE PharmacienDetail SET identifiant = ?, mdp = ?, prenom_phar = ?, nom_phar = ?"
+							+ "WHERE num_phar = ?");
 
-			myStmt.setString(1, userName);
-			myStmt.setString(2, password);
-			myStmt.setString(3, firstName);
-			myStmt.setString(4, surname);
-			myStmt.setString(5, id);
+			myStmt.setString(1, identifiant);
+			myStmt.setString(2, mdp);
+			myStmt.setString(3, prenom_phar);
+			myStmt.setString(4, nom_phar);
+			myStmt.setString(5, num_phar);
 
 			myStmt.executeUpdate();
 		} finally {
@@ -278,7 +280,7 @@ public class SQLiteCon {
 		try {
 
 			myStmt = myConn
-					.prepareStatement("UPDATE User SET Password = ? WHERE UserName = ?");
+					.prepareStatement("UPDATE PharmacienDetail SET mdp = ? WHERE identifiant = ?");
 
 			myStmt.setString(1, newPassword);
 			myStmt.setString(2, currentUser);
