@@ -12,9 +12,6 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
-
-import dao.SQLiteCon;
-
 import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
@@ -22,7 +19,11 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.ImageIcon;
 
+import dao.SQLiteCon;
+
 import java.awt.Toolkit;
+import java.awt.Font;
+import java.awt.Window.Type;
 
 public class LoginWindow {
 
@@ -67,39 +68,42 @@ public class LoginWindow {
 	 */
 	private void initialize() {
 		frmInLogin = new JFrame();
-		
-		frmInLogin.setIconImage(Toolkit.getDefaultToolkit().getImage(LoginWindow.class.getResource("/view/logo_new.png")));
 		frmInLogin.setResizable(false);
-		frmInLogin.setTitle("In - Login");
-		frmInLogin.setBounds(100, 100, 362, 240);
+		frmInLogin.setTitle("Logiciel de Gestion de Pharmacie - Se connecter ");
+		frmInLogin.setBounds(100, 100, 968, 500);
 		frmInLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmInLogin.setLocationRelativeTo(null);
 		frmInLogin.getContentPane().setLayout(null);
-		frmInLogin.getContentPane().setBackground(new Color(56, 56, 56));
+		frmInLogin.getContentPane().setBackground(Color.WHITE);
 		
 
-		JLabel lblUserName = new JLabel("User Name:");
-		lblUserName.setForeground(Color.LIGHT_GRAY);
+		JLabel lblUserName = new JLabel("Identfiant");
+		lblUserName.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblUserName.setForeground(Color.BLACK);
 		lblUserName.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblUserName.setBounds(74, 106, 102, 14);
+		lblUserName.setBounds(300, 181, 102, 14);
 		frmInLogin.getContentPane().add(lblUserName);
 
-		JLabel lblPassword = new JLabel("Password:");
-		lblPassword.setForeground(Color.LIGHT_GRAY);
+		JLabel lblPassword = new JLabel("Mot de passe");
+		lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblPassword.setForeground(Color.BLACK);
 		lblPassword.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblPassword.setBounds(74, 138, 102, 14);
+		lblPassword.setBounds(300, 241, 102, 14);
 		frmInLogin.getContentPane().add(lblPassword);
 
 		textFieldUserName = new JTextField();
-		textFieldUserName.setBounds(186, 104, 148, 20);
+		textFieldUserName.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		textFieldUserName.setBounds(412, 174, 148, 30);
 		frmInLogin.getContentPane().add(textFieldUserName);
 		textFieldUserName.setColumns(10);
 
 		passwordField = new JPasswordField();
-		passwordField.setBounds(186, 135, 148, 20);
+		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		passwordField.setBounds(412, 234, 148, 30);
 		frmInLogin.getContentPane().add(passwordField);
 
-		JButton btnLogin = new JButton("Login");
+		JButton btnLogin = new JButton("Se connecter");
+		btnLogin.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnLogin.setBackground(new Color(204, 204, 204));
 		btnLogin.addActionListener(new ActionListener() {
 			@Override
@@ -111,26 +115,18 @@ public class LoginWindow {
 				}
 			}
 		});
-		btnLogin.setBounds(245, 166, 89, 30);
+		btnLogin.setBounds(412, 289, 148, 30);
 		frmInLogin.getContentPane().add(btnLogin);
 
 		// enter key
 		frmInLogin.getRootPane().setDefaultButton(btnLogin);
 		
-		JLabel labelPadLock = new JLabel("");
-		labelPadLock.setIcon(new ImageIcon(LoginWindow.class.getResource("/view/login_lock_new.png")));
-		labelPadLock.setBounds(10, 168, 30, 30);
-		frmInLogin.getContentPane().add(labelPadLock);
-		
-		JLabel labelLogo = new JLabel("");
-		labelLogo.setIcon(new ImageIcon(LoginWindow.class.getResource("/view/logo_new_64_no_bckg.png")));
-		labelLogo.setBounds(10, 11, 64, 64);
-		frmInLogin.getContentPane().add(labelLogo);
-		
-		JLabel labelInventoryManagement = new JLabel("");
-		labelInventoryManagement.setIcon(new ImageIcon(LoginWindow.class.getResource("/view/inv_management.png")));
-		labelInventoryManagement.setBounds(72, 25, 200, 50);
-		frmInLogin.getContentPane().add(labelInventoryManagement);
+		JLabel lblLogicielDePharmacie = new JLabel("Logiciel de pharmacie");
+		lblLogicielDePharmacie.setHorizontalAlignment(SwingConstants.CENTER);
+		lblLogicielDePharmacie.setForeground(new Color(165, 42, 42));
+		lblLogicielDePharmacie.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblLogicielDePharmacie.setBounds(330, 100, 261, 25);
+		frmInLogin.getContentPane().add(lblLogicielDePharmacie);
 		
 	}
 }

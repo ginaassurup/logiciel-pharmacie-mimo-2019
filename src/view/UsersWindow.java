@@ -31,6 +31,9 @@ import dao.SQLiteCon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import java.awt.Window.Type;
+import java.awt.Dialog.ModalityType;
+import javax.swing.SwingConstants;
 
 public class UsersWindow extends JDialog {
 
@@ -70,21 +73,21 @@ public class UsersWindow extends JDialog {
 	 * Create the dialog.
 	 */
 	public UsersWindow() {
+		setFont(new Font("Tahoma", Font.PLAIN, 14));
 		getContentPane().setFocusTraversalKeysEnabled(false);
 
 		// connect to database
 		conn = new SQLiteCon();
 
-		setIconImage(Toolkit.getDefaultToolkit().getImage(UsersWindow.class.getResource("/view/logo_new.png")));
-		setTitle("In - Users");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(UsersWindow.class.getResource("/view/User.png")));
+		setTitle("Logiciel Gestion de pharmacie - Users");
 		setModal(true);
-		setResizable(false);
-		setBounds(100, 100, 560, 242);
-		getContentPane().setBackground(new Color(56, 56, 56));
+		setBounds(100, 100, 968, 500);
+		getContentPane().setBackground(Color.WHITE);
 		getContentPane().setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(115, 11, 429, 192);
+		scrollPane.setBounds(204, 118, 623, 290);
 		getContentPane().add(scrollPane);
 
 		tableUsers = new JTable() {
@@ -110,15 +113,16 @@ public class UsersWindow extends JDialog {
 		tableUsers.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		JLabel label = new JLabel("");
+		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setIcon(new ImageIcon(UsersWindow.class
 				.getResource("/view/User.png")));
-		label.setBounds(22, 11, 72, 72);
+		label.setBounds(56, 118, 95, 93);
 		getContentPane().add(label);
 
-		JButton btnAdd = new JButton("Add");
+		JButton btnAdd = new JButton("Ajouter");
 		btnAdd.setFocusPainted(false);
 		btnAdd.setBackground(new Color(204, 204, 204));
-		btnAdd.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnAdd.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnAdd.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -126,11 +130,11 @@ public class UsersWindow extends JDialog {
 				addUser();
 			}
 		});
-		btnAdd.setBounds(14, 119, 88, 23);
+		btnAdd.setBounds(49, 209, 113, 23);
 		getContentPane().add(btnAdd);
 
-		JButton btnRemove = new JButton("Remove");
-		btnRemove.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		JButton btnRemove = new JButton("Supprimer");
+		btnRemove.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnRemove.setFocusPainted(false);
 		btnRemove.setBackground(new Color(204, 204, 204));
 		btnRemove.addActionListener(new ActionListener() {
@@ -140,21 +144,46 @@ public class UsersWindow extends JDialog {
 				removeUser();
 			}
 		});
-		btnRemove.setBounds(14, 149, 88, 23);
+		btnRemove.setBounds(49, 239, 113, 23);
 		getContentPane().add(btnRemove);
 
-		JButton btnEdit = new JButton("Edit");
+		JButton btnEdit = new JButton("Modifier");
 		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
 				updateUser();
 			}
 		});
-		btnEdit.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnEdit.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnEdit.setFocusPainted(false);
 		btnEdit.setBackground(new Color(204, 204, 204));
-		btnEdit.setBounds(14, 179, 88, 23);
+		btnEdit.setBounds(49, 269, 113, 23);
 		getContentPane().add(btnEdit);
+		
+		JLabel lblListeDesPharmaciens = new JLabel("Liste des pharmaciens");
+		lblListeDesPharmaciens.setHorizontalAlignment(SwingConstants.CENTER);
+		lblListeDesPharmaciens.setForeground(new Color(165, 42, 42));
+		lblListeDesPharmaciens.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblListeDesPharmaciens.setBounds(231, 43, 498, 25);
+		getContentPane().add(lblListeDesPharmaciens);
+		
+		JButton btnRetour = new JButton("Retour");
+		btnRetour.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+				OuvrirMenuPrincipal();
+			}
+
+			// opens users window
+			private void OuvrirMenuPrincipal() {
+				
+				MenuPrincipal menuPrincipal = new MenuPrincipal();
+				menuPrincipal.getFrmMenuPrincipal().setVisible(true);
+			}
+		});
+		
+		btnRetour.setBounds(12, 13, 97, 25);
+		getContentPane().add(btnRetour);
 
 		setLocationRelativeTo(null);
 

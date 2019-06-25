@@ -69,7 +69,7 @@ public class MainWindow extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	// first category in combo box
-	String firstCatStr = "All";
+	String firstCatStr = "Tous";
 
 	// selected product
 	String currentProductName;
@@ -134,7 +134,7 @@ public class MainWindow extends JFrame {
 		createMenuBar();
 		setResizable(false);
 
-		setTitle("Inventory - Main | User: " + conn.currentUser);
+		setTitle("Logiciel de Gestion de Pharmacie - Menu principal | Utilisateur : " + conn.currentUser);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 720, 640);
 		contentPane = new JPanel();

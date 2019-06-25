@@ -25,6 +25,7 @@ import model.ProductJoin;
 import model.Unit;
 import model.PharmacienDetail;
 import view.MainWindow;
+import view.MenuPrincipal;
 
 public class SQLiteCon {
 
@@ -112,8 +113,12 @@ public class SQLiteCon {
 				currentPassword = pswd.getText();
 
 				// open main window
-				MainWindow mainWindow = new MainWindow();
-				mainWindow.setVisible(true);
+//				MainWindow mainWindow = new MainWindow();
+//				mainWindow.setVisible(true);
+				
+				// open Menu principal
+				MenuPrincipal menuPrincipal = new MenuPrincipal();
+				menuPrincipal.getFrmMenuPrincipal().setVisible(true);
 			}
 			// if don't match
 			else {
