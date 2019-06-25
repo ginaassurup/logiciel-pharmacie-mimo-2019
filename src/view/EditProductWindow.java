@@ -329,10 +329,10 @@ public class EditProductWindow extends JDialog {
 				
 				for (int i = 0; i < products.size(); i++) {
 
-					if (products.get(i).getName().equalsIgnoreCase(newProdName)) {
+					if (products.get(i).getLibelle_produit().equalsIgnoreCase(newProdName)) {
 
 						productExists = true;
-						if (products.get(i).getType().equalsIgnoreCase(typeName)) {
+						if (products.get(i).getForme().equalsIgnoreCase(typeName)) {
 							typeExists = true;
 							break;
 						}

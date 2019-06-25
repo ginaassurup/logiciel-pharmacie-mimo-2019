@@ -5,91 +5,100 @@
 package model;
 
 public class ProductJoin {
-	private int id;
-	private String name;
-	private String categoryName;
-	private String type;
-	private int stock;
-	private String unit;
-	private int stockAlarm;
+	private int num_prod;
+	private int code_barre;
+	private String libelle_produit;
+	private String nom_cat;
+	private String forme;
+	private int qtte_stock;
+	private int qtte_stock_alarme;
+	private float prix_vente;
+	private float prix_achat;
+	private String nom_four;
 	
-	
-	
-	public ProductJoin(int id, String name, String categoryName, String type, int stock, String unit, int stockAlarm) {
+	public ProductJoin(int num_prod, int code_barre, String libelle_produit, String nom_cat, String forme, int qtte_stock, int qtte_stock_alarme,
+			float prix_vente, float prix_achat, String nom_four) {
 		super();
-		this.id = id;
-		this.name = name;
-		this.categoryName = categoryName;
-		this.type = type;
-		this.stock = stock;
-		this.unit = unit;
-		this.stockAlarm = stockAlarm;
+		this.num_prod = num_prod;
+		this.code_barre = code_barre;
+		this.libelle_produit = libelle_produit;
+		this.nom_cat = nom_cat;
+		this.forme = forme;
+		this.qtte_stock = qtte_stock;
+		this.qtte_stock_alarme = qtte_stock_alarme;
+		this.prix_vente = prix_vente;
+		this.prix_achat = prix_achat;
+		this.nom_four = nom_four;
 	}
 	
 
-	public int getId() {
-		return id;
+	public int getNum_prod() {
+		return num_prod;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getCategoryName() {
-		return categoryName;
-	}
-
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public int getStock() {
-		return stock;
-	}
-
-	public void setStock(int stock) {
-		this.stock = stock;
+	public void setNum_prod(int id) {
+		this.num_prod = id;
 	}
 	
-	public String getUnit() {
-		return unit;
+	public int getCode_barre() {
+		return this.code_barre;
 	}
-
-	public void setUnit(String unit) {
-		this.unit = unit;
+		
+	public void setCode_barre(int code_barre) {
+		this.code_barre = code_barre;
 	}
 	
-
-	public int getstockAlarm() {
-		return stockAlarm;
+	public String getLibelle_produit() {
+		return libelle_produit;
 	}
 
-	public void setstockAlarm(int stockAlarm) {
-		this.stockAlarm = stockAlarm;
+	public void setLibelle_produit(String libelle_produit) {
+		this.libelle_produit = libelle_produit;
+	}
+	
+	public String getNom_cat() {
+		return nom_cat;
+	}
+
+	public void setNom_cat(String nom_cat) {
+		this.nom_cat = nom_cat;
+	}
+
+	public String getForme() {
+		return forme;
+	}
+
+	public void setForme(String forme) {
+		this.forme = forme;
+	}
+	
+	public int getQtte_stock() {
+		return qtte_stock;
+	}
+	public void setQtte_stock(int qtte_stock) {
+		this.qtte_stock = qtte_stock;
+	}
+	
+	public int getQtte_stock_alarme() {
+		return qtte_stock_alarme;
+	}
+	public void setQtte_stock_alarme(int qtte_stock_alarme) {
+		this.qtte_stock_alarme = qtte_stock_alarme;
+	}
+	
+	public String getNom_four() {
+		return nom_four;
+	}
+
+	public void setNom_four(String nom_four) {
+		this.nom_four = nom_four;
 	}
 	
 	
 	@Override
 	public String toString() {
 		return String
-				.format("Product [name=%s, categoryName=%s, type=%s, stock=%s]",
-						name, categoryName, type, stock);
+				.format("Product [libelle_produit=%s, nom_cat=%s, forme=%s, qtte_stock=%s]",
+						libelle_produit, nom_cat, forme, qtte_stock);
 	} 
 }

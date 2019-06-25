@@ -50,15 +50,15 @@ public class ProductTableModel extends AbstractTableModel {
 
 		switch (col) {
 		case PRODUCT_NAME_COL:
-			return tempProduct.getName();
+			return tempProduct.getLibelle_produit();
 		case CATEGORY_COL:
-			return tempProduct.getCategoryId();
+			return tempProduct.getId_cat();
 		case TYPE_COL:
-			return tempProduct.getType();
+			return tempProduct.getForme();
 		case STOCK_COL:
-			return tempProduct.getStock();
+			return tempProduct.getQtte_stock();
 		default:
-			return tempProduct.getName();
+			return tempProduct.getLibelle_produit();
 		} 
 		
 	}

@@ -125,27 +125,25 @@ public class MainWindow extends JFrame {
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes", "static-access" })
 	public MainWindow() {
-
+		
 		// initialise connection
 		conn = new SQLiteCon();
-
-		setIconImage(Toolkit.getDefaultToolkit().getImage(MainWindow.class.getResource("/view/logo_new.png")));
 
 		createMenuBar();
 		setResizable(false);
 
-		setTitle("Logiciel de Gestion de Pharmacie - Menu principal | Utilisateur : " + conn.currentUser);
+		setTitle("Produits | Utilisateur : \" + conn.currentUser");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 720, 640);
+		setBounds(100, 100, 968, 700);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(56, 56, 56));
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBackground(new Color(163, 193, 228));
-		scrollPane.setBounds(29, 117, 654, 383);
+		scrollPane.setBounds(29, 156, 906, 383);
 		contentPane.add(scrollPane);
 
 		tableProduct = new JTable() {
@@ -186,10 +184,10 @@ public class MainWindow extends JFrame {
 			}
 		});
 		comboBoxCategory.setMaximumRowCount(20);
-		comboBoxCategory.setBounds(29, 72, 125, 30);
+		comboBoxCategory.setBounds(29, 95, 125, 30);
 		contentPane.add(comboBoxCategory);
 
-		JButton btnCategories = new JButton("Categories");
+		JButton btnCategories = new JButton("Cat\u00E9gorie");
 		btnCategories.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		//btnCategories.setBackground(new Color(75, 190, 95));
 		btnCategories.setBackground(new Color(204, 204, 204));
@@ -200,59 +198,8 @@ public class MainWindow extends JFrame {
 			}
 		});
 		btnCategories.setFocusPainted(false);
-		btnCategories.setBounds(156, 72, 82, 30);
+		btnCategories.setBounds(156, 95, 82, 30);
 		contentPane.add(btnCategories);
-
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(56, 56, 56));
-		panel.setBounds(29, 534, 244, 30);
-		contentPane.add(panel);
-		panel.setLayout(null);
-
-		JButton btnAddProduct = new JButton("Add");
-		btnAddProduct.setBackground(new Color(204, 204, 204));
-		btnAddProduct.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-
-				addProduct();
-			}
-		});
-		btnAddProduct.setBounds(0, 0, 80, 30);
-		panel.add(btnAddProduct);
-		btnAddProduct.setFont(new Font("Tahoma", Font.PLAIN, 10));
-
-		btnAddProduct.setFocusPainted(false);
-
-		JButton btnRemoveProduct = new JButton("Remove");
-		btnRemoveProduct.setBackground(new Color(204, 204, 204));
-		btnRemoveProduct.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-
-				removeProduct();
-			}
-		});
-		btnRemoveProduct.setBounds(82, 0, 80, 30);
-		panel.add(btnRemoveProduct);
-		btnRemoveProduct.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnRemoveProduct.setFocusPainted(false);
-
-		JButton btnEdit = new JButton("Edit");
-		btnEdit.setBackground(new Color(204, 204, 204));
-		btnEdit.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				// edit product
-				editProduct();
-
-			}
-		});
-		btnEdit.setBounds(164, 0, 80, 30);
-		panel.add(btnEdit);
-		btnEdit.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnEdit.setFocusPainted(false);
 
 		textFieldSearch = new JTextField();
 
@@ -264,38 +211,8 @@ public class MainWindow extends JFrame {
 				}
 			}
 		});
-
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(56, 56, 56));
-		panel_1.setBounds(430, 534, 252, 30);
-		contentPane.add(panel_1);
-		panel_1.setLayout(null);
-
-		buttonPlus = new JButton("+");
-		buttonPlus.setBackground(new Color(204, 204, 204));
-		buttonPlus.setBounds(127, 0, 125, 30);
-		panel_1.add(buttonPlus);
-		buttonPlus.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				addStock();
-			}
-		});
-		buttonPlus.setFocusPainted(false);
-
-		buttonMinus = new JButton("-");
-		buttonMinus.setBackground(new Color(204, 204, 204));
-		buttonMinus.setBounds(0, 0, 125, 30);
-		panel_1.add(buttonMinus);
-		buttonMinus.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				removeStock();
-			}
-		});
-		buttonMinus.setFocusPainted(false);
 		textFieldSearch.setToolTipText("Product Name");
-		textFieldSearch.setBounds(401, 72, 118, 30);
+		textFieldSearch.setBounds(537, 95, 118, 30);
 		contentPane.add(textFieldSearch);
 		textFieldSearch.setColumns(10);
 
@@ -307,7 +224,7 @@ public class MainWindow extends JFrame {
 			}
 		});
 
-		JButton btnSearch = new JButton("Search");
+		JButton btnSearch = new JButton("Rechercher");
 		btnSearch.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnSearch.setBackground(new Color(204, 204, 204));
 		btnSearch.addActionListener(new ActionListener() {
@@ -317,16 +234,16 @@ public class MainWindow extends JFrame {
 			}
 		});
 		btnSearch.setFocusPainted(false);
-		btnSearch.setBounds(521, 72, 80, 30);
+		btnSearch.setBounds(692, 95, 118, 30);
 		contentPane.add(btnSearch);
 
-		JLabel lblNewLabel = new JLabel("Product Name:");
+		JLabel lblNewLabel = new JLabel("Produit");
 		lblNewLabel.setForeground(Color.LIGHT_GRAY);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel.setBounds(299, 78, 97, 14);
+		lblNewLabel.setBounds(435, 101, 97, 14);
 		contentPane.add(lblNewLabel);
 
-		JButton btnShowAll = new JButton("Show All");
+		JButton btnShowAll = new JButton("Tout afficher");
 		btnShowAll.setBackground(new Color(204, 204, 204));
 		btnShowAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -336,30 +253,129 @@ public class MainWindow extends JFrame {
 		});
 		btnShowAll.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnShowAll.setFocusPainted(false);
-		btnShowAll.setBounds(603, 72, 80, 30);
+		btnShowAll.setBounds(822, 94, 113, 30);
 		contentPane.add(btnShowAll);
 
-		JLabel lblProducts = new JLabel("Products");
+		JLabel lblProducts = new JLabel("Gestion des produits");
 		lblProducts.setForeground(Color.LIGHT_GRAY);
 		lblProducts.setHorizontalAlignment(SwingConstants.CENTER);
-		lblProducts.setBounds(115, 514, 75, 14);
+		lblProducts.setBounds(30, 558, 244, 14);
 		contentPane.add(lblProducts);
 
 		JLabel lblStock = new JLabel("Stock");
 		lblStock.setForeground(Color.LIGHT_GRAY);
 		lblStock.setHorizontalAlignment(SwingConstants.CENTER);
-		lblStock.setBounds(520, 514, 75, 14);
+		lblStock.setBounds(782, 558, 75, 14);
 		contentPane.add(lblStock);
 		
 		JLabel labelLogo = new JLabel("");
-		labelLogo.setIcon(new ImageIcon(MainWindow.class.getResource("/view/logo_new_64_no_bckg.png")));
+		labelLogo.setIcon(null);
 		labelLogo.setBounds(319, 516, 64, 64);
 		contentPane.add(labelLogo);
 		
-		JLabel labelInventoryManagement = new JLabel("");
-		labelInventoryManagement.setIcon(new ImageIcon(MainWindow.class.getResource("/view/inv_management.png")));
-		labelInventoryManagement.setBounds(21, 11, 200, 50);
-		contentPane.add(labelInventoryManagement);
+		JLabel lblProduits = new JLabel("Produits");
+		lblProduits.setHorizontalAlignment(SwingConstants.CENTER);
+		lblProduits.setForeground(new Color(165, 42, 42));
+		lblProduits.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblProduits.setBounds(218, 57, 498, 25);
+		contentPane.add(lblProduits);
+		
+		JMenuBar menuBar = new JMenuBar();
+		menuBar.setBounds(0, 0, 962, 30);
+		contentPane.add(menuBar);
+		
+		JMenu menu = new JMenu("Param\u00E8tres");
+		menu.setMnemonic(KeyEvent.VK_F);
+		menu.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		menuBar.add(menu);
+		
+		JMenuItem menuItem = new JMenuItem("Imprimer");
+		menu.add(menuItem);
+		
+		JSeparator separator = new JSeparator();
+		menu.add(separator);
+		
+		JMenuItem menuItem_1 = new JMenuItem("Fermer");
+		menuItem_1.setToolTipText("Exit application");
+		menuItem_1.setMnemonic(KeyEvent.VK_E);
+		menu.add(menuItem_1);
+		
+		JMenu menu_1 = new JMenu("");
+		menu_1.setMnemonic(KeyEvent.VK_F);
+		menu_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		menuBar.add(menu_1);
+		
+		JSeparator separator_1 = new JSeparator();
+		menu_1.add(separator_1);
+		
+				JButton btnAddProduct = new JButton("Ajouter");
+				btnAddProduct.setBounds(29, 586, 80, 30);
+				contentPane.add(btnAddProduct);
+				btnAddProduct.setBackground(new Color(204, 204, 204));
+				btnAddProduct.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+
+						addProduct();
+					}
+				});
+				btnAddProduct.setFont(new Font("Tahoma", Font.PLAIN, 10));
+				
+						btnAddProduct.setFocusPainted(false);
+						
+								JButton btnRemoveProduct = new JButton("Supprimer");
+								btnRemoveProduct.setBounds(111, 586, 80, 30);
+								contentPane.add(btnRemoveProduct);
+								btnRemoveProduct.setBackground(new Color(204, 204, 204));
+								btnRemoveProduct.addActionListener(new ActionListener() {
+									@Override
+									public void actionPerformed(ActionEvent arg0) {
+
+										removeProduct();
+									}
+								});
+								btnRemoveProduct.setFont(new Font("Tahoma", Font.PLAIN, 10));
+								btnRemoveProduct.setFocusPainted(false);
+								
+										JButton btnEdit = new JButton("Modifier");
+										btnEdit.setBounds(193, 586, 80, 30);
+										contentPane.add(btnEdit);
+										btnEdit.setBackground(new Color(204, 204, 204));
+										btnEdit.addActionListener(new ActionListener() {
+											@Override
+											public void actionPerformed(ActionEvent e) {
+
+												// edit product
+												editProduct();
+
+											}
+										});
+										btnEdit.setFont(new Font("Tahoma", Font.PLAIN, 10));
+										btnEdit.setFocusPainted(false);
+										
+												buttonPlus = new JButton("+");
+												buttonPlus.setBounds(810, 586, 125, 30);
+												contentPane.add(buttonPlus);
+												buttonPlus.setBackground(new Color(204, 204, 204));
+												buttonPlus.addActionListener(new ActionListener() {
+													@Override
+													public void actionPerformed(ActionEvent arg0) {
+														addStock();
+													}
+												});
+												buttonPlus.setFocusPainted(false);
+												
+														buttonMinus = new JButton("-");
+														buttonMinus.setBounds(683, 586, 125, 30);
+														contentPane.add(buttonMinus);
+														buttonMinus.setBackground(new Color(204, 204, 204));
+														buttonMinus.addActionListener(new ActionListener() {
+															@Override
+															public void actionPerformed(ActionEvent e) {
+																removeStock();
+															}
+														});
+														buttonMinus.setFocusPainted(false);
 		setLocationRelativeTo(null);
 
 		getProductsJoin();
@@ -368,107 +384,6 @@ public class MainWindow extends JFrame {
 
 	// menu bar
 	private void createMenuBar() {
-
-		JMenuBar menubar = new JMenuBar();
-
-		JMenu file = new JMenu("File");
-		file.setMnemonic(KeyEvent.VK_F);
-
-		JMenuItem eMenuItem = new JMenuItem("Exit");
-		eMenuItem.setMnemonic(KeyEvent.VK_E);
-		eMenuItem.setToolTipText("Exit application");
-		eMenuItem.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent event) {
-				System.exit(0);
-			}
-		});
-
-		JMenuItem mntmPrint = new JMenuItem("Print");
-		mntmPrint.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				printTable();
-			}
-		});
-		file.add(mntmPrint);
-
-		JMenuItem mntmSettings = new JMenuItem("Settings");
-		mntmSettings.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				openSettings();
-			}
-		});
-
-		file.add(mntmSettings);
-
-		JSeparator separator_1 = new JSeparator();
-		file.add(separator_1);
-
-		file.add(eMenuItem);
-		menubar.add(file);
-
-		setJMenuBar(menubar);
-
-		JMenu mnEdit = new JMenu("Edit");
-		mnEdit.setMnemonic(KeyEvent.VK_E);
-		menubar.add(mnEdit);
-
-		JMenuItem mntmAddProduct = new JMenuItem("Add Product");
-		mntmAddProduct.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				addProduct();
-			}
-		});
-		mnEdit.add(mntmAddProduct);
-
-		JMenuItem mntmRemoveProduct = new JMenuItem("Remove Product");
-		mntmRemoveProduct.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				removeProduct();
-			}
-		});
-		mnEdit.add(mntmRemoveProduct);
-
-		JMenuItem mntmEditProduct = new JMenuItem("Edit Product");
-		mntmEditProduct.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				editProduct();
-			}
-		});
-		mnEdit.add(mntmEditProduct);
-
-		JMenuItem mntmCategories = new JMenuItem("Edit Categories");
-		mntmCategories.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				openCategories();
-			}
-		});
-
-		JSeparator separator = new JSeparator();
-		mnEdit.add(separator);
-		mnEdit.add(mntmCategories);
-
-		JMenuItem mntmEditUnits = new JMenuItem("Edit Units");
-		mntmEditUnits.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-
-				openUnits();
-			}
-		});
-		mnEdit.add(mntmEditUnits);
-
-		JMenu mnHelp = new JMenu("Help");
-		mnHelp.setMnemonic(KeyEvent.VK_H);
-		menubar.add(mnHelp);
-
-		JMenuItem mntmAbout = new JMenuItem("About");
-		mntmAbout.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				openAbout();
-			}
-		});
-		mnHelp.add(mntmAbout);
 	}
 
 	// opens Categories Window
@@ -480,33 +395,6 @@ public class MainWindow extends JFrame {
 		}
 		refreshComboBox();
 		getProductsJoin();
-	}
-
-	// opens Units Window
-	private void openUnits() {
-		unitsWindow = new UnitsWindow();
-		unitsWindow.setVisible(true);
-		while (unitsWindow.isShowing()) {
-			//
-		}
-		refreshComboBox();
-		getProductsJoin();
-	}
-
-	// opens Settings window
-	private void openSettings() {
-		SettingsWindow settingsWindow = new SettingsWindow();
-		settingsWindow.setVisible(true);
-		while (settingsWindow.isVisible()) {
-
-		}
-		refreshComboBox();
-		refreshTable();
-	}
-	
-	private void openAbout(){
-		AboutWindow aboutWindow = new AboutWindow();
-		aboutWindow.setVisible(true);
 	}
 
 	/*
@@ -988,28 +876,6 @@ public class MainWindow extends JFrame {
 		hideStockAlarmColumn();
 		allignColumn();
 		colourIfStockAlarm();
-	}
-
-	private void printTable() {
-
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-		DateFormat timeFormat = new SimpleDateFormat("HH:mm");
-		Date date = new Date();
-
-		String dateF = dateFormat.format(date);
-		String timeF = timeFormat.format(date);
-
-		// String dateNow = LocalDate.now().toString();
-
-		MessageFormat header = new MessageFormat("Inventory Report - " + dateF
-				+ " at " + timeF + ".");
-		MessageFormat footer = new MessageFormat("Page {0, number, integer}");
-
-		try {
-			tableProduct.print(JTable.PrintMode.FIT_WIDTH, header, footer);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
 	}
 
 	// //////////////////////

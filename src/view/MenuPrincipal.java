@@ -185,8 +185,8 @@ public class MenuPrincipal extends JFrame{
 
 			// opens users window
 			private void openUsers() {
-				UsersWindow usersWindow = new UsersWindow();
-				usersWindow.setVisible(true);
+				FenetrePharmaciens fenetrePharmaciens = new FenetrePharmaciens();
+				fenetrePharmaciens.setVisible(true);
 			}
 		});
 		btnPharmaciens.setPreferredSize(new Dimension(260, 60));

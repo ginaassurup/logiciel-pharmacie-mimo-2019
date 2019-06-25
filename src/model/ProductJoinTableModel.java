@@ -54,22 +54,22 @@ public class ProductJoinTableModel extends AbstractTableModel {
 		switch (col) {
 		
 		case PRODUCT_ID_COL:
-			return tempProductJoin.getId();
+			return tempProductJoin.getNum_prod();
 		case PRODUCT_NAME_COL:
-			return tempProductJoin.getName();
+			return tempProductJoin.getLibelle_produit();
 		case CATEGORY_COL:
-			return tempProductJoin.getCategoryName();
+			return tempProductJoin.getNom_cat();
 		case TYPE_COL:
-			return tempProductJoin.getType();
+			return tempProductJoin.getForme();
 		case STOCK_COL:
-			return tempProductJoin.getStock();
+			return tempProductJoin.getQtte_stock();
 		case UNIT_COL:
-			return tempProductJoin.getUnit();
+			return tempProductJoin.getNom_four();
 		case STOCK_ALARM_COL:
-			return tempProductJoin.getstockAlarm();
+			return tempProductJoin.getQtte_stock_alarme();
 
 		default:
-			return tempProductJoin.getName();
+			return tempProductJoin.getLibelle_produit();
 		} 
 		
 	}

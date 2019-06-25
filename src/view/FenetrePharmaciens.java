@@ -35,7 +35,7 @@ import java.awt.Window.Type;
 import java.awt.Dialog.ModalityType;
 import javax.swing.SwingConstants;
 
-public class UsersWindow extends JDialog {
+public class FenetrePharmaciens extends JDialog {
 
 	/**
 	 * 
@@ -59,7 +59,7 @@ public class UsersWindow extends JDialog {
 			@Override
 			public void run() {
 				try {
-					UsersWindow dialog = new UsersWindow();
+					FenetrePharmaciens dialog = new FenetrePharmaciens();
 					dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 					dialog.setVisible(true);
 				} catch (Exception e) {
@@ -72,14 +72,14 @@ public class UsersWindow extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public UsersWindow() {
+	public FenetrePharmaciens() {
 		setFont(new Font("Tahoma", Font.PLAIN, 14));
 		getContentPane().setFocusTraversalKeysEnabled(false);
 
 		// connect to database
 		conn = new SQLiteCon();
 
-		setIconImage(Toolkit.getDefaultToolkit().getImage(UsersWindow.class.getResource("/view/User.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(FenetrePharmaciens.class.getResource("/view/User.png")));
 		setTitle("Logiciel Gestion de pharmacie - Users");
 		setModal(true);
 		setBounds(100, 100, 968, 500);
@@ -114,7 +114,7 @@ public class UsersWindow extends JDialog {
 
 		JLabel label = new JLabel("");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setIcon(new ImageIcon(UsersWindow.class
+		label.setIcon(new ImageIcon(FenetrePharmaciens.class
 				.getResource("/view/User.png")));
 		label.setBounds(56, 118, 95, 93);
 		getContentPane().add(label);

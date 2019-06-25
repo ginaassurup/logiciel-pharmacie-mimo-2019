@@ -305,8 +305,8 @@ public class AddProductWindow extends JDialog {
 			boolean bothExists = false;
 			// if product name and type the same
 			for (int i = 0; i < products.size(); i++) {
-				if (products.get(i).getName().equalsIgnoreCase(prodName)) {
-					System.out.println("Exists " + products.get(i).getName()
+				if (products.get(i).getLibelle_produit().equalsIgnoreCase(prodName)) {
+					System.out.println("Exists " + products.get(i).getLibelle_produit()
 							+ " " + prodName);
 					productExists = true;
 					break;
@@ -317,7 +317,7 @@ public class AddProductWindow extends JDialog {
 			
 			for (int i = 0; i < products.size(); i++) {
 			
-				if (products.get(i).getType().equalsIgnoreCase(typeName)) {
+				if (products.get(i).getForme().equalsIgnoreCase(typeName)) {
 					typeExists = true;
 					break;
 				}

@@ -591,16 +591,20 @@ public class SQLiteCon {
 	private ProductJoin convertRowToProductJoin(ResultSet myRs)
 			throws SQLException {
 
-		int id = myRs.getInt("Id");
-		String name = myRs.getString("Name");
-		String category = myRs.getString("CatName");
-		String type = myRs.getString("Type");
-		int stock = myRs.getInt("Stock");
-		String unit = myRs.getString("UnitName");
-		int stockAlarm = myRs.getInt("StockAlarm");
+		int num_prod= myRs.getInt("num_prod");
+		int code_barre = myRs.getInt("code_barre");
+		String libelle_produit = myRs.getString("libelle_produit");
+		String nom_cat = myRs.getString("nom_cat");
+		String forme = myRs.getString("forme");
+		int qtte_stock= myRs.getInt("qtte_stock");
+		int qtte_stock_alarme= myRs.getInt("qtte_stock_alarme");
+		float prix_vente= myRs.getFloat("prix_vente");
+		float prix_achat= myRs.getFloat("prix_achat");
+		String nom_four = myRs.getString("nom_four");
 
-		ProductJoin tempProductJoin = new ProductJoin(id, name, category, type,
-				stock, unit, stockAlarm);
+		ProductJoin tempProductJoin = new ProductJoin(num_prod,code_barre, libelle_produit, nom_cat, forme, qtte_stock, qtte_stock_alarme,
+				prix_vente, prix_achat, nom_four);
+
 
 		return tempProductJoin;
 	}
@@ -790,12 +794,12 @@ public class SQLiteCon {
 				tempProduct = convertRowToProduct(myRs);
 				list.add(tempProduct);
 
-				if (tempProduct.getName().equalsIgnoreCase(product)) {
+				if (tempProduct.getLibelle_produit().equalsIgnoreCase(product)) {
 					break;
 				}
 			}
 
-			return tempProduct.getId();
+			return tempProduct.getNum_prod();
 
 		} finally {
 			close(myStmt, myRs);
@@ -925,13 +929,17 @@ public class SQLiteCon {
 	// convert row to product
 	private Product convertRowToProduct(ResultSet myRs) throws SQLException {
 
-		int id = myRs.getInt("Id");
-		String name = myRs.getString("Name");
-		int category = myRs.getInt("Category");
-		String type = myRs.getString("Type");
-		int stock = myRs.getInt("Stock");
+		int num_prod= myRs.getInt("num_prod");
+		int code_barre = myRs.getInt("code_barre");
+		String libelle_produit = myRs.getString("libelle_produit");
+		int id_cat = myRs.getInt("id_cat");
+		String forme = myRs.getString("forme");
+		int qtte_stock= myRs.getInt("qtte_stock");
+		int qtte_stock_alarme= myRs.getInt("qtte_stock_alarme");
+		float prix_vente= myRs.getFloat("prix_vente");
+		float prix_achat= myRs.getFloat("prix_achat");
 
-		Product tempProduct = new Product(id, name, category, type, stock);
+		Product tempProduct = new Product(num_prod, code_barre, libelle_produit, id_cat, forme, qtte_stock, prix_vente, prix_achat);
 
 		return tempProduct;
 	}
