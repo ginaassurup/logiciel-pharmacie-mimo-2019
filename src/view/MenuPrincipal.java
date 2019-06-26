@@ -100,7 +100,7 @@ public class MenuPrincipal extends JFrame{
 				openMainWindow();
 			}
 
-			// opens users window
+			// opens listePhar window
 			private void openMainWindow() {
 				MainWindow mainWindow = new MainWindow();
 				mainWindow.setVisible(true);
@@ -183,7 +183,7 @@ public class MenuPrincipal extends JFrame{
 				openUsers();
 			}
 
-			// opens users window
+			// opens listePhar window
 			private void openUsers() {
 				FenetrePharmaciens fenetrePharmaciens = new FenetrePharmaciens();
 				fenetrePharmaciens.setVisible(true);

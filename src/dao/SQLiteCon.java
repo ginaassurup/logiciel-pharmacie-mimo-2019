@@ -108,7 +108,7 @@ public class SQLiteCon {
 				// frmInLogin.dispose();
 				// open main window
 
-				// assign current user and password (for managing users)
+				// assign current user and password (for managing listePhar)
 				currentUser = user.getText();
 				currentPassword = pswd.getText();
 
@@ -140,7 +140,7 @@ public class SQLiteCon {
 		}
 	}
 
-	// gets all users to the list
+	// gets all listePhar to the list
 	public List<PharmacienDetail> getAllUsers() throws Exception {
 
 		List<PharmacienDetail> list = new ArrayList<>();
@@ -165,7 +165,7 @@ public class SQLiteCon {
 		}
 	}
 
-	// search users
+	// search listePhar
 	public List<PharmacienDetail> searchUsers(String userName) throws Exception {
 		List<PharmacienDetail> list = new ArrayList<>();
 
@@ -231,7 +231,7 @@ public class SQLiteCon {
 	}
 
 	// remove user query
-	public void removeUserQuery(String num_phar, String identifiant)
+	public void supprimerUnPharQuery(String num_phar, String identifiant)
 			throws Exception {
 
 		PreparedStatement myStmt = null;
