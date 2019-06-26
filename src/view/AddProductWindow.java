@@ -1,5 +1,5 @@
 /*
- * Add Product Window class
+ * Add ProduitDetail Window class
  */
 
 package view;
@@ -32,7 +32,7 @@ import javax.swing.ImageIcon;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
-import model.Category;
+import model.Categorie;
 import model.ProductJoin;
 import model.Unit;
 
@@ -51,15 +51,19 @@ public class AddProductWindow extends JDialog {
 
 	// fields that need access
 	private final JPanel contentPanel = new JPanel();
+//	public JTextField textFieldCodeBarre;
 	public JTextField textFieldName;
 	public JTextField textFieldType;
 	public JTextField textFieldStock;
+	public JTextField textFieldPrixVente;
+	public JTextField textFieldPrixAchat;
 	boolean click;
 	JButton btnAddProduct;
 
 	JComboBox<String> comboBoxCategory;
 	JComboBox<String> comboBoxUnits;
 	JTextField textFieldStockAlarm;
+	private JTextField textFieldCodeBarre;
 
 	/**
 	 * Launch the application.
@@ -85,11 +89,8 @@ public class AddProductWindow extends JDialog {
 
 		setModal(true);
 		setResizable(false);
-		setTitle("In - Add Product");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(
-				AddProductWindow.class
-						.getResource("/view/logo_new.png")));
-		setBounds(100, 100, 396, 356);
+		setTitle("Ajouter un produit");
+		setBounds(100, 100, 968, 700);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -97,15 +98,15 @@ public class AddProductWindow extends JDialog {
 		contentPanel.setLayout(null);
 
 		// contentPanel.setBackground(new Color(163, 193, 228));
-		contentPanel.setBackground(new Color(56, 56, 56));
+		contentPanel.setBackground(Color.WHITE);
 
 		textFieldName = new JTextField();
-		textFieldName.setBounds(188, 40, 162, 20);
+		textFieldName.setBounds(269, 175, 350, 30);
 		contentPanel.add(textFieldName);
 		textFieldName.setColumns(10);
 
 		comboBoxCategory = new JComboBox(getCategoriesToCombo());
-		comboBoxCategory.setBounds(188, 80, 81, 20);
+		comboBoxCategory.setBounds(269, 218, 239, 30);
 		contentPanel.add(comboBoxCategory);
 		
 		// combobox highlighter color
@@ -116,39 +117,43 @@ public class AddProductWindow extends JDialog {
 
 		textFieldType = new JTextField();
 		textFieldType.setColumns(10);
-		textFieldType.setBounds(188, 120, 162, 20);
+		textFieldType.setBounds(269, 261, 350, 30);
 		contentPanel.add(textFieldType);
 
 		textFieldStock = new JTextField();
 		textFieldStock.setColumns(10);
-		textFieldStock.setBounds(188, 160, 162, 20);
+		textFieldStock.setBounds(269, 304, 350, 30);
 		contentPanel.add(textFieldStock);
 
-		JLabel lblName = new JLabel("Name:");
-		lblName.setForeground(Color.LIGHT_GRAY);
+		JLabel lblName = new JLabel("Libell\u00E9");
+		lblName.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblName.setForeground(Color.BLACK);
 		lblName.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblName.setBounds(116, 43, 62, 14);
+		lblName.setBounds(131, 175, 113, 30);
 		contentPanel.add(lblName);
 
-		JLabel lblCategory = new JLabel("Category:");
-		lblCategory.setForeground(Color.LIGHT_GRAY);
+		JLabel lblCategory = new JLabel("Categorie");
+		lblCategory.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblCategory.setForeground(Color.BLACK);
 		lblCategory.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblCategory.setBounds(116, 83, 62, 14);
+		lblCategory.setBounds(131, 218, 113, 30);
 		contentPanel.add(lblCategory);
 
-		JLabel lblType = new JLabel("Type:");
-		lblType.setForeground(Color.LIGHT_GRAY);
+		JLabel lblType = new JLabel("Forme");
+		lblType.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblType.setForeground(Color.BLACK);
 		lblType.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblType.setBounds(116, 123, 62, 14);
+		lblType.setBounds(131, 261, 113, 30);
 		contentPanel.add(lblType);
 
-		JLabel lblStock = new JLabel("Stock:");
-		lblStock.setForeground(Color.LIGHT_GRAY);
+		JLabel lblStock = new JLabel("Quantit\u00E9 stock");
+		lblStock.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblStock.setForeground(Color.BLACK);
 		lblStock.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblStock.setBounds(116, 163, 62, 14);
+		lblStock.setBounds(131, 304, 113, 30);
 		contentPanel.add(lblStock);
 
-		btnAddProduct = new JButton("Add Product");
+		btnAddProduct = new JButton("Valider");
 		btnAddProduct.setBackground(new Color(204, 204, 204));
 		btnAddProduct.addActionListener(new ActionListener() {
 			@Override
@@ -156,16 +161,10 @@ public class AddProductWindow extends JDialog {
 				addProduct();
 			}
 		});
-		btnAddProduct.setBounds(188, 274, 162, 23);
+		btnAddProduct.setBounds(379, 549, 193, 40);
 		contentPanel.add(btnAddProduct);
 
-		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon(AddProductWindow.class
-				.getResource("/view/logo_new_64_no_bckg.png")));
-		label.setBounds(10, 10, 72, 72);
-		contentPanel.add(label);
-
-		JButton btnNewCat = new JButton("New");
+		JButton btnNewCat = new JButton("Nouveau");
 		btnNewCat.setFocusPainted(false);
 		btnNewCat.setBackground(new Color(204, 204, 204));
 		btnNewCat.setFont(new Font("Tahoma", Font.PLAIN, 10));
@@ -177,11 +176,11 @@ public class AddProductWindow extends JDialog {
 
 			}
 		});
-		btnNewCat.setBounds(279, 80, 71, 20);
+		btnNewCat.setBounds(522, 218, 97, 30);
 		contentPanel.add(btnNewCat);
 
 		comboBoxUnits = new JComboBox(getUnitsToCombo());
-		comboBoxUnits.setBounds(188, 198, 81, 20);
+		comboBoxUnits.setBounds(269, 476, 239, 30);
 				
 		// combobox highlighter color
 		Object childU = comboBoxUnits.getAccessibleContext().getAccessibleChild(0);
@@ -191,7 +190,7 @@ public class AddProductWindow extends JDialog {
 		
 		contentPanel.add(comboBoxUnits);
 
-		JButton btnNewUnit = new JButton("New");
+		JButton btnNewUnit = new JButton("Nouveau");
 		btnNewUnit.setBackground(new Color(204, 204, 204));
 		btnNewUnit.setFocusPainted(false);
 		btnNewUnit.addActionListener(new ActionListener() {
@@ -200,25 +199,74 @@ public class AddProductWindow extends JDialog {
 			}
 		});
 		btnNewUnit.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnNewUnit.setBounds(279, 198, 71, 20);
+		btnNewUnit.setBounds(522, 476, 97, 30);
 		contentPanel.add(btnNewUnit);
 
-		JLabel lblUnits = new JLabel("Unit:");
-		lblUnits.setForeground(Color.LIGHT_GRAY);
+		JLabel lblUnits = new JLabel("Fournisseur");
+		lblUnits.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblUnits.setForeground(Color.BLACK);
 		lblUnits.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblUnits.setBounds(116, 201, 62, 14);
+		lblUnits.setBounds(131, 476, 113, 30);
 		contentPanel.add(lblUnits);
 
 		textFieldStockAlarm = new JTextField();
 		textFieldStockAlarm.setColumns(10);
-		textFieldStockAlarm.setBounds(188, 237, 162, 20);
+		textFieldStockAlarm.setBounds(269, 347, 350, 30);
 		contentPanel.add(textFieldStockAlarm);
 
-		JLabel lblStockAlarm = new JLabel("Stock Alarm:");
-		lblStockAlarm.setForeground(Color.LIGHT_GRAY);
+		JLabel lblStockAlarm = new JLabel("Stock alarme");
+		lblStockAlarm.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblStockAlarm.setForeground(Color.BLACK);
 		lblStockAlarm.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblStockAlarm.setBounds(89, 240, 89, 14);
+		lblStockAlarm.setBounds(104, 347, 140, 30);
 		contentPanel.add(lblStockAlarm);
+		
+		JLabel lblCodeBarre = new JLabel("Code barre");
+		lblCodeBarre.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblCodeBarre.setForeground(Color.BLACK);
+		lblCodeBarre.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblCodeBarre.setBounds(131, 127, 113, 30);
+		contentPanel.add(lblCodeBarre);
+		
+		textFieldCodeBarre = new JTextField();
+		textFieldCodeBarre.setColumns(10);
+		textFieldCodeBarre.setBounds(269, 127, 350, 30);
+		contentPanel.add(textFieldCodeBarre);
+		
+		JLabel lblAjouterUnProduit = new JLabel("Ajouter un produit");
+		lblAjouterUnProduit.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAjouterUnProduit.setForeground(new Color(165, 42, 42));
+		lblAjouterUnProduit.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblAjouterUnProduit.setBounds(248, 83, 498, 25);
+		contentPanel.add(lblAjouterUnProduit);
+		
+		JButton button = new JButton("Retour");
+		button.setBounds(12, 13, 97, 25);
+		contentPanel.add(button);
+		
+		JLabel lblPrixDeVente = new JLabel("Prix de vente");
+		lblPrixDeVente.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblPrixDeVente.setForeground(Color.BLACK);
+		lblPrixDeVente.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblPrixDeVente.setBounds(131, 390, 113, 30);
+		contentPanel.add(lblPrixDeVente);
+		
+		textFieldPrixVente = new JTextField();
+		textFieldPrixVente.setColumns(10);
+		textFieldPrixVente.setBounds(269, 390, 350, 30);
+		contentPanel.add(textFieldPrixVente);
+		
+		JLabel lblPrixDachat = new JLabel("Prix d'achat");
+		lblPrixDachat.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblPrixDachat.setForeground(Color.BLACK);
+		lblPrixDachat.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblPrixDachat.setBounds(131, 433, 113, 30);
+		contentPanel.add(lblPrixDachat);
+		
+		textFieldPrixAchat = new JTextField();
+		textFieldPrixAchat.setColumns(10);
+		textFieldPrixAchat.setBounds(269, 433, 350, 30);
+		contentPanel.add(textFieldPrixAchat);
 		getContentPane().setBackground(new Color(163, 193, 228));
 		setLocationRelativeTo(null);
 
@@ -228,13 +276,13 @@ public class AddProductWindow extends JDialog {
 	private String[] getCategoriesToCombo() {
 
 		try {
-			List<Category> categories = null;
+			List<Categorie> categories = null;
 			ArrayList<String> comboCategories = new ArrayList<String>();
 			comboCategories.add("");
 			categories = conn.getAllCategories();
 
 			for (int i = 0; i < categories.size(); i++) {
-				comboCategories.add(categories.get(i).getName());
+				comboCategories.add(categories.get(i).getNom_cat());
 				System.out.println(comboCategories.get(i));
 			}
 
@@ -248,7 +296,7 @@ public class AddProductWindow extends JDialog {
 
 	}
 
-	// get all units to comboBox
+	// get all listeFour to comboBox
 	private String[] getUnitsToCombo() {
 
 		try {
@@ -258,7 +306,7 @@ public class AddProductWindow extends JDialog {
 			units = conn.getAllUnits();
 
 			for (int i = 0; i < units.size(); i++) {
-				comboUnits.add(units.get(i).getName());
+				comboUnits.add(units.get(i).getRaison_sociale());
 				System.out.println(comboUnits.get(i));
 			}
 
@@ -276,22 +324,24 @@ public class AddProductWindow extends JDialog {
 	private void addProduct() {
 		click = false;
 		if (fieldsCheck()) {
-			String prodName = textFieldName.getText().toString().trim();
-			String catName = comboBoxCategory.getSelectedItem().toString()
-					.trim();
-			String typeName = textFieldType.getText().toString().trim();
-			String quantityName = textFieldStock.getText().toString().trim();
+			String code_barre = textFieldCodeBarre.getText().toString().trim();
+			String libelle_produit = textFieldName.getText().toString().trim();
+			String nom_cat = comboBoxCategory.getSelectedItem().toString().trim();
+			String forme = textFieldType.getText().toString().trim();
+			String qtte_stock = textFieldStock.getText().toString().trim();
+			String qtte_stock_alarme = textFieldStockAlarm.getText().toString().trim();
+			String prix_vente = textFieldPrixVente.getText().toString().trim();
+			String prix_achat = textFieldPrixAchat.getText().toString().trim();
+			String nom_four = comboBoxUnits.getSelectedItem().toString().trim();
 
-			String unitName = comboBoxUnits.getSelectedItem().toString().trim();
 
-			String stockAlarm = textFieldStockAlarm.getText().toString().trim();
 
-			if (stockAlarm.equalsIgnoreCase("")) {
-				stockAlarm = "0";
+			if (qtte_stock_alarme.equalsIgnoreCase("")) {
+				qtte_stock_alarme = "0";
 			}
 
-			System.out.println(prodName + " " + catName + " " + typeName + " "
-					+ quantityName);
+			System.out.println(libelle_produit + " " + nom_cat + " " + forme + " "
+					+ qtte_stock);
 
 			try {
 				products = conn.getProductsJoin();
@@ -305,9 +355,9 @@ public class AddProductWindow extends JDialog {
 			boolean bothExists = false;
 			// if product name and type the same
 			for (int i = 0; i < products.size(); i++) {
-				if (products.get(i).getLibelle_produit().equalsIgnoreCase(prodName)) {
+				if (products.get(i).getLibelle_produit().equalsIgnoreCase(libelle_produit)) {
 					System.out.println("Exists " + products.get(i).getLibelle_produit()
-							+ " " + prodName);
+							+ " " + libelle_produit);
 					productExists = true;
 					break;
 
@@ -317,7 +367,7 @@ public class AddProductWindow extends JDialog {
 			
 			for (int i = 0; i < products.size(); i++) {
 			
-				if (products.get(i).getForme().equalsIgnoreCase(typeName)) {
+				if (products.get(i).getForme().equalsIgnoreCase(forme)) {
 					typeExists = true;
 					break;
 				}
@@ -330,8 +380,11 @@ public class AddProductWindow extends JDialog {
 			
 			if (!bothExists) {
 				try {
-					conn.insertProductQuery(prodName, catName, typeName,
-							quantityName, unitName, stockAlarm);
+					conn.insertProductQuery(code_barre, libelle_produit, nom_cat, forme,
+							qtte_stock, qtte_stock_alarme, prix_vente, prix_achat, nom_four);
+					
+//					public void insertProductQuery(String code_barre, String libelle_produit, String nom_cat,
+//							String forme, String qtte_stock, String qtte_stock_alarme, String prix_vente, String prix_achat, String nom_four)
 					// refresh table
 					click = true;
 					setVisible(false);
@@ -343,7 +396,7 @@ public class AddProductWindow extends JDialog {
 				clearFields();
 			} else {
 				JOptionPane.showMessageDialog(null,
-						"Product with the same name and type exists.");
+						"ProduitDetail with the same name and type exists.");
 			}
 		} else {
 			JOptionPane
@@ -401,10 +454,15 @@ public class AddProductWindow extends JDialog {
 
 	// clears fields
 	private void clearFields() {
+		textFieldCodeBarre.setText("");
 		textFieldName.setText("");
 		comboBoxCategory.setSelectedIndex(0);
 		textFieldType.setText("");
 		textFieldStock.setText("");
+		textFieldStockAlarm.setText("");
+		textFieldPrixVente.setText("");
+		textFieldPrixAchat.setText("");
+		comboBoxUnits.setSelectedIndex(0);
 
 	}
 
@@ -449,5 +507,4 @@ public class AddProductWindow extends JDialog {
 		});
 
 	}
-
 }

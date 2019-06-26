@@ -1,5 +1,5 @@
 /*
- * Product model for join query
+ * ProduitDetail model for join query
  */
 
 package model;
@@ -14,10 +14,10 @@ public class ProductJoin {
 	private int qtte_stock_alarme;
 	private float prix_vente;
 	private float prix_achat;
-	private String nom_four;
+	private String raison_sociale;
 	
 	public ProductJoin(int num_prod, int code_barre, String libelle_produit, String nom_cat, String forme, int qtte_stock, int qtte_stock_alarme,
-			float prix_vente, float prix_achat, String nom_four) {
+			float prix_vente, float prix_achat, String raison_sociale) {
 		super();
 		this.num_prod = num_prod;
 		this.code_barre = code_barre;
@@ -28,7 +28,7 @@ public class ProductJoin {
 		this.qtte_stock_alarme = qtte_stock_alarme;
 		this.prix_vente = prix_vente;
 		this.prix_achat = prix_achat;
-		this.nom_four = nom_four;
+		this.raison_sociale = raison_sociale;
 	}
 	
 
@@ -36,8 +36,8 @@ public class ProductJoin {
 		return num_prod;
 	}
 
-	public void setNum_prod(int id) {
-		this.num_prod = id;
+	public void setNum_prod(int num_prod) {
+		this.num_prod = num_prod;
 	}
 	
 	public int getCode_barre() {
@@ -86,19 +86,37 @@ public class ProductJoin {
 		this.qtte_stock_alarme = qtte_stock_alarme;
 	}
 	
-	public String getNom_four() {
-		return nom_four;
+	public float getPrix_achat() {
+		return prix_achat;
+	}
+	public void setPrix_achat(int prix_achat) {
+		this.prix_achat = prix_achat;
+	}
+	
+	public float getPrix_vente() {
+		return prix_vente;
+	}
+	public void setPrix_vente(int prix_vente) {
+		this.prix_vente = prix_vente;
+	}
+	
+	public String getRaison_sociale() {
+		return raison_sociale;
 	}
 
-	public void setNom_four(String nom_four) {
-		this.nom_four = nom_four;
+	public void setRaison_sociale(String raison_sociale) {
+		this.raison_sociale = raison_sociale;
 	}
 	
 	
 	@Override
 	public String toString() {
 		return String
-				.format("Product [libelle_produit=%s, nom_cat=%s, forme=%s, qtte_stock=%s]",
-						libelle_produit, nom_cat, forme, qtte_stock);
+				.format("ProduitDetail [num_prod=%s, code_barre=%s, libelle_produit=%s, nom_cat=%s, forme=%s, qtte_stock=%s, qtte_stock_alarme=%s,"
+						+ "prix_vente=%s, prix_achat=%s, raison_sociale=%s]",
+						num_prod, code_barre, libelle_produit, nom_cat, forme, qtte_stock, qtte_stock_alarme, prix_vente, prix_achat, raison_sociale);
+		
+//				.format("ProduitDetail [libelle_produit=%s, nom_cat=%s, forme=%s, qtte_stock=%s]",
+//						libelle_produit, nom_cat, forme, qtte_stock);
 	} 
 }

@@ -1,5 +1,5 @@
 /*
- * Edit Product Window class
+ * Edit ProduitDetail Window class
  */
 
 package view;
@@ -32,7 +32,7 @@ import javax.swing.ImageIcon;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
-import model.Category;
+import model.Categorie;
 import model.ProductJoin;
 import model.Unit;
 
@@ -86,7 +86,7 @@ public class EditProductWindow extends JDialog {
 
 		setModal(true);
 		setResizable(false);
-		setTitle("In - Edit Product");
+		setTitle("In - Edit ProduitDetail");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				EditProductWindow.class
 						.getResource("/view/logo_new.png")));
@@ -129,7 +129,7 @@ public class EditProductWindow extends JDialog {
 		lblName.setBounds(116, 43, 62, 14);
 		contentPanel.add(lblName);
 
-		JLabel lblCategory = new JLabel("Category:");
+		JLabel lblCategory = new JLabel("Categorie:");
 		lblCategory.setForeground(Color.LIGHT_GRAY);
 		lblCategory.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblCategory.setBounds(116, 83, 62, 14);
@@ -147,7 +147,7 @@ public class EditProductWindow extends JDialog {
 		lblStock.setBounds(116, 163, 62, 14);
 		contentPanel.add(lblStock);
 
-		JButton btnEditProduct = new JButton("Update Product");
+		JButton btnEditProduct = new JButton("Update ProduitDetail");
 		btnEditProduct.setBackground(new Color(204, 204, 204));
 		btnEditProduct.addActionListener(new ActionListener() {
 			@Override
@@ -230,13 +230,13 @@ public class EditProductWindow extends JDialog {
 	private String[] getCategoriesToCombo() {
 
 		try {
-			List<Category> categories = null;
+			List<Categorie> categories = null;
 			ArrayList<String> comboCategories = new ArrayList<String>();
 			comboCategories.add("");
 			categories = conn.getAllCategories();
 
 			for (int i = 0; i < categories.size(); i++) {
-				comboCategories.add(categories.get(i).getName());
+				comboCategories.add(categories.get(i).getNom_cat());
 				System.out.println(comboCategories.get(i));
 			}
 
@@ -250,7 +250,7 @@ public class EditProductWindow extends JDialog {
 
 	}
 
-	// gets all units to combo
+	// gets all listeFour to combo
 	private String[] getUnitsToCombo() {
 
 		try {
@@ -260,7 +260,7 @@ public class EditProductWindow extends JDialog {
 			units = conn.getAllUnits();
 
 			for (int i = 0; i < units.size(); i++) {
-				comboUnits.add(units.get(i).getName());
+				comboUnits.add(units.get(i).getRaison_sociale());
 				System.out.println(comboUnits.get(i));
 			}
 
@@ -371,7 +371,7 @@ public class EditProductWindow extends JDialog {
 					dispose();
 				} else {
 					JOptionPane.showMessageDialog(null,
-							"Product with the same name and type exists.");
+							"ProduitDetail with the same name and type exists.");
 				}
 			} else {
 				// do nothing

@@ -20,6 +20,7 @@ import javax.swing.JButton;
 import javax.swing.ListSelectionModel;
 import javax.swing.WindowConstants;
 
+import model.ListePharmaciens;
 import model.Unit;
 import model.UnitTableModel;
 
@@ -31,6 +32,7 @@ import dao.SQLiteCon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import javax.swing.SwingConstants;
 
 public class UnitsWindow extends JDialog {
 
@@ -42,10 +44,10 @@ public class UnitsWindow extends JDialog {
 	// database connection declaration
 	SQLiteCon conn;
 
-	List<Unit> units;
+	List<Unit> listeFour;
 
 	// table
-	private JTable tableUnits;
+	private JTable tableListeFour;
 
 	String newUnit = "";
 
@@ -66,6 +68,7 @@ public class UnitsWindow extends JDialog {
 			}
 		});
 	}
+	
 
 	/**
 	 * Create the dialog.
@@ -80,14 +83,14 @@ public class UnitsWindow extends JDialog {
 		setTitle("In - Units");
 		setModal(true);
 		setResizable(false);
-		setBounds(100, 100, 254, 242);
+		setBounds(100, 100, 968, 700);
 		getContentPane().setLayout(null);
-		getContentPane().setBackground(new Color(56, 56, 56));
+		getContentPane().setBackground(Color.WHITE);
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(115, 11, 120, 192);
+		scrollPane.setBounds(164, 162, 644, 381);
 		getContentPane().add(scrollPane);
 
-		tableUnits = new JTable() {
+		tableListeFour = new JTable() {
 			/**
 			 * 
 			 */
@@ -99,38 +102,33 @@ public class UnitsWindow extends JDialog {
 				super.changeSelection(rowIndex, columnIndex, !extend, extend);
 			}
 		};
-		tableUnits.setFocusable(false);
+		tableListeFour.setFocusable(false);
 
-		scrollPane.setViewportView(tableUnits);
+		scrollPane.setViewportView(tableListeFour);
 
-		tableUnits.setFillsViewportHeight(true);
-		tableUnits.setBackground(SystemColor.window);
-		tableUnits.setSelectionBackground(new Color(163, 193, 228));
-		tableUnits.setRequestFocusEnabled(false);
-		tableUnits.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tableListeFour.setFillsViewportHeight(true);
+		tableListeFour.setBackground(SystemColor.window);
+		tableListeFour.setSelectionBackground(new Color(163, 193, 228));
+		tableListeFour.setRequestFocusEnabled(false);
+		tableListeFour.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon(UnitsWindow.class.getResource("/view/logo_new_64_no_bckg.png")));
-		label.setBounds(22, 11, 72, 72);
-		getContentPane().add(label);
-
-		JButton btnAdd = new JButton("Add");
+		JButton btnAdd = new JButton("Ajouter");
 		btnAdd.setFocusPainted(false);
 		btnAdd.setBackground(new Color(204, 204, 204));
-		btnAdd.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnAdd.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnAdd.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 
 				// Add category
-				addUnit();
+				ajouterUnFour();
 			}
 		});
-		btnAdd.setBounds(14, 119, 88, 23);
+		btnAdd.setBounds(32, 162, 88, 23);
 		getContentPane().add(btnAdd);
 
 		JButton btnRemove = new JButton("Remove");
-		btnRemove.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnRemove.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnRemove.setBackground(new Color(204, 204, 204));
 		btnRemove.setFocusPainted(false);
 		btnRemove.addActionListener(new ActionListener() {
@@ -140,7 +138,7 @@ public class UnitsWindow extends JDialog {
 				removeUnit();
 			}
 		});
-		btnRemove.setBounds(14, 149, 88, 23);
+		btnRemove.setBounds(32, 192, 88, 23);
 		getContentPane().add(btnRemove);
 
 		JButton btnEdit = new JButton("Edit");
@@ -151,10 +149,21 @@ public class UnitsWindow extends JDialog {
 				updateUnit();
 			}
 		});
-		btnEdit.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnEdit.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnEdit.setFocusPainted(false);
-		btnEdit.setBounds(14, 179, 88, 23);
+		btnEdit.setBounds(32, 222, 88, 23);
 		getContentPane().add(btnEdit);
+		
+		JButton button = new JButton("Retour");
+		button.setBounds(14, 13, 97, 25);
+		getContentPane().add(button);
+		
+		JLabel lblListeDesFournisseurs = new JLabel("Liste des fournisseurs");
+		lblListeDesFournisseurs.setHorizontalAlignment(SwingConstants.CENTER);
+		lblListeDesFournisseurs.setForeground(new Color(165, 42, 42));
+		lblListeDesFournisseurs.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblListeDesFournisseurs.setBounds(208, 75, 498, 25);
+		getContentPane().add(lblListeDesFournisseurs);
 
 		setLocationRelativeTo(null);
 
@@ -167,19 +176,19 @@ public class UnitsWindow extends JDialog {
 
 		try {
 
-			units = conn.getAllUnits();
+			listeFour = conn.getAllUnits();
 
-			UnitTableModel model = new UnitTableModel(units);
+			UnitTableModel model = new UnitTableModel(listeFour);
 
-			tableUnits.setModel(model);
+			tableListeFour.setModel(model);
 
 			// remove/hide Id table
-			TableColumn myTableColumn0 = tableUnits.getColumnModel()
-					.getColumn(0);
-			// tableCategories.getColumnModel().removeColumn(myTableColumn0);
-			myTableColumn0.setMaxWidth(0);
-			myTableColumn0.setMinWidth(0);
-			myTableColumn0.setPreferredWidth(0);
+//			TableColumn myTableColumn0 = tableListeFour.getColumnModel()
+//					.getColumn(0);
+//			// tableCategories.getColumnModel().removeColumn(myTableColumn0);
+//			myTableColumn0.setMaxWidth(0);
+//			myTableColumn0.setMinWidth(0);
+//			myTableColumn0.setPreferredWidth(0);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -187,37 +196,60 @@ public class UnitsWindow extends JDialog {
 	}
 
 	// add category
-	private void addUnit() {
+	private void ajouterUnFour() {
+		// Ajouter un pharmacien
+		FenetreAjouterUnFour fenetreAjouterUnFour = new FenetreAjouterUnFour();
+		dispose();
+		fenetreAjouterUnFour.setVisible(true);
+		while (fenetreAjouterUnFour.isVisible()) {
 
-		newUnit = JOptionPane.showInputDialog("New Unit name").trim();
+		}
+		getListeFourToTable();
+	}
+//		newUnit = JOptionPane.showInputDialog("New Unit name").trim();
+//
+//		// if not empty
+//		if (!newUnit.equalsIgnoreCase("")) {
+//
+//			// check if exists
+//			boolean unitExists = false;
+//			for (int i = 0; i < listeFour.size(); i++) {
+//				if (listeFour.get(i).getRaison_sociale().equalsIgnoreCase(newUnit)) {
+//
+//					unitExists = true;
+//					break;
+//				}
+//			}
+//
+//			// if doesn't exist
+//			if (!unitExists) {
+//				try {
+//					conn.insertUnitQuery(newUnit);
+//				} catch (Exception e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//				getUnitsToTable();
+//			} else {
+//				JOptionPane.showMessageDialog(null, "This unit already exists.");
+//			}
+//		} else {
+//			JOptionPane.showMessageDialog(null, "Name of unit can't be empty.");
+//		}
 
-		// if not empty
-		if (!newUnit.equalsIgnoreCase("")) {
+	// get listeFour au tableau
+	private void getListeFourToTable() {
+		try {
 
-			// check if exists
-			boolean unitExists = false;
-			for (int i = 0; i < units.size(); i++) {
-				if (units.get(i).getName().equalsIgnoreCase(newUnit)) {
+			listeFour = conn.getAllUnits();
 
-					unitExists = true;
-					break;
-				}
-			}
+			UnitTableModel model = new UnitTableModel(listeFour);
+			tableListeFour.setModel(model);
 
-			// if doesn't exist
-			if (!unitExists) {
-				try {
-					conn.insertUnitQuery(newUnit);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				getUnitsToTable();
-			} else {
-				JOptionPane.showMessageDialog(null, "This unit already exists.");
-			}
-		} else {
-			JOptionPane.showMessageDialog(null, "Name of unit can't be empty.");
+//			hideColumns();
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -227,14 +259,14 @@ public class UnitsWindow extends JDialog {
 		int nameCol = 1;
 
 		// if row selected
-		if (!(tableUnits.getSelectedRow() == -1)) {
+		if (!(tableListeFour.getSelectedRow() == -1)) {
 
-			int selectedRow = tableUnits.getSelectedRow();
+			int selectedRow = tableListeFour.getSelectedRow();
 
-			String catId = tableUnits.getValueAt(selectedRow, idCol)
+			String catId = tableListeFour.getValueAt(selectedRow, idCol)
 					.toString();
 
-			String catName = tableUnits.getValueAt(selectedRow, nameCol)
+			String catName = tableListeFour.getValueAt(selectedRow, nameCol)
 					.toString();
 
 			int reply = JOptionPane.showConfirmDialog(null,
@@ -268,15 +300,15 @@ public class UnitsWindow extends JDialog {
 	private void updateUnit() {
 
 		// if row selected
-		if (!(tableUnits.getSelectedRow() == -1)) {
+		if (!(tableListeFour.getSelectedRow() == -1)) {
 
 			int idCol = 0;
 			int nameCol = 1;
-			int selectedRow = tableUnits.getSelectedRow();
+			int selectedRow = tableListeFour.getSelectedRow();
 
-			String id = tableUnits.getValueAt(selectedRow, idCol)
+			String id = tableListeFour.getValueAt(selectedRow, idCol)
 					.toString();
-			String currentUnit = tableUnits.getValueAt(selectedRow,
+			String currentUnit = tableListeFour.getValueAt(selectedRow,
 					nameCol).toString();
 
 			newUnit = JOptionPane.showInputDialog(
@@ -286,8 +318,8 @@ public class UnitsWindow extends JDialog {
 
 				// check if exists
 				boolean unitExists = false;
-				for (int i = 0; i < units.size(); i++) {
-					if (units.get(i).getName()
+				for (int i = 0; i < listeFour.size(); i++) {
+					if (listeFour.get(i).getRaison_sociale()
 							.equalsIgnoreCase(newUnit)) {
 						unitExists = true;
 						break;

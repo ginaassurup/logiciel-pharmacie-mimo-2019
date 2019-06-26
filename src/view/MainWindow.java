@@ -43,9 +43,9 @@ import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 import java.awt.Toolkit;
 
-import model.Category;
+import model.Categorie;
 import model.MyRenderer;
-import model.Product;
+import model.ProduitDetail;
 import model.ProductJoin;
 import model.ProductJoinTableModel;
 import model.ProductTableModel;
@@ -132,7 +132,7 @@ public class MainWindow extends JFrame {
 		createMenuBar();
 		setResizable(false);
 
-		setTitle("Produits | Utilisateur : \" + conn.currentUser");
+		setTitle("Produits | Utilisateur : " + conn.currentUser);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 968, 700);
 		contentPane = new JPanel();
@@ -211,7 +211,7 @@ public class MainWindow extends JFrame {
 				}
 			}
 		});
-		textFieldSearch.setToolTipText("Product Name");
+		textFieldSearch.setToolTipText("ProduitDetail Name");
 		textFieldSearch.setBounds(537, 95, 118, 30);
 		contentPane.add(textFieldSearch);
 		textFieldSearch.setColumns(10);
@@ -376,10 +376,27 @@ public class MainWindow extends JFrame {
 															}
 														});
 														buttonMinus.setFocusPainted(false);
+														
+														JButton btnRetour = new JButton("Retour");
+														btnRetour.addActionListener(new ActionListener() {
+															public void actionPerformed(ActionEvent arg0) {
+																dispose();
+																OuvrirMenuPrincipal();
+															}
+														});
+														btnRetour.setBounds(10, 42, 97, 25);
+														contentPane.add(btnRetour);
 		setLocationRelativeTo(null);
 
 		getProductsJoin();
 		// refreshTable();
+	}
+
+	// Ouvrir le menu principal
+	private void OuvrirMenuPrincipal() {
+		
+		MenuPrincipal menuPrincipal = new MenuPrincipal();
+		menuPrincipal.getFrmMenuPrincipal().setVisible(true);
 	}
 
 	// menu bar
@@ -412,8 +429,8 @@ public class MainWindow extends JFrame {
 			tableProduct.setModel(model);
 
 			
-			hideProductIdColumn();
-			hideStockAlarmColumn();
+//			hideProductIdColumn();
+//			hideStockAlarmColumn();
 			allignColumn();
 			colourIfStockAlarm();
 			
@@ -466,13 +483,13 @@ public class MainWindow extends JFrame {
 	private String[] getCategoriesToCombo() {
 
 		try {
-			List<Category> categories = null;
+			List<Categorie> categories = null;
 			ArrayList<String> comboCategories = new ArrayList<String>();
-			comboCategories.add("All");
+			comboCategories.add("Toutes");
 			categories = conn.getAllCategories();
 
 			for (int i = 0; i < categories.size(); i++) {
-				comboCategories.add(categories.get(i).getName());
+				comboCategories.add(categories.get(i).getNom_cat());
 				System.out.println(comboCategories.get(i));
 			}
 
@@ -502,7 +519,7 @@ public class MainWindow extends JFrame {
 	}
 
 	/*
-	 * Product search and category filter
+	 * ProduitDetail search and category filter
 	 */
 
 	// search button method
@@ -558,7 +575,7 @@ public class MainWindow extends JFrame {
 
 				List<ProductJoin> productsJoin = null;
 
-				if (firstCatStr.equalsIgnoreCase("All")) {
+				if (firstCatStr.equalsIgnoreCase("Toutes")) {
 					productsJoin = conn.getProductsJoin();
 				} else {
 					productsJoin = conn.filterProductsByCat(firstCatStr);
@@ -571,8 +588,8 @@ public class MainWindow extends JFrame {
 				ProductJoinTableModel model = new ProductJoinTableModel(
 						productsJoin);
 				tableProduct.setModel(model);
-				hideProductIdColumn();
-				hideStockAlarmColumn();
+//				hideProductIdColumn();
+//				hideStockAlarmColumn();
 				allignColumn();
 				colourIfStockAlarm();
 				currentListProductJoin = productsJoin;
@@ -770,7 +787,7 @@ public class MainWindow extends JFrame {
 				// refresh view here
 				refreshTable();
 
-				JOptionPane.showMessageDialog(null, "Product removed.");
+				JOptionPane.showMessageDialog(null, "ProduitDetail removed.");
 
 			} else {
 				// do nothing
@@ -847,7 +864,7 @@ public class MainWindow extends JFrame {
 	public void refreshTable() {
 
 		try {
-			if (firstCatStr.equalsIgnoreCase("All")) {
+			if (firstCatStr.equalsIgnoreCase("Toutes")) {
 				currentListProductJoin = conn.getProductsJoin();
 			} else {
 				currentListProductJoin = conn.filterProductsByCat(firstCatStr);
@@ -872,8 +889,8 @@ public class MainWindow extends JFrame {
 				currentListProductJoin);
 
 		tableProduct.setModel(model);
-		hideProductIdColumn();
-		hideStockAlarmColumn();
+//		hideProductIdColumn();
+//		hideStockAlarmColumn();
 		allignColumn();
 		colourIfStockAlarm();
 	}
@@ -887,11 +904,11 @@ public class MainWindow extends JFrame {
 
 		try {
 
-			List<Product> products = null;
+			List<ProduitDetail> produitDetails = null;
 
-			products = conn.getAllProducts();
+			produitDetails = conn.getAllProducts();
 
-			ProductTableModel model = new ProductTableModel(products);
+			ProductTableModel model = new ProductTableModel(produitDetails);
 			tableProduct.setModel(model);
 
 		} catch (Exception e) {

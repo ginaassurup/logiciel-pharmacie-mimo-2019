@@ -1,5 +1,5 @@
 /*
- * Category table model for join Query
+ * Categorie table model for join Query
  */
 
 package model;
@@ -18,11 +18,11 @@ public class CategoryTableModel extends AbstractTableModel {
 	private static final int CATEGORY_ID_COL = 0;
 	private static final int CATEGORY_NAME_COL = 1;
 
-	private String[] columnNames = {"Id", "Name"};
+	private String[] columnNames = {"Id categorie", "Nom categorie"};
 	
-	private List<Category> categories;
+	private List<Categorie> categories;
 
-	public CategoryTableModel(List<Category> theCategories) {
+	public CategoryTableModel(List<Categorie> theCategories) {
 		categories = theCategories;
 	} 
 	
@@ -44,15 +44,15 @@ public class CategoryTableModel extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int row, int col) {
 
-		Category tempCategory = categories.get(row);
+		Categorie tempCategory = categories.get(row);
 
 		switch (col) {
 		case CATEGORY_ID_COL:
-			return tempCategory.getId();
+			return tempCategory.getId_cat();
 		case CATEGORY_NAME_COL:
-			return tempCategory.getName();
+			return tempCategory.getNom_cat();
 		default:
-			return tempCategory.getName();
+			return tempCategory.getNom_cat();
 		} 
 		
 	}

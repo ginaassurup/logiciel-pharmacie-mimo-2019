@@ -74,7 +74,7 @@ public class MenuPrincipal extends JFrame{
 	private void initialize() {
 		setFrmMenuPrincipal(new JFrame());
 		getFrmMenuPrincipal().setResizable(false);
-		getFrmMenuPrincipal().setTitle("Menu principal | Utilisateur : \" + conn.currentUser");
+		getFrmMenuPrincipal().setTitle("Menu principal | Utilisateur : " + conn.currentUser);
 		getFrmMenuPrincipal().getContentPane().setBackground(SystemColor.text);
 		getFrmMenuPrincipal().getContentPane().setLayout(null);
 		

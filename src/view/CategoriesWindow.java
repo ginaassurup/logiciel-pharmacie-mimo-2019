@@ -20,7 +20,7 @@ import javax.swing.JButton;
 import javax.swing.ListSelectionModel;
 import javax.swing.WindowConstants;
 
-import model.Category;
+import model.Categorie;
 import model.CategoryTableModel;
 
 import javax.swing.JScrollPane;
@@ -42,7 +42,7 @@ public class CategoriesWindow extends JDialog {
 	// database connection declaration
 	SQLiteCon conn;
 
-	List<Category> categories;
+	List<Categorie> categories;
 
 	// table
 	private JTable tableCategories;
@@ -197,9 +197,9 @@ public class CategoriesWindow extends JDialog {
 			// check if exists
 			boolean catExists = false;
 			for (int i = 0; i < categories.size(); i++) {
-				if (categories.get(i).getName().equalsIgnoreCase(newCategory)) {
+				if (categories.get(i).getNom_cat().equalsIgnoreCase(newCategory)) {
 
-					System.out.println("Exists " + categories.get(i).getName()
+					System.out.println("Exists " + categories.get(i).getNom_cat()
 							+ " " + newCategory);
 					catExists = true;
 					break;
@@ -293,11 +293,11 @@ public class CategoriesWindow extends JDialog {
 				// check if exists
 				boolean catExists = false;
 				for (int i = 0; i < categories.size(); i++) {
-					if (categories.get(i).getName()
+					if (categories.get(i).getNom_cat()
 							.equalsIgnoreCase(newCategory)) {
 
 						System.out.println("Exists "
-								+ categories.get(i).getName() + " "
+								+ categories.get(i).getNom_cat() + " "
 								+ newCategory);
 						catExists = true;
 						break;
