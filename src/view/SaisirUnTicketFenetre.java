@@ -81,7 +81,7 @@ public class SaisirUnTicketFenetre extends JFrame {
 	List<ProductJoin> currentListProductJoin;
 
 	// AddProduct Window declaration
-	AddProductWindow addProductWindow;
+	AjouterUnProduitFenetre ajouterUnProduitFenetre;
 
 	// EditProduct Window declaration
 	EditProductWindow editProductWindow;
@@ -596,15 +596,15 @@ public class SaisirUnTicketFenetre extends JFrame {
 	// add product
 	private void addProduct() {
 
-		// initialise AddProductWindow
-		addProductWindow = new AddProductWindow();
+		// initialise AjouterUnProduitFenetre
+		ajouterUnProduitFenetre = new AjouterUnProduitFenetre();
 		dispose();
-		addProductWindow.setVisible(true);
-		addProductWindow.textFieldName.setText("");
-		addProductWindow.textFieldType.setText("");
-		addProductWindow.textFieldStock.setText("");
+		ajouterUnProduitFenetre.setVisible(true);
+		ajouterUnProduitFenetre.textFieldName.setText("");
+		ajouterUnProduitFenetre.textFieldType.setText("");
+		ajouterUnProduitFenetre.textFieldStock.setText("");
 
-		while (addProductWindow.isVisible()) {
+		while (ajouterUnProduitFenetre.isVisible()) {
 
 		}
 

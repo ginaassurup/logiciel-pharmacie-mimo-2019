@@ -86,16 +86,13 @@ public class EditProductWindow extends JDialog {
 
 		setModal(true);
 		setResizable(false);
-		setTitle("In - Edit ProduitDetail");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(
-				EditProductWindow.class
-						.getResource("/view/logo_new.png")));
-		setBounds(100, 100, 396, 356);
+		setTitle("Modifier un produit");
+		setBounds(100, 100, 968, 700);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
-		contentPanel.setBackground(new Color(56, 56, 56));
+		contentPanel.setBackground(Color.WHITE);
 
 		textFieldName = new JTextField();
 		textFieldName.setBounds(188, 40, 162, 20);
@@ -157,14 +154,8 @@ public class EditProductWindow extends JDialog {
 				updateProduct();
 			}
 		});
-		btnEditProduct.setBounds(188, 274, 162, 23);
+		btnEditProduct.setBounds(408, 489, 162, 23);
 		contentPanel.add(btnEditProduct);
-
-		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon(EditProductWindow.class
-				.getResource("/view/logo_new_64_no_bckg.png")));
-		label.setBounds(10, 10, 72, 72);
-		contentPanel.add(label);
 
 		JButton btnNewCat = new JButton("New");
 		btnNewCat.setBackground(new Color(204, 204, 204));
