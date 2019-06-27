@@ -1,5 +1,5 @@
 /*
- * Product table model
+ * ProduitDetail table model
  */
 
 package model;
@@ -19,13 +19,13 @@ public class ProductTableModel extends AbstractTableModel {
 	private static final int TYPE_COL = 2;
 	private static final int STOCK_COL = 3;
 
-	private String[] columnNames = { "Product Name", "Category", "Type",
+	private String[] columnNames = { "ProduitDetail Name", "Categorie", "Type",
 			"Stock" };
 	
-	private List<Product> products;
+	private List<ProduitDetail> produitDetails;
 
-	public ProductTableModel(List<Product> theProducts) {
-		products = theProducts;
+	public ProductTableModel(List<ProduitDetail> theProducts) {
+		produitDetails = theProducts;
 	} 
 	
 	@Override
@@ -35,7 +35,7 @@ public class ProductTableModel extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
-		return products.size(); 
+		return produitDetails.size(); 
 	}
 	
 	@Override
@@ -46,7 +46,7 @@ public class ProductTableModel extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int row, int col) {
 
-		Product tempProduct = products.get(row);
+		ProduitDetail tempProduct = produitDetails.get(row);
 
 		switch (col) {
 		case PRODUCT_NAME_COL:

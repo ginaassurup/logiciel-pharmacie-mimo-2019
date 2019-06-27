@@ -19,8 +19,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import model.Category;
-import model.Product;
+import model.Categorie;
+import model.ProduitDetail;
 import model.ProductJoin;
 import model.Unit;
 import model.PharmacienDetail;
@@ -33,6 +33,7 @@ public class SQLiteCon {
 	public static boolean isConnected;
 	public static String currentUser = "";
 	public static String currentPassword = "";
+	private PreparedStatement myStmt;
 
 	// constructor that connects to database
 	public SQLiteCon() {
@@ -111,10 +112,6 @@ public class SQLiteCon {
 				// assign current user and password (for managing listePhar)
 				currentUser = user.getText();
 				currentPassword = pswd.getText();
-
-				// open main window
-//				MainWindow mainWindow = new MainWindow();
-//				mainWindow.setVisible(true);
 				
 				// open Menu principal
 				MenuPrincipal menuPrincipal = new MenuPrincipal();
@@ -230,7 +227,7 @@ public class SQLiteCon {
 		}
 	}
 
-	// remove user query
+	// Supprimer un pharmacien query
 	public void supprimerUnPharQuery(String num_phar, String identifiant)
 			throws Exception {
 
@@ -253,8 +250,8 @@ public class SQLiteCon {
 		}
 	}
 
-	// update user
-	public void updateUserQuery(String num_phar, String identifiant, String mdp,
+	// Mettre à jour le profil d'un pharmacien query
+	public void majPharQuery(String num_phar, String identifiant, String mdp,
 			String prenom_phar, String nom_phar) throws Exception {
 
 		PreparedStatement myStmt = null;
@@ -277,8 +274,8 @@ public class SQLiteCon {
 		}
 	}
 
-	// change password
-	public void changePasswordQuery(String newPassword) throws Exception {
+	// Modifier le mot de passe query
+	public void modifierMdpQuery(String newPassword) throws Exception {
 
 		PreparedStatement myStmt = null;
 
@@ -301,13 +298,13 @@ public class SQLiteCon {
 	}
 
 	/*
-	 * Category Table Methods
+	 * Categorie Table Methods
 	 */
 
 	// gets the list of categories
-	public List<Category> getAllCategories() throws Exception {
+	public List<Categorie> getAllCategories() throws Exception {
 
-		List<Category> list = new ArrayList<>();
+		List<Categorie> list = new ArrayList<>();
 
 		Statement myStmt = null;
 		ResultSet myRs = null;
@@ -315,10 +312,10 @@ public class SQLiteCon {
 		try {
 			myStmt = myConn.createStatement();
 			myRs = myStmt
-					.executeQuery("SELECT * FROM Category ORDER BY Category.Name COLLATE NOCASE");
+					.executeQuery("SELECT * FROM Categorie ORDER BY Categorie.nom_cat COLLATE NOCASE");
 
 			while (myRs.next()) {
-				Category tempCategory = convertRowToCategory(myRs);
+				Categorie tempCategory = convertRowToCategory(myRs);
 				list.add(tempCategory);
 			}
 
@@ -330,39 +327,39 @@ public class SQLiteCon {
 	}
 
 	// convert row to category
-	private Category convertRowToCategory(ResultSet myRs) throws SQLException {
+	private Categorie convertRowToCategory(ResultSet myRs) throws SQLException {
 
-		int id = myRs.getInt("Id");
-		String name = myRs.getString("Name");
+		int id_cat = myRs.getInt("id_cat");
+		String nom_cat = myRs.getString("nom_cat");
 
-		Category tempCategory = new Category(id, name);
+		Categorie tempCategory = new Categorie(id_cat, nom_cat);
 
 		return tempCategory;
 	}
 
 	// gets ID of catName
-	public int getCategoryId(String category) throws SQLException {
+	public int getId_cat(String category) throws SQLException {
 
-		List<Category> list = new ArrayList<>();
-		Category tempCategory = null;
+		List<Categorie> list = new ArrayList<>();
+		Categorie tempCategory = null;
 
 		Statement myStmt = null;
 		ResultSet myRs = null;
 
 		try {
 			myStmt = myConn.createStatement();
-			myRs = myStmt.executeQuery("SELECT * FROM Category");
+			myRs = myStmt.executeQuery("SELECT * FROM Categorie");
 
 			while (myRs.next()) {
 				tempCategory = convertRowToCategory(myRs);
 				list.add(tempCategory);
 
-				if (tempCategory.getName().equalsIgnoreCase(category)) {
+				if (tempCategory.getNom_cat().equalsIgnoreCase(category)) {
 					break;
 				}
 			}
 
-			return tempCategory.getId();
+			return tempCategory.getId_cat();
 
 		} finally {
 			close(myStmt, myRs);
@@ -370,23 +367,23 @@ public class SQLiteCon {
 	}
 
 	// insert category
-	public void insertCategoryQuery(String catName) throws Exception {
+	public void insertCategoryQuery(String nom_cat) throws Exception {
 
 		PreparedStatement myStmt = null;
 
 		try {
-			myStmt = myConn.prepareStatement("INSERT INTO Category (Name)"
+			myStmt = myConn.prepareStatement("INSERT INTO Categorie (nom_cat)"
 					+ "VALUES (?)");
 
-			myStmt.setString(1, catName);
+			myStmt.setString(1, nom_cat);
 			myStmt.executeUpdate();
 		} finally {
 			close(myStmt, null);
 		}
 	}
 
-	// remove category query
-	public void removeCategoryQuery(String catId, String catName)
+	// Supprimer une catégorie
+	public void removeCategoryQuery(String id_cat, String nom_cat)
 			throws Exception {
 
 		PreparedStatement myStmt = null;
@@ -394,12 +391,12 @@ public class SQLiteCon {
 		try {
 
 			myStmt = myConn
-					.prepareStatement("DELETE FROM Category WHERE Id = ? AND Name = ?");
+					.prepareStatement("DELETE FROM Categorie WHERE id_cat = ? AND nom_cat = ?");
 
-			myStmt.setString(1, catId);
-			myStmt.setString(2, catName);
+			myStmt.setString(1, id_cat);
+			myStmt.setString(2, nom_cat);
 			myStmt.execute();
-			// JOptionPane.showMessageDialog(null, "Category removed");
+			// JOptionPane.showMessageDialog(null, "Categorie removed");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null,
 					"This category has products assigned so can't be removed.");
@@ -410,18 +407,18 @@ public class SQLiteCon {
 	}
 
 	// update category
-	public void updateCategoryQuery(String currentCategory, String newCategory,
-			String id) throws Exception {
+	public void updateCategoryQuery(String current_cat, String new_cat,
+			String id_cat) throws Exception {
 
 		PreparedStatement myStmt = null;
 
 		try {
 
 			myStmt = myConn
-					.prepareStatement("UPDATE Category SET Name = ? WHERE Id = ?");
+					.prepareStatement("UPDATE Categorie SET nom_cat = ? WHERE id_cat = ?");
 
-			myStmt.setString(1, newCategory);
-			myStmt.setString(2, id);
+			myStmt.setString(1, new_cat);
+			myStmt.setString(2, id_cat);
 
 			myStmt.executeUpdate();
 		} finally {
@@ -433,7 +430,7 @@ public class SQLiteCon {
 	 * Unit Table methods
 	 */
 
-	// gets the list of units
+	// gets the list of listeFour
 	public List<Unit> getAllUnits() throws Exception {
 
 		List<Unit> list = new ArrayList<>();
@@ -444,7 +441,7 @@ public class SQLiteCon {
 		try {
 			myStmt = myConn.createStatement();
 			myRs = myStmt
-					.executeQuery("SELECT * FROM Unit ORDER BY Unit.Name COLLATE NOCASE");
+					.executeQuery("SELECT * FROM FournisseurDetail ORDER BY FournisseurDetail.id_four COLLATE NOCASE");
 
 			while (myRs.next()) {
 				Unit tempUnit = convertRowToUnit(myRs);
@@ -461,16 +458,19 @@ public class SQLiteCon {
 	// convert row to unit
 	private Unit convertRowToUnit(ResultSet myRs) throws SQLException {
 
-		int id = myRs.getInt("Id");
-		String name = myRs.getString("Name");
+		int id_four = myRs.getInt("id_four");
+		String raison_sociale = myRs.getString("raison_sociale");
+		String adresse_four = myRs.getString("adresse_four");
+		int code_postal_four = myRs.getInt("code_postal_four");
+		String ville_four = myRs.getString("ville_four");
 
-		Unit tempUnit = new Unit(id, name);
+		Unit tempUnit = new Unit(id_four, raison_sociale, adresse_four, code_postal_four, ville_four);
 
 		return tempUnit;
 	}
 
 	// gets ID of unit Name
-	public int getUnitId(String unit) throws SQLException {
+	public int getId_four(String unit) throws SQLException {
 
 		List<Unit> list = new ArrayList<>();
 		Unit tempUnit = null;
@@ -480,18 +480,18 @@ public class SQLiteCon {
 
 		try {
 			myStmt = myConn.createStatement();
-			myRs = myStmt.executeQuery("SELECT * FROM Unit");
+			myRs = myStmt.executeQuery("SELECT * FROM FournisseurDetail");
 
 			while (myRs.next()) {
 				tempUnit = convertRowToUnit(myRs);
 				list.add(tempUnit);
 
-				if (tempUnit.getName().equalsIgnoreCase(unit)) {
+				if (tempUnit.getRaison_sociale().equalsIgnoreCase(unit)) {
 					break;
 				}
 			}
 
-			return tempUnit.getId();
+			return tempUnit.getId_four();
 
 		} finally {
 			close(myStmt, myRs);
@@ -499,15 +499,18 @@ public class SQLiteCon {
 	}
 
 	// insert unit
-	public void insertUnitQuery(String unitName) throws Exception {
+	public void insertUnitQuery(String raison_sociale, String adresse_four, String code_postal_four, String ville_four) throws Exception {
 
 		PreparedStatement myStmt = null;
 
 		try {
-			myStmt = myConn.prepareStatement("INSERT INTO Unit (Name)"
-					+ "VALUES (?)");
+			myStmt = myConn.prepareStatement("INSERT INTO FournisseurDetail (raison_sociale, adresse_four, code_postal_four, ville_four)"
+					+ "VALUES (?, ?, ?, ?)");
 
-			myStmt.setString(1, unitName);
+			myStmt.setString(1, raison_sociale);
+			myStmt.setString(2, adresse_four);
+			myStmt.setString(3, code_postal_four);
+			myStmt.setString(4, ville_four);
 			myStmt.executeUpdate();
 		} finally {
 			close(myStmt, null);
@@ -523,12 +526,12 @@ public class SQLiteCon {
 		try {
 
 			myStmt = myConn
-					.prepareStatement("DELETE FROM Unit WHERE Id = ? AND Name = ?");
+					.prepareStatement("DELETE FROM FournisseurDetail WHERE id_four = ? AND raison_sociale = ?");
 
 			myStmt.setString(1, unitId);
 			myStmt.setString(2, unitName);
 			myStmt.execute();
-			// JOptionPane.showMessageDialog(null, "Category removed");
+			// JOptionPane.showMessageDialog(null, "Categorie removed");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null,
 					"This unit has products assigned so can't be removed.");
@@ -547,7 +550,7 @@ public class SQLiteCon {
 		try {
 
 			myStmt = myConn
-					.prepareStatement("UPDATE Unit SET Name = ? WHERE Id = ?");
+					.prepareStatement("UPDATE FournisseurDetail SET raison_sociale = ? WHERE id_four = ?");
 
 			myStmt.setString(1, newUnit);
 			myStmt.setString(2, id);
@@ -559,7 +562,7 @@ public class SQLiteCon {
 	}
 
 	/*
-	 * Product Table methods
+	 * ProduitDetail Table methods
 	 */
 
 	// get all products - join table (category id- name)
@@ -569,11 +572,16 @@ public class SQLiteCon {
 
 		Statement myStmt = null;
 		ResultSet myRs = null;
-
+		
 		try {
 			myStmt = myConn.createStatement();
 			myRs = myStmt
-					.executeQuery("SELECT Product.Id, Product.Name, Category.Name as CatName, Product.Type, Product.Stock, Unit.Name as UnitName, Product.StockAlarm FROM Product INNER JOIN Category ON Product.Category=Category.Id INNER JOIN Unit ON Product.Unit=Unit.Id ORDER BY Product.Name COLLATE NOCASE");
+			.executeQuery("SELECT ProduitDetail.num_prod, ProduitDetail.code_barre, ProduitDetail.libelle_produit, Categorie.nom_cat as nom_cat, "
+					+ "ProduitDetail.forme, ProduitDetail.qtte_stock, ProduitDetail.prix_vente, ProduitDetail.prix_achat, FournisseurDetail.raison_sociale as raison_sociale, "
+					+ "ProduitDetail.qtte_stock_alarme FROM ProduitDetail INNER JOIN Categorie ON ProduitDetail.id_cat=Categorie.id_cat INNER JOIN FournisseurDetail ON ProduitDetail.id_four=FournisseurDetail.id_four ORDER BY ProduitDetail.num_prod COLLATE NOCASE");
+	
+//			myRs = myStmt
+//					.executeQuery("SELECT Product.Id, Product.Name, Categorie.Name as CatName, Product.Type, Product.Stock, Unit.Name as UnitName, Product.StockAlarm FROM Product INNER JOIN Categorie ON Product.Category=Categorie.Id INNER JOIN Unit ON Product.Unit=Unit.Id ORDER BY Product.Name COLLATE NOCASE");
 
 			while (myRs.next()) {
 				ProductJoin tempProductJoin = convertRowToProductJoin(myRs);
@@ -600,17 +608,17 @@ public class SQLiteCon {
 		int qtte_stock_alarme= myRs.getInt("qtte_stock_alarme");
 		float prix_vente= myRs.getFloat("prix_vente");
 		float prix_achat= myRs.getFloat("prix_achat");
-		String nom_four = myRs.getString("nom_four");
+		String raison_sociale = myRs.getString("raison_sociale");
 
 		ProductJoin tempProductJoin = new ProductJoin(num_prod,code_barre, libelle_produit, nom_cat, forme, qtte_stock, qtte_stock_alarme,
-				prix_vente, prix_achat, nom_four);
+				prix_vente, prix_achat, raison_sociale);
 
 
 		return tempProductJoin;
 	}
 
 	// filters products by category, used in combobox
-	public List<ProductJoin> filterProductsByCat(String catName)
+	public List<ProductJoin> filterProductsByCat(String nom_cat)
 			throws Exception {
 		List<ProductJoin> list = new ArrayList<>();
 
@@ -620,9 +628,15 @@ public class SQLiteCon {
 		try {
 			// catName = "";
 			myStmt = myConn
-					.prepareStatement("SELECT Product.Id, Product.Name, Category.Name as CatName, Product.Type, Product.Stock, Unit.Name as UnitName, Product.StockAlarm FROM Product INNER JOIN Category ON Product.Category=Category.Id INNER JOIN Unit ON Product.Unit=Unit.Id WHERE Category.Name = ? ORDER BY Product.Name COLLATE NOCASE");
+					.prepareStatement("SELECT ProduitDetail.num_prod, ProduitDetail.code_barre, ProduitDetail.libelle_produit, Categorie.nom_cat as nom_cat, "
+							+ "ProduitDetail.forme, ProduitDetail.qtte_stock, ProduitDetail.prix_vente, ProduitDetail.prix_achat, FournisseurDetail.raison_sociale as raison_sociale, "
+							+ "ProduitDetail.qtte_stock_alarme FROM ProduitDetail INNER JOIN Categorie ON ProduitDetail.id_cat=Categorie.id_cat INNER JOIN FournisseurDetail "
+							+ "ON ProduitDetail.id_four=FournisseurDetail.id_four WHERE Categorie.nom_cat = ? ORDER BY ProduitDetail.libelle_produit COLLATE NOCASE");
 
-			myStmt.setString(1, catName);
+//			myStmt = myConn
+//					.prepareStatement("SELECT Product.Id, Product.Name, Category.Name as CatName, Product.Type, Product.Stock, Unit.Name as UnitName, Product.StockAlarm FROM Product INNER JOIN Category ON Product.Category=Category.Id INNER JOIN Unit ON Product.Unit=Unit.Id WHERE Category.Name = ? ORDER BY Product.Name COLLATE NOCASE");
+
+			myStmt.setString(1, nom_cat);
 
 			myRs = myStmt.executeQuery();
 
@@ -638,30 +652,41 @@ public class SQLiteCon {
 	}
 
 	// search method used for search button
-	public List<ProductJoin> searchProductsJoinCat(String prodName, String cat)
+	public List<ProductJoin> searchProductsJoinCat(String libelle_produit, String nom_cat)
 			throws Exception {
 		List<ProductJoin> list = new ArrayList<>();
 
-		PreparedStatement myStmt = null;
+		myStmt = null;
 		ResultSet myRs = null;
 
 		try {
 
-			if (cat.equalsIgnoreCase("All")) {
+			if (nom_cat.equalsIgnoreCase("Toutes")) {
 				System.out.println("If ALL");
-				prodName += "%";
+				libelle_produit += "%";
+				
 				myStmt = myConn
-						.prepareStatement("SELECT Product.Id, Product.Name, Category.Name as CatName, Product.Type, Product.Stock, Unit.Name as UnitName, Product.StockAlarm FROM Product INNER JOIN Category ON Product.Category=Category.Id INNER JOIN Unit ON Product.Unit=Unit.Id WHERE Product.Name LIKE ? ORDER BY Product.Name COLLATE NOCASE");
+						.prepareStatement("SELECT ProduitDetail.num_prod, ProduitDetail.code_barre, ProduitDetail.libelle_produit, Categorie.nom_cat as nom_cat, "
+								+ "ProduitDetail.forme, ProduitDetail.qtte_stock, ProduitDetail.prix_vente, ProduitDetail.prix_achat, FournisseurDetail.raison_sociale as raison_sociale, "
+								+ "ProduitDetail.qtte_stock_alarme FROM ProduitDetail INNER JOIN Categorie ON ProduitDetail.id_cat=Categorie.id_cat INNER JOIN FournisseurDetail ON ProduitDetail.id_four=FournisseurDetail.id_four WHERE ProduitDetail.libelle_produit LIKE ? ORDER BY ProduitDetail.num_prod COLLATE NOCASE");
 
-				myStmt.setString(1, prodName);
+//				myStmt = myConn
+//						.prepareStatement("SELECT ProduitDetail.Id, ProduitDetail.Name, Categorie.Name as CatName, ProduitDetail.Type, ProduitDetail.Stock, Unit.Name as UnitName, ProduitDetail.StockAlarm FROM ProduitDetail INNER JOIN Categorie ON ProduitDetail.Category=Categorie.Id INNER JOIN Unit ON ProduitDetail.Unit=Unit.Id WHERE ProduitDetail.Name LIKE ? ORDER BY ProduitDetail.Name COLLATE NOCASE");
+
+				myStmt.setString(1, libelle_produit);
 
 			} else {
-				prodName += "%";
+				libelle_produit += "%";
 				myStmt = myConn
-						.prepareStatement("SELECT Product.Id, Product.Name, Category.Name as CatName, Product.Type, Product.Stock, Unit.Name as UnitName, Product.StockAlarm FROM Product INNER JOIN Category ON Product.Category=Category.Id INNER JOIN Unit ON Product.Unit=Unit.Id WHERE Category.Name = ? AND Product.Name LIKE ? ORDER BY Product.Name COLLATE NOCASE");
+						.prepareStatement("SELECT ProduitDetail.num_prod, ProduitDetail.code_barre, ProduitDetail.libelle_produit, Categorie.nom_cat as nom_cat, "
+								+ "ProduitDetail.forme, ProduitDetail.qtte_stock, ProduitDetail.prix_vente, ProduitDetail.prix_achat, FournisseurDetail.raison_sociale as raison_sociale, "
+								+ "ProduitDetail.qtte_stock_alarme FROM ProduitDetail INNER JOIN Categorie ON ProduitDetail.id_cat=Categorie.id_cat INNER JOIN FournisseurDetail ON ProduitDetail.id_four=FournisseurDetail.id_four WHERE Categorie.nom_cat = ? AND ProduitDetail.libelle_produit LIKE ? ORDER BY ProduitDetail.num_prod COLLATE NOCASE");
 
-				myStmt.setString(1, cat);
-				myStmt.setString(2, prodName);
+//				myStmt = myConn
+//						.prepareStatement("SELECT ProduitDetail.Id, ProduitDetail.Name, Categorie.Name as CatName, ProduitDetail.Type, ProduitDetail.Stock, Unit.Name as UnitName, ProduitDetail.StockAlarm FROM ProduitDetail INNER JOIN Categorie ON ProduitDetail.Category=Categorie.Id INNER JOIN Unit ON ProduitDetail.Unit=Unit.Id WHERE Categorie.Name = ? AND ProduitDetail.Name LIKE ? ORDER BY ProduitDetail.Name COLLATE NOCASE");
+
+				myStmt.setString(1, nom_cat);
+				myStmt.setString(2, libelle_produit);
 
 			}
 
@@ -678,31 +703,36 @@ public class SQLiteCon {
 		}
 	}
 
-	// insert product
-	public void insertProductQuery(String prodName, String catName,
-			String typeName, String quantityName, String unitName,
-			String stockAlarm) throws Exception {
+	// Ajouter un produit
+	public void insertProductQuery(String code_barre, String libelle_produit, String nom_cat,
+			String forme, String qtte_stock, String qtte_stock_alarme, String prix_vente, String prix_achat, String nom_four) throws Exception {
 
 		PreparedStatement myStmt = null;
 
 		// get ID of catName
-		int catId = getCategoryId(catName);
+		int id_cat = getId_cat(nom_cat);
 
 		// get ID of unitName
-		int unitId = getUnitId(unitName);
+		int id_four = getId_four(nom_four);
 
 		try {
-
 			myStmt = myConn
-					.prepareStatement("INSERT INTO Product (Name, Category, Type, Stock, Unit, StockAlarm)"
-							+ "VALUES (?, ?, ?, ?, ?, ?)");
+					.prepareStatement("INSERT INTO ProduitDetail (code_barre, libelle_produit, id_cat, forme, qtte_stock, qtte_stock_alarme, prix_vente, prix_achat, id_four)"
+							+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-			myStmt.setString(1, prodName);
-			myStmt.setString(2, "" + catId);
-			myStmt.setString(3, typeName);
-			myStmt.setString(4, quantityName);
-			myStmt.setString(5, "" + unitId);
-			myStmt.setString(6, stockAlarm);
+//			myStmt = myConn
+//					.prepareStatement("INSERT INTO Product (Name, Category, Type, Stock, Unit, StockAlarm)"
+//							+ "VALUES (?, ?, ?, ?, ?, ?)");
+
+			myStmt.setString(1, code_barre);
+			myStmt.setString(2, libelle_produit);
+			myStmt.setString(3, "" + id_cat);
+			myStmt.setString(4, forme);
+			myStmt.setString(5, qtte_stock);
+			myStmt.setString(6, qtte_stock_alarme);
+			myStmt.setString(7, prix_vente);
+			myStmt.setString(8, prix_achat);
+			myStmt.setString(9, "" + id_four);
 
 			myStmt.executeUpdate();
 		} finally {
@@ -712,7 +742,7 @@ public class SQLiteCon {
 	}
 
 	// remove product
-	public void removeProductQuery(String prodId, String prodName)
+	public void removeProductQuery(String num_prod, String code_barre)
 			throws Exception {
 
 		PreparedStatement myStmt = null;
@@ -720,16 +750,38 @@ public class SQLiteCon {
 		try {
 
 			myStmt = myConn
-					.prepareStatement("DELETE FROM Product WHERE Id = ? AND Name = ?");
+					.prepareStatement("DELETE FROM ProduitDetail WHERE num_prod = ? AND code_barre = ?");
 
-			myStmt.setString(1, prodId);
-			myStmt.setString(2, prodName);
+			myStmt.setString(1, num_prod);
+			myStmt.setString(2, code_barre);
 
 			myStmt.execute();
 		} finally {
 			close(myStmt, null);
 		}
 	}
+	
+//	public void supprimerUnPharQuery(String num_phar, String identifiant)
+//			throws Exception {
+//
+//		PreparedStatement myStmt = null;
+//
+//		try {
+//
+//			myStmt = myConn
+//					.prepareStatement("DELETE FROM PharmacienDetail WHERE num_phar = ? AND identifiant = ?");
+//
+//			myStmt.setString(1, num_phar);
+//			myStmt.setString(2, identifiant);
+//			myStmt.execute();
+//
+//		} catch (Exception e) {
+//
+//		} finally {
+//			close(myStmt, null);
+//
+//		}
+//	}
 
 	// remove all products
 	public void removeAllQuery(String tableName) throws Exception {
@@ -752,15 +804,15 @@ public class SQLiteCon {
 		PreparedStatement myStmt = null;
 
 		// get ID of prod and catName
-		int catId = getCategoryId(catName);
-		int unitId = getUnitId(unitName);
+		int catId = getId_cat(catName);
+		int unitId = getId_four(unitName);
 
 		System.out.println(currentId);
 
 		try {
 
 			myStmt = myConn
-					.prepareStatement("UPDATE Product SET Name = ?, Category = ?, Type = ?, Stock = ?, Unit = ?, StockAlarm = ?"
+					.prepareStatement("UPDATE ProduitDetail SET Name = ?, Categorie = ?, Type = ?, Stock = ?, Unit = ?, StockAlarm = ?"
 							+ "WHERE Id = ?");
 
 			myStmt.setString(1, prodName);
@@ -780,15 +832,15 @@ public class SQLiteCon {
 	// gets ID of prodName
 	public int getProductId(String product) throws SQLException {
 
-		List<Product> list = new ArrayList<>();
-		Product tempProduct = null;
+		List<ProduitDetail> list = new ArrayList<>();
+		ProduitDetail tempProduct = null;
 
 		Statement myStmt = null;
 		ResultSet myRs = null;
 
 		try {
 			myStmt = myConn.createStatement();
-			myRs = myStmt.executeQuery("SELECT * FROM Product");
+			myRs = myStmt.executeQuery("SELECT * FROM ProduitDetail");
 
 			while (myRs.next()) {
 				tempProduct = convertRowToProduct(myRs);
@@ -817,7 +869,7 @@ public class SQLiteCon {
 		try {
 
 			myStmt = myConn
-					.prepareStatement("UPDATE Product SET Stock = (Product.Stock + ?) "
+					.prepareStatement("UPDATE ProduitDetail SET Stock = (ProduitDetail.Stock + ?) "
 							+ "WHERE Id = ? AND Name = ?");
 
 			myStmt.setString(1, qString);
@@ -858,7 +910,7 @@ public class SQLiteCon {
 			try {
 
 				myStmt = myConn
-						.prepareStatement("UPDATE Product SET Stock = (Product.Stock - ?) "
+						.prepareStatement("UPDATE ProduitDetail SET Stock = (ProduitDetail.Stock - ?) "
 								+ "WHERE Id = ? AND Name = ?");
 
 				myStmt.setString(1, qString);
@@ -903,19 +955,19 @@ public class SQLiteCon {
 	// //////////////////////
 
 	// get all products
-	public List<Product> getAllProducts() throws Exception {
+	public List<ProduitDetail> getAllProducts() throws Exception {
 
-		List<Product> list = new ArrayList<>();
+		List<ProduitDetail> list = new ArrayList<>();
 
 		Statement myStmt = null;
 		ResultSet myRs = null;
 
 		try {
 			myStmt = myConn.createStatement();
-			myRs = myStmt.executeQuery("SELECT * FROM Product");
+			myRs = myStmt.executeQuery("SELECT * FROM ProduitDetail");
 
 			while (myRs.next()) {
-				Product tempProduct = convertRowToProduct(myRs);
+				ProduitDetail tempProduct = convertRowToProduct(myRs);
 				list.add(tempProduct);
 			}
 
@@ -927,7 +979,7 @@ public class SQLiteCon {
 	}
 
 	// convert row to product
-	private Product convertRowToProduct(ResultSet myRs) throws SQLException {
+	private ProduitDetail convertRowToProduct(ResultSet myRs) throws SQLException {
 
 		int num_prod= myRs.getInt("num_prod");
 		int code_barre = myRs.getInt("code_barre");
@@ -935,18 +987,18 @@ public class SQLiteCon {
 		int id_cat = myRs.getInt("id_cat");
 		String forme = myRs.getString("forme");
 		int qtte_stock= myRs.getInt("qtte_stock");
-		int qtte_stock_alarme= myRs.getInt("qtte_stock_alarme");
+//		int qtte_stock_alarme= myRs.getInt("qtte_stock_alarme");
 		float prix_vente= myRs.getFloat("prix_vente");
 		float prix_achat= myRs.getFloat("prix_achat");
 
-		Product tempProduct = new Product(num_prod, code_barre, libelle_produit, id_cat, forme, qtte_stock, prix_vente, prix_achat);
+		ProduitDetail tempProduct = new ProduitDetail(num_prod, code_barre, libelle_produit, id_cat, forme, qtte_stock,prix_vente, prix_achat);
 
 		return tempProduct;
 	}
 
 	// search products
-	public List<Product> searcshProducts(String prodName) throws Exception {
-		List<Product> list = new ArrayList<>();
+	public List<ProduitDetail> searcshProducts(String prodName) throws Exception {
+		List<ProduitDetail> list = new ArrayList<>();
 
 		PreparedStatement myStmt = null;
 		ResultSet myRs = null;
@@ -954,14 +1006,14 @@ public class SQLiteCon {
 		try {
 			prodName += "%";
 			myStmt = myConn
-					.prepareStatement("select * from Product where Name like ?");
+					.prepareStatement("select * from ProduitDetail where Name like ?");
 
 			myStmt.setString(1, prodName);
 
 			myRs = myStmt.executeQuery();
 
 			while (myRs.next()) {
-				Product tempProduct = convertRowToProduct(myRs);
+				ProduitDetail tempProduct = convertRowToProduct(myRs);
 				list.add(tempProduct);
 			}
 

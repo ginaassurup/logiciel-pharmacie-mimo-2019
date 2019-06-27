@@ -20,7 +20,7 @@ public class MyRenderer extends DefaultTableCellRenderer {
 				isSelected, hasFocus, row, col);
 		
 		int stock = Integer.parseInt(table.getModel().getValueAt(row, 4).toString());
-		int stockAlarm = Integer.parseInt(table.getModel().getValueAt(row, 6).toString());
+		int stockAlarm = Integer.parseInt(table.getModel().getValueAt(row, 5).toString());
 		
 		if (stock <= stockAlarm) {
 			comp.setForeground(Color.red);

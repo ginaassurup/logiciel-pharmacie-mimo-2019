@@ -1,10 +1,10 @@
 /*
- * Product model
+ * ProduitDetail model
  */
 
 package model;
 
-public class Product {
+public class ProduitDetail {
 	private int num_prod;
 	private int code_barre;
 	private String libelle_produit;
@@ -14,7 +14,7 @@ public class Product {
 	private float prix_vente;
 	private float prix_achat;
 	
-	public Product(int num_prod, int code_barre, String libelle_produit, int id_cat, String forme, int qtte_stock, float prix_vente, float prix_achat) {
+	public ProduitDetail(int num_prod, int code_barre, String libelle_produit, int id_cat, String forme, int qtte_stock, float prix_vente, float prix_achat) {
 		super();
 		this.num_prod = num_prod;
 		this.code_barre = code_barre;
@@ -84,7 +84,7 @@ public class Product {
 	@Override
 	public String toString() {
 		return String
-				.format("Product [num_prod=%s, libelle_produit=%s, id_cat=%s, forme=%s, qtte_stock=%s]",
+				.format("ProduitDetail [num_prod=%s, libelle_produit=%s, id_cat=%s, forme=%s, qtte_stock=%s]",
 						num_prod, libelle_produit, id_cat, forme, qtte_stock);
 	} 
 }

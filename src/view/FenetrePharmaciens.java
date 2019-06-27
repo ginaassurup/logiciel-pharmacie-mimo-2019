@@ -80,7 +80,7 @@ public class FenetrePharmaciens extends JDialog {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(FenetrePharmaciens.class.getResource("/view/User.png")));
 		setTitle("Liste des pharmaciens");
 		setModal(true);
-		setBounds(100, 100, 968, 500);
+		setBounds(100, 100, 968, 703);
 		getContentPane().setBackground(Color.WHITE);
 		getContentPane().setLayout(null);
 

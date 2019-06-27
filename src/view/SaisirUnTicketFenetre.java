@@ -61,7 +61,7 @@ import java.awt.SystemColor;
 import javax.swing.JSeparator;
 import javax.swing.ImageIcon;
 
-public class MainWindow extends JFrame {
+public class SaisirUnTicketFenetre extends JFrame {
 
 	/**
 	 * 
@@ -97,8 +97,6 @@ public class MainWindow extends JFrame {
 
 	// fields, buttons, tables that need access
 	JTable tableProduct;
-	private JComboBox<String> comboBoxCategory;
-	private JTextField textFieldSearch;
 	private JButton buttonPlus;
 	private JButton buttonMinus;
 	private JPanel contentPane;
@@ -111,7 +109,7 @@ public class MainWindow extends JFrame {
 			@Override
 			public void run() {
 				try {
-					MainWindow frame = new MainWindow();
+					SaisirUnTicketFenetre frame = new SaisirUnTicketFenetre();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -124,15 +122,15 @@ public class MainWindow extends JFrame {
 	 * Create the frame.
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes", "static-access" })
-	public MainWindow() {
+	public SaisirUnTicketFenetre() {
 		
 		// initialise connection
-		conn = new SQLiteCon();
+//		conn = new SQLiteCon();
 
 		createMenuBar();
 		setResizable(false);
 
-		setTitle("Produits | Utilisateur : " + conn.currentUser);
+		setTitle("Saisir un ticket | Utilisateur : ");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 968, 700);
 		contentPane = new JPanel();
@@ -166,101 +164,16 @@ public class MainWindow extends JFrame {
 		tableProduct.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		scrollPane.setViewportView(tableProduct);
-
-		comboBoxCategory = new JComboBox(getCategoriesToCombo());
-
-		// combobox highlighter color
-		Object child = comboBoxCategory.getAccessibleContext().getAccessibleChild(0);
-		BasicComboPopup popup = (BasicComboPopup)child;
-		JList list = popup.getList();
-		list.setSelectionBackground(new Color(204, 204, 204));
-		
-		
-		comboBoxCategory.addItemListener(new ItemListener() {
-			@Override
-			public void itemStateChanged(ItemEvent evt) {
-
-				categoryFilter(evt);
-			}
-		});
-		comboBoxCategory.setMaximumRowCount(20);
-		comboBoxCategory.setBounds(29, 95, 125, 30);
-		contentPane.add(comboBoxCategory);
-
-		JButton btnCategories = new JButton("Cat\u00E9gorie");
-		btnCategories.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		//btnCategories.setBackground(new Color(75, 190, 95));
-		btnCategories.setBackground(new Color(204, 204, 204));
-		btnCategories.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				openCategories();
-			}
-		});
-		btnCategories.setFocusPainted(false);
-		btnCategories.setBounds(156, 95, 82, 30);
-		contentPane.add(btnCategories);
-
-		textFieldSearch = new JTextField();
-
-		textFieldSearch.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent evt) {
-				if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-					searchBtn();
-				}
-			}
-		});
-		textFieldSearch.setToolTipText("ProduitDetail Name");
-		textFieldSearch.setBounds(537, 95, 118, 30);
-		contentPane.add(textFieldSearch);
-		textFieldSearch.setColumns(10);
+//		BasicComboPopup popup = (BasicComboPopup)child;
+//		JList list = popup.getList();
+//		list.setSelectionBackground(new Color(204, 204, 204));
 
 		// request focus
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				textFieldSearch.requestFocusInWindow();
 			}
 		});
-
-		JButton btnSearch = new JButton("Rechercher");
-		btnSearch.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnSearch.setBackground(new Color(204, 204, 204));
-		btnSearch.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				searchBtn();
-			}
-		});
-		btnSearch.setFocusPainted(false);
-		btnSearch.setBounds(692, 95, 118, 30);
-		contentPane.add(btnSearch);
-
-		JLabel lblNewLabel = new JLabel("Produit");
-		lblNewLabel.setForeground(Color.LIGHT_GRAY);
-		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel.setBounds(435, 101, 97, 14);
-		contentPane.add(lblNewLabel);
-
-		JButton btnShowAll = new JButton("Tout afficher");
-		btnShowAll.setBackground(new Color(204, 204, 204));
-		btnShowAll.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-
-				showwAll();
-			}
-		});
-		btnShowAll.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnShowAll.setFocusPainted(false);
-		btnShowAll.setBounds(822, 94, 113, 30);
-		contentPane.add(btnShowAll);
-
-		JLabel lblProducts = new JLabel("Gestion des produits");
-		lblProducts.setForeground(Color.LIGHT_GRAY);
-		lblProducts.setHorizontalAlignment(SwingConstants.CENTER);
-		lblProducts.setBounds(30, 558, 244, 14);
-		contentPane.add(lblProducts);
 
 		JLabel lblStock = new JLabel("Stock");
 		lblStock.setForeground(Color.LIGHT_GRAY);
@@ -273,7 +186,7 @@ public class MainWindow extends JFrame {
 		labelLogo.setBounds(319, 516, 64, 64);
 		contentPane.add(labelLogo);
 		
-		JLabel lblProduits = new JLabel("Produits");
+		JLabel lblProduits = new JLabel("Saisir un ticket");
 		lblProduits.setHorizontalAlignment(SwingConstants.CENTER);
 		lblProduits.setForeground(new Color(165, 42, 42));
 		lblProduits.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -406,17 +319,6 @@ public class MainWindow extends JFrame {
 	private void createMenuBar() {
 	}
 
-	// opens Categories Window
-	private void openCategories() {
-		categoriesWindow = new CategoriesWindow();
-		categoriesWindow.setVisible(true);
-		while (categoriesWindow.isShowing()) {
-			//
-		}
-		refreshComboBox();
-		getProductsJoin();
-	}
-
 	/*
 	 * Get data to the table and combobox
 	 */
@@ -506,106 +408,57 @@ public class MainWindow extends JFrame {
 	}
 
 	// refreshes combobox after change
-	public void refreshComboBox() {
-
-		SwingUtilities.invokeLater(new Runnable() {
-			@SuppressWarnings("unchecked")
-			@Override
-			public void run() {
-				@SuppressWarnings({ "rawtypes" })
-				DefaultComboBoxModel model = new DefaultComboBoxModel(
-						getCategoriesToCombo());
-				comboBoxCategory.setModel(model);
-				comboBoxCategory.setSelectedItem(firstCatStr);
-			}
-		});
-	}
+//	public void refreshComboBox() {
+//
+//		SwingUtilities.invokeLater(new Runnable() {
+//			@SuppressWarnings("unchecked")
+//			@Override
+//			public void run() {
+//				@SuppressWarnings({ "rawtypes" })
+//				DefaultComboBoxModel model = new DefaultComboBoxModel(
+//						getCategoriesToCombo());
+//				comboBoxCategory.setModel(model);
+//				comboBoxCategory.setSelectedItem(firstCatStr);
+//			}
+//		});
+//	}
 
 	/*
 	 * ProduitDetail search and category filter
 	 */
 
 	// search button method
-	private void searchBtn() {
-
-		try {
-			String product = textFieldSearch.getText();
-			currentProductSearch = product;
-			List<ProductJoin> productsJoin = null;
-
-			if (product != null && product.trim().length() > 0) {
-				productsJoin = conn.searchProductsJoinCat(product, firstCatStr);
-			} else {
-				productsJoin = conn.searchProductsJoinCat("", firstCatStr);
-			}
-
-			for (ProductJoin temp : productsJoin) {
-				System.out.println(temp);
-			}
-
-			ProductJoinTableModel model = new ProductJoinTableModel(
-					productsJoin);
-
-			tableProduct.setModel(model);
-//			hideProductIdColumn();
-//			hideStockAlarmColumn();
-			allignColumn();
-			colourIfStockAlarm();
-			currentListProductJoin = productsJoin;
-
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-	}
-
-	// show all method
-	private void showwAll() {
-		textFieldSearch.setText("");
-		searchBtn();
-	}
-
-	// filters category depending on item in combobox
-	private void categoryFilter(ItemEvent evt) {
-		Object item = evt.getItem();
-
-		if (evt.getStateChange() == ItemEvent.SELECTED) {
-			// Item was just selected
-			try {
-
-				firstCatStr = item.toString();
-
-				System.out.println(firstCatStr);
-
-				List<ProductJoin> productsJoin = null;
-
-				if (firstCatStr.equalsIgnoreCase("Toutes")) {
-					productsJoin = conn.getProductsJoin();
-				} else {
-					productsJoin = conn.filterProductsByCat(firstCatStr);
-				}
-
-				for (ProductJoin temp : productsJoin) {
-					System.out.println(temp);
-				}
-
-				ProductJoinTableModel model = new ProductJoinTableModel(
-						productsJoin);
-				tableProduct.setModel(model);
-//				hideProductIdColumn();
-//				hideStockAlarmColumn();
-				allignColumn();
-				colourIfStockAlarm();
-				currentListProductJoin = productsJoin;
-				textFieldSearch.setText("");
-
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
-
-		} else if (evt.getStateChange() == ItemEvent.DESELECTED) {
-			// Item is no longer selected
-		}
-	}
+//	private void searchBtn() {
+//
+//		try {
+//			String product = textFieldSearch.getText();
+//			currentProductSearch = product;
+//			List<ProductJoin> productsJoin = null;
+//
+//			if (product != null && product.trim().length() > 0) {
+//				productsJoin = conn.searchProductsJoinCat(product, firstCatStr);
+//			} else {
+//				productsJoin = conn.searchProductsJoinCat("", firstCatStr);
+//			}
+//
+//			for (ProductJoin temp : productsJoin) {
+//				System.out.println(temp);
+//			}
+//
+//			ProductJoinTableModel model = new ProductJoinTableModel(
+//					productsJoin);
+//
+//			tableProduct.setModel(model);
+////			hideProductIdColumn();
+////			hideStockAlarmColumn();
+//			allignColumn();
+//			colourIfStockAlarm();
+//			currentListProductJoin = productsJoin;
+//
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//		}
+//	}
 
 	/*
 	 * Add and remove stock
@@ -756,7 +609,7 @@ public class MainWindow extends JFrame {
 		}
 
 		refreshTable();
-		refreshComboBox();
+//		refreshComboBox();
 	}
 
 	// remove product
@@ -852,7 +705,7 @@ public class MainWindow extends JFrame {
 			}
 
 			refreshTable();
-			refreshComboBox();
+//			refreshComboBox();
 		} else {
 			JOptionPane.showMessageDialog(null,
 					"In order to edit product please select product row first.");

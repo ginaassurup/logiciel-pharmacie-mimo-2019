@@ -46,3 +46,7 @@ ville_four VARCHAR(50) NOT NULL);
 
 Insert into FournisseurDetail(id_four, raison_sociale, adresse_four, code_postal_four, ville_four)
 values (1, "Sanofi France", "56 rue La Boetie", 75008, "Paris")
+
+
+
+SELECT ProduitDetail.num_prod, ProduitDetail.code_barre, ProduitDetail.libelle_produit, Categorie.nom_cat as nom_cat, ProduitDetail.forme, ProduitDetail.qtte_stock, ProduitDetail.prix_vente, ProduitDetail.prix_achat, FournisseurDetail.raison_sociale as raison_sociale, ProduitDetail.qtte_stock_alarme FROM ProduitDetail INNER JOIN Categorie ON ProduitDetail.id_cat=Categorie.id_cat INNER JOIN FournisseurDetail ON ProduitDetail.id_four=FournisseurDetail.id_four ORDER BY ProduitDetail.num_prod COLLATE NOCASE

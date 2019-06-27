@@ -17,8 +17,11 @@ public class UnitTableModel extends AbstractTableModel {
 	
 	private static final int UNIT_ID_COL = 0;
 	private static final int UNIT_NAME_COL = 1;
+	private static final int ADRESSE_FOUR_COL = 2;
+	private static final int CODE_POSTAL_FOUR_COL = 3;
+	private static final int VILLE_FOUR_COL = 4;
 
-	private String[] columnNames = {"Id", "Name"};
+	private String[] columnNames = {"Numéro", "Raison sociale", "Adresse", "Code postale", "Ville"};
 	
 	private List<Unit> units;
 
@@ -48,11 +51,18 @@ public class UnitTableModel extends AbstractTableModel {
 
 		switch (col) {
 		case UNIT_ID_COL:
-			return tempUnit.getId();
+			return tempUnit.getId_four();
 		case UNIT_NAME_COL:
-			return tempUnit.getName();
+			return tempUnit.getRaison_sociale();
+		case ADRESSE_FOUR_COL:
+			return tempUnit.getAdresse_four();
+		case CODE_POSTAL_FOUR_COL:
+			return tempUnit.getCode_postal_four();
+		case VILLE_FOUR_COL:
+			return tempUnit.getVille_four();
+
 		default:
-			return tempUnit.getName();
+			return tempUnit.getRaison_sociale();
 		} 
 		
 	}

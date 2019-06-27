@@ -202,7 +202,7 @@ public class FenetreModifierUnPhar extends JDialog {
 				if (!userName.equalsIgnoreCase("admin")) {
 					
 					try {
-						conn.updateUserQuery(mdpActuel, userName, password1, firstName, surname);
+						conn.majPharQuery(mdpActuel, userName, password1, firstName, surname);
 						System.out.println("updated");
 					} catch (Exception e) {
 						// TODO Auto-generated catch block

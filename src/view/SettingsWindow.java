@@ -215,7 +215,7 @@ public class SettingsWindow extends JDialog {
 		if (reply == JOptionPane.YES_OPTION) {
 
 			try {
-				conn.removeAllQuery("Product");
+				conn.removeAllQuery("ProduitDetail");
 				System.out.println("removed");
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -241,7 +241,7 @@ public class SettingsWindow extends JDialog {
 		if (reply == JOptionPane.YES_OPTION) {
 
 			try {
-				conn.removeAllQuery("Category");
+				conn.removeAllQuery("Categorie");
 				System.out.println("removed");
 				JOptionPane.showMessageDialog(null, "All Categories removed.");
 			} catch (Exception e) {
@@ -289,7 +289,7 @@ public class SettingsWindow extends JDialog {
 						if(inputNewPassword1.equals(inputNewPassword2)){
 							
 							try {
-								conn.changePasswordQuery(inputNewPassword1);
+								conn.modifierMdpQuery(inputNewPassword1);
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();

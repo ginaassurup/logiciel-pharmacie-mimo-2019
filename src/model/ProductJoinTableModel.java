@@ -1,5 +1,5 @@
 /*
- * Product table model for join query
+ * ProduitDetail table model for join query
  */
 
 package model;
@@ -14,16 +14,19 @@ public class ProductJoinTableModel extends AbstractTableModel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static final int PRODUCT_ID_COL = 0;
-	private static final int PRODUCT_NAME_COL = 1;
-	private static final int CATEGORY_COL = 2;
-	private static final int TYPE_COL = 3;
-	private static final int STOCK_COL = 4;
-	private static final int UNIT_COL = 5;
-	private static final int STOCK_ALARM_COL = 6;
+	private static final int CODE_BARRE_COL = 0;
+	private static final int LIBELLE_PRODUIT_COL = 1;
+	private static final int CATEGORIE_COL = 2;
+	private static final int FORME_COL = 3;
+	private static final int QTTE_STOCK_COL = 4;
+	private static final int QTTE_STOCK_ALARME_COL = 5;
+	private static final int PRIX_VENTE_COL = 6;
+	private static final int PRIX_ACHAT_COL = 7;	
+	private static final int RAISON_SOCIALE_COL = 8;
 
-	private String[] columnNames = { "Product Id","Product Name", "Category", "Type",
-			"Stock", "Unit", "Stock Alarm"};
+
+	private String[] columnNames = { "Code barre","Libellé", "Catégorie", "Forme",
+			"Stock", "Alarme", "Prix de vente",  "Prix d'achat", "Fournisseur"};
 	
 	private List<ProductJoin> productsJoin;
 
@@ -53,20 +56,24 @@ public class ProductJoinTableModel extends AbstractTableModel {
 
 		switch (col) {
 		
-		case PRODUCT_ID_COL:
-			return tempProductJoin.getNum_prod();
-		case PRODUCT_NAME_COL:
+		case CODE_BARRE_COL:
+			return tempProductJoin.getCode_barre();
+		case LIBELLE_PRODUIT_COL:
 			return tempProductJoin.getLibelle_produit();
-		case CATEGORY_COL:
+		case CATEGORIE_COL:
 			return tempProductJoin.getNom_cat();
-		case TYPE_COL:
+		case FORME_COL:
 			return tempProductJoin.getForme();
-		case STOCK_COL:
+		case QTTE_STOCK_COL:
 			return tempProductJoin.getQtte_stock();
-		case UNIT_COL:
-			return tempProductJoin.getNom_four();
-		case STOCK_ALARM_COL:
+		case QTTE_STOCK_ALARME_COL:
 			return tempProductJoin.getQtte_stock_alarme();
+		case PRIX_VENTE_COL:
+			return tempProductJoin.getPrix_vente();
+		case PRIX_ACHAT_COL:
+			return tempProductJoin.getPrix_achat();
+		case RAISON_SOCIALE_COL:
+			return tempProductJoin.getRaison_sociale();
 
 		default:
 			return tempProductJoin.getLibelle_produit();
