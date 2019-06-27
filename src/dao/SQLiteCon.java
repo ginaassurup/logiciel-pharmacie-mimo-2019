@@ -756,7 +756,9 @@ public class SQLiteCon {
 			myStmt.setString(2, code_barre);
 
 			myStmt.execute();
-		} finally {
+		} catch (Exception e) {
+			
+		}finally {
 			close(myStmt, null);
 		}
 	}
