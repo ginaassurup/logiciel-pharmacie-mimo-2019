@@ -40,7 +40,7 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class AddProductWindow extends JDialog {
+public class AjouterLigneTicketFenetre extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 
@@ -70,7 +70,7 @@ public class AddProductWindow extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			AddProductWindow dialog = new AddProductWindow();
+			AjouterLigneTicketFenetre dialog = new AjouterLigneTicketFenetre();
 			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -82,7 +82,7 @@ public class AddProductWindow extends JDialog {
 	 * Create the dialog.
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public AddProductWindow() {
+	public AjouterLigneTicketFenetre() {
 
 		// initialise database connection
 		conn = new SQLiteCon();
