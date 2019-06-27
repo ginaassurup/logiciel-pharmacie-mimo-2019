@@ -172,8 +172,8 @@ public class MenuPrincipal extends JFrame{
 
 			// opens listePhar window
 			private void ouvrirUnitsWindow() {
-				UnitsWindow unitsWindow = new UnitsWindow();
-				unitsWindow.setVisible(true);
+				FournisseursFenetre fournisseursFenetre = new FournisseursFenetre();
+				fournisseursFenetre.setVisible(true);
 			}
 		});
 		
@@ -200,8 +200,8 @@ public class MenuPrincipal extends JFrame{
 
 			// opens listePhar window
 			private void openUsers() {
-				FenetrePharmaciens fenetrePharmaciens = new FenetrePharmaciens();
-				fenetrePharmaciens.setVisible(true);
+				PharmaciensFenetre pharmaciensFenetre = new PharmaciensFenetre();
+				pharmaciensFenetre.setVisible(true);
 			}
 		});
 		btnPharmaciens.setPreferredSize(new Dimension(260, 60));

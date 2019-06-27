@@ -1,5 +1,5 @@
 /*
- * Add User Window class
+ * Edit User class
  */
 package view;
 
@@ -26,7 +26,7 @@ import java.awt.event.ActionEvent;
 import java.util.List;
 import java.awt.Font;
 
-public class FenetreAjouterUnPhar extends JDialog {
+public class ModifierUnFourFenetre extends JDialog {
 
 	/**
 	 * 
@@ -38,51 +38,13 @@ public class FenetreAjouterUnPhar extends JDialog {
 
 	List<PharmacienDetail> listePhar;
 
-	private JTextField textFieldIdentifiant;
-	private JPasswordField mdpField;
-	private JTextField textFieldPrenom;
-	private JTextField textFieldNom;
-	private JPasswordField mdpField2;
-
-	public JTextField getTextFieldIdentifiant() {
-		return textFieldIdentifiant;
-	}
-
-	public void setTextFieldIdentifiant(JTextField textFieldUserName) {
-		this.textFieldIdentifiant = textFieldUserName;
-	}
-
-	public JPasswordField getMdpField() {
-		return mdpField;
-	}
-
-	public void setMdpField(JPasswordField passwordField) {
-		this.mdpField = passwordField;
-	}
-
-	public JTextField getTextFieldPrenom() {
-		return textFieldPrenom;
-	}
-
-	public void setTextFieldPrenom(JTextField textFieldFirstName) {
-		this.textFieldPrenom = textFieldFirstName;
-	}
-
-	public JTextField getTextFieldNom() {
-		return textFieldNom;
-	}
-
-	public void setTextFieldNom(JTextField textFieldSurname) {
-		this.textFieldNom = textFieldSurname;
-	}
-
-	public JPasswordField getMdpField2() {
-		return mdpField2;
-	}
-
-	public void setMdpField2(JPasswordField passwordField2) {
-		this.mdpField2 = passwordField2;
-	}
+	JTextField textFieldIdentifiant;
+	JPasswordField mdpField;
+	JTextField textFieldPrenom;
+	JTextField textFieldNom;
+	JPasswordField mdpField2;
+	
+	String mdpActuel;
 
 	/**
 	 * Launch the application.
@@ -91,7 +53,7 @@ public class FenetreAjouterUnPhar extends JDialog {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FenetreAjouterUnPhar dialog = new FenetreAjouterUnPhar();
+					ModifierUnFourFenetre dialog = new ModifierUnFourFenetre();
 					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					dialog.setVisible(true);
 				} catch (Exception e) {
@@ -104,18 +66,20 @@ public class FenetreAjouterUnPhar extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public FenetreAjouterUnPhar() {
-		
+	public ModifierUnFourFenetre() {
+		getContentPane().setForeground(Color.BLACK);
+		getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 14));
+
 		// initialise database connection
 		conn = new SQLiteCon();
 
 		setResizable(false);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(FenetreAjouterUnPhar.class.getResource("/view/User.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(ModifierUnFourFenetre.class.getResource("/view/User.png")));
 		setModal(true);
-		setTitle("Ajouter un pharmacien");
+		setTitle("Modifier le profil d' un fournisseur");
 		setBounds(100, 100, 968, 600);
-		getContentPane().setBackground(Color.WHITE);
 		getContentPane().setLayout(null);
+		getContentPane().setBackground(Color.WHITE);
 
 		textFieldIdentifiant = new JTextField();
 		textFieldIdentifiant.setBounds(427, 155, 180, 30);
@@ -137,10 +101,11 @@ public class FenetreAjouterUnPhar extends JDialog {
 		getContentPane().add(textFieldNom);
 
 		JButton btnValider = new JButton("Valider");
+		btnValider.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnValider.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				addUser();
+				majPhar();
 				OuvrirFenetrePharmaciens();
 			}
 		});
@@ -150,7 +115,7 @@ public class FenetreAjouterUnPhar extends JDialog {
 
 		JLabel label = new JLabel("");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setIcon(new ImageIcon(FenetreAjouterUnPhar.class
+		label.setIcon(new ImageIcon(ModifierUnFourFenetre.class
 				.getResource("/view/User.png")));
 		label.setBounds(56, 118, 95, 93);
 		getContentPane().add(label);
@@ -199,85 +164,61 @@ public class FenetreAjouterUnPhar extends JDialog {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
 				OuvrirFenetrePharmaciens();
-			}		
+			}
 		});
 		btnRetour.setBounds(12, 13, 97, 25);
 		getContentPane().add(btnRetour);
 		
-		JLabel lblAjouterUnPharmacien = new JLabel("Ajouter un pharmacien");
-		lblAjouterUnPharmacien.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAjouterUnPharmacien.setForeground(new Color(165, 42, 42));
-		lblAjouterUnPharmacien.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblAjouterUnPharmacien.setBounds(248, 83, 498, 25);
-		getContentPane().add(lblAjouterUnPharmacien);
+		JLabel lblAjoutDunPharmacien = new JLabel("Modifier le profil du fournisseur");
+		lblAjoutDunPharmacien.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAjoutDunPharmacien.setForeground(new Color(165, 42, 42));
+		lblAjoutDunPharmacien.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblAjoutDunPharmacien.setBounds(248, 83, 498, 25);
+		getContentPane().add(lblAjoutDunPharmacien);
 		setLocationRelativeTo(null);
 	}
 
 	// Ouvrir la fenetre de la liste des Pharmaciens
 	private void OuvrirFenetrePharmaciens() {
 		
-		FenetrePharmaciens fenetrePharmaciens = new FenetrePharmaciens();
-		fenetrePharmaciens.setVisible(true);
+		PharmaciensFenetre pharmaciensFenetre = new PharmaciensFenetre();
+		pharmaciensFenetre.setVisible(true);
 	}
 
-	// adds user
-	private void addUser() {
+	// Mettre à jour le profil du pharmacien
+	private void majPhar() {
 
-		String userName = textFieldIdentifiant.getText().trim();
-		@SuppressWarnings("deprecation")
-		String password = mdpField.getText().trim();
-		String firstName = textFieldPrenom.getText().trim();
-		String surname = textFieldNom.getText().trim();
-
-		try {
-			listePhar = conn.getAllUsers();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		// if not empty
 		if (!emptyFields()) {
-			// if password match
+			
+			String userName = textFieldIdentifiant.getText().trim();
+			String password1 = new String(mdpField.getPassword());
+			@SuppressWarnings("unused")
+			String password2 = new String(mdpField2.getPassword());
+			String firstName = textFieldPrenom.getText().trim();
+			String surname = textFieldNom.getText().trim();
+
 			if (passwordMatch()) {
-				System.out.println("Avant d'essayer...");
+
+				if (!userName.equalsIgnoreCase("admin")) {
 					
-				// check if exists
-				boolean userExists = false;
-				for (int i = 0; i < listePhar.size(); i++) {
-					if (listePhar.get(i).getIdentifiant().equalsIgnoreCase(userName)) {
-
-						System.out.println("Exists " + listePhar.get(i).getIdentifiant()
-								+ " " + userName);
-						userExists = true;
-						break;
-					}
-				}
-
-				// if doesn't exist
-				if (!userExists) {
 					try {
-						conn.insertUserQuery(userName, password, firstName, surname);
-						System.out.println("Ajout d'un pharmacien dans la BDD avec succès");
-						setVisible(false);
+						conn.majPharQuery(mdpActuel, userName, password1, firstName, surname);
+						System.out.println("updated");
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					
+					dispose();
 				} else {
-					JOptionPane.showMessageDialog(null,
-							"Ce pharmacien existe déjà");
-				}		
-				
-				
-			} else {
-				JOptionPane.showMessageDialog(null, "Le mot de passe ne correspond pas !");
-			}
+					JOptionPane.showMessageDialog(null, "You cannot rename user into \"admin\".");
+				}
 
+			} else {
+				JOptionPane.showMessageDialog(null, "Password doesn't match.");
+			}
 		} else {
 			JOptionPane.showMessageDialog(null,
-					"Veuillez remplir les champs requis.");
+					"Make sure that all required fields are filled.");
 		}
 
 	}

@@ -450,8 +450,8 @@ public class EditProductWindow extends JDialog {
 	// opens Units window
 	private void openUnits() {
 
-		UnitsWindow unitsWindow = new UnitsWindow();
-		unitsWindow.setVisible(true);
+		FournisseursFenetre fournisseursFenetre = new FournisseursFenetre();
+		fournisseursFenetre.setVisible(true);
 
 		// refreshes combobox after change
 		SwingUtilities.invokeLater(new Runnable() {
@@ -462,7 +462,7 @@ public class EditProductWindow extends JDialog {
 				DefaultComboBoxModel model = new DefaultComboBoxModel(
 						getUnitsToCombo());
 				comboBoxUnits.setModel(model);
-				comboBoxUnits.setSelectedItem(unitsWindow.newUnit);
+				comboBoxUnits.setSelectedItem(fournisseursFenetre.newUnit);
 			}
 		});
 

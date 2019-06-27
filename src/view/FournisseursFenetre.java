@@ -34,7 +34,7 @@ import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
-public class UnitsWindow extends JDialog {
+public class FournisseursFenetre extends JDialog {
 
 	/**
 	 * 
@@ -59,7 +59,7 @@ public class UnitsWindow extends JDialog {
 			@Override
 			public void run() {
 				try {
-					UnitsWindow dialog = new UnitsWindow();
+					FournisseursFenetre dialog = new FournisseursFenetre();
 					dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 					dialog.setVisible(true);
 				} catch (Exception e) {
@@ -73,14 +73,14 @@ public class UnitsWindow extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public UnitsWindow() {
+	public FournisseursFenetre() {
 		getContentPane().setFocusTraversalKeysEnabled(false);
 
 		// connect to database
 		conn = new SQLiteCon();
 
-		setIconImage(Toolkit.getDefaultToolkit().getImage(UnitsWindow.class.getResource("/view/logo_new.png")));
-		setTitle("In - Units");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(FournisseursFenetre.class.getResource("/view/logo_new.png")));
+		setTitle("iste des pharmaciens");
 		setModal(true);
 		setResizable(false);
 		setBounds(100, 100, 968, 700);
@@ -141,7 +141,7 @@ public class UnitsWindow extends JDialog {
 		btnRemove.setBounds(32, 192, 88, 23);
 		getContentPane().add(btnRemove);
 
-		JButton btnEdit = new JButton("Edit");
+		JButton btnEdit = new JButton("Modifier");
 		btnEdit.setBackground(new Color(204, 204, 204));
 		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -154,9 +154,22 @@ public class UnitsWindow extends JDialog {
 		btnEdit.setBounds(32, 222, 88, 23);
 		getContentPane().add(btnEdit);
 		
-		JButton button = new JButton("Retour");
-		button.setBounds(14, 13, 97, 25);
-		getContentPane().add(button);
+		JButton btnRetour = new JButton("Retour");
+		btnRetour.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+				OuvrirMenuPrincipal();
+			}
+
+			// Ouvrir le menu principal
+			private void OuvrirMenuPrincipal() {
+				
+				MenuPrincipal menuPrincipal = new MenuPrincipal();
+				menuPrincipal.getFrmMenuPrincipal().setVisible(true);
+			}
+		});
+		btnRetour.setBounds(14, 13, 97, 25);
+		getContentPane().add(btnRetour);
 		
 		JLabel lblListeDesFournisseurs = new JLabel("Liste des fournisseurs");
 		lblListeDesFournisseurs.setHorizontalAlignment(SwingConstants.CENTER);
@@ -198,10 +211,10 @@ public class UnitsWindow extends JDialog {
 	// add category
 	private void ajouterUnFour() {
 		// Ajouter un pharmacien
-		FenetreAjouterUnFour fenetreAjouterUnFour = new FenetreAjouterUnFour();
+		AjouterUnFourFenetre ajouterUnFourFenetre = new AjouterUnFourFenetre();
 		dispose();
-		fenetreAjouterUnFour.setVisible(true);
-		while (fenetreAjouterUnFour.isVisible()) {
+		ajouterUnFourFenetre.setVisible(true);
+		while (ajouterUnFourFenetre.isVisible()) {
 
 		}
 		getListeFourToTable();
@@ -301,7 +314,9 @@ public class UnitsWindow extends JDialog {
 
 		// if row selected
 		if (!(tableListeFour.getSelectedRow() == -1)) {
-
+			ModifierUnFourFenetre modifierUnFourFenetre = new ModifierUnFourFenetre();
+			modifierUnFourFenetre.setVisible(true);
+			
 			int idCol = 0;
 			int nameCol = 1;
 			int selectedRow = tableListeFour.getSelectedRow();

@@ -90,7 +90,7 @@ public class MainWindow extends JFrame {
 	CategoriesWindow categoriesWindow;
 
 	// Units Window declaration
-	UnitsWindow unitsWindow;
+	FournisseursFenetre fournisseursFenetre;
 
 	// database class declaration
 	SQLiteCon conn;

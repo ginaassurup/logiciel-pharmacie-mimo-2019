@@ -26,7 +26,7 @@ import java.awt.event.ActionEvent;
 import java.util.List;
 import java.awt.Font;
 
-public class FenetreAjouterUnFour extends JDialog {
+public class AjouterUnFourFenetre extends JDialog {
 
 	/**
 	 * 
@@ -82,7 +82,7 @@ public class FenetreAjouterUnFour extends JDialog {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FenetreAjouterUnFour dialog = new FenetreAjouterUnFour();
+					AjouterUnFourFenetre dialog = new AjouterUnFourFenetre();
 					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					dialog.setVisible(true);
 				} catch (Exception e) {
@@ -95,13 +95,13 @@ public class FenetreAjouterUnFour extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public FenetreAjouterUnFour() {
+	public AjouterUnFourFenetre() {
 		
 		// initialise database connection
 		conn = new SQLiteCon();
 
 		setResizable(false);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(FenetreAjouterUnFour.class.getResource("/view/User.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(AjouterUnFourFenetre.class.getResource("/view/User.png")));
 		setModal(true);
 		setTitle("Ajouter un pharmacien");
 		setBounds(100, 100, 968, 600);
@@ -141,7 +141,7 @@ public class FenetreAjouterUnFour extends JDialog {
 
 		JLabel label = new JLabel("");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setIcon(new ImageIcon(FenetreAjouterUnFour.class
+		label.setIcon(new ImageIcon(AjouterUnFourFenetre.class
 				.getResource("/view/User.png")));
 		label.setBounds(56, 118, 95, 93);
 		getContentPane().add(label);
@@ -196,8 +196,8 @@ public class FenetreAjouterUnFour extends JDialog {
 	// Ouvrir la fenetre de la liste des Pharmaciens
 	private void OuvrirFenetreUnitsWindow() {
 		
-		UnitsWindow unitsWindow = new UnitsWindow();
-		unitsWindow.setVisible(true);
+		FournisseursFenetre fournisseursFenetre = new FournisseursFenetre();
+		fournisseursFenetre.setVisible(true);
 	}
 
 	// adds Fournisseurs
