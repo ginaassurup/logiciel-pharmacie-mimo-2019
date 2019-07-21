@@ -285,19 +285,19 @@ public class EditProductWindow extends JDialog {
 			if (reply == JOptionPane.YES_OPTION) {
 
 				String newProdName = textFieldName.getText().toString().trim();
-				String catName = comboBoxCategory.getSelectedItem().toString()
+				String nom_cat = comboBoxCategory.getSelectedItem().toString()
 						.trim();
-				String typeName = textFieldType.getText().toString().trim();
-				String quantityName = textFieldStock.getText().toString()
+				String forme = textFieldType.getText().toString().trim();
+				String qtte_stock = textFieldStock.getText().toString()
 						.trim();
-				String unitName = comboBoxUnits.getSelectedItem().toString()
-						.trim();
-
-				String stockAlarm = textFieldStockAlarm.getText().toString()
+				String nom_four = comboBoxUnits.getSelectedItem().toString()
 						.trim();
 
-				if (stockAlarm.equalsIgnoreCase("")) {
-					stockAlarm = "0";
+				String qtte_stock_alarme = textFieldStockAlarm.getText().toString()
+						.trim();
+
+				if (qtte_stock_alarme.equalsIgnoreCase("")) {
+					qtte_stock_alarme = "0";
 				}
 
 				System.out.println("current: " + currentProductName
@@ -323,7 +323,7 @@ public class EditProductWindow extends JDialog {
 					nameChanged = true;
 				}
 
-				if (!typeName.equalsIgnoreCase(currentTypeName)){
+				if (!forme.equalsIgnoreCase(currentTypeName)){
 					typeChanged = true;
 				}
 				
@@ -332,7 +332,7 @@ public class EditProductWindow extends JDialog {
 					if (products.get(i).getLibelle_produit().equalsIgnoreCase(newProdName)) {
 
 						productExists = true;
-						if (products.get(i).getForme().equalsIgnoreCase(typeName)) {
+						if (products.get(i).getForme().equalsIgnoreCase(forme)) {
 							typeExists = true;
 							break;
 						}
@@ -357,8 +357,8 @@ public class EditProductWindow extends JDialog {
 				if (!bothExists || !nameChanged && !typeChanged) {
 					try {
 						conn.updateProductQuery(currentId, currentProductName,
-								newProdName, catName, typeName, quantityName,
-								unitName, stockAlarm);
+								newProdName, nom_cat, forme, qtte_stock,
+								nom_four, qtte_stock_alarme);
 
 					} catch (Exception e) {
 						// TODO Auto-generated catch block

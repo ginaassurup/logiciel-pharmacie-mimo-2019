@@ -19,7 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 
 import dao.SQLiteCon;
-import model.PharmacienDetail;
+import model.Unit;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -36,15 +36,15 @@ public class ModifierUnFourFenetre extends JDialog {
 	// database class declaration
 	SQLiteCon conn;
 
-	List<PharmacienDetail> listePhar;
+	List<Unit> listeFour;
 
-	JTextField textFieldIdentifiant;
-	JPasswordField mdpField;
-	JTextField textFieldPrenom;
-	JTextField textFieldNom;
-	JPasswordField mdpField2;
+	JTextField textFieldRaisonSociale;
+	JTextField textFieldAdresseFour;
+	JTextField textFieldCodePostalFour;
+	JTextField textFieldVilleFour;
+
+	String num_phar;
 	
-	String mdpActuel;
 
 	/**
 	 * Launch the application.
@@ -76,37 +76,40 @@ public class ModifierUnFourFenetre extends JDialog {
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ModifierUnFourFenetre.class.getResource("/view/User.png")));
 		setModal(true);
-		setTitle("Modifier le profil d' un fournisseur");
+		setTitle("Modifier le profil d'un fournisseur");
 		setBounds(100, 100, 968, 600);
 		getContentPane().setLayout(null);
 		getContentPane().setBackground(Color.WHITE);
 
-		textFieldIdentifiant = new JTextField();
-		textFieldIdentifiant.setBounds(427, 155, 180, 30);
-		getContentPane().add(textFieldIdentifiant);
-		textFieldIdentifiant.setColumns(10);
+		textFieldRaisonSociale = new JTextField();
+		textFieldRaisonSociale.setBounds(427, 155, 180, 30);
+		getContentPane().add(textFieldRaisonSociale);
+		textFieldRaisonSociale.setColumns(10);
 
-		mdpField = new JPasswordField();
-		mdpField.setBounds(427, 202, 180, 30);
-		getContentPane().add(mdpField);
+		textFieldAdresseFour = new JTextField();
+		textFieldAdresseFour.setBounds(427, 202, 180, 30);
+		getContentPane().add(textFieldAdresseFour);
+		textFieldAdresseFour.setColumns(10);
 
-		textFieldPrenom = new JTextField();
-		textFieldPrenom.setColumns(10);
-		textFieldPrenom.setBounds(427, 290, 180, 30);
-		getContentPane().add(textFieldPrenom);
+		textFieldCodePostalFour = new JTextField();
+		textFieldCodePostalFour.setColumns(10);
+		textFieldCodePostalFour.setBounds(427, 290, 180, 30);
+		getContentPane().add(textFieldCodePostalFour);
+		textFieldCodePostalFour.setColumns(10);
 
-		textFieldNom = new JTextField();
-		textFieldNom.setColumns(10);
-		textFieldNom.setBounds(427, 333, 180, 30);
-		getContentPane().add(textFieldNom);
+		textFieldVilleFour = new JTextField();
+		textFieldVilleFour.setColumns(10);
+		textFieldVilleFour.setBounds(427, 333, 180, 30);
+		getContentPane().add(textFieldVilleFour);
+		textFieldVilleFour.setColumns(10);
 
 		JButton btnValider = new JButton("Valider");
 		btnValider.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnValider.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				majPhar();
-				OuvrirFenetrePharmaciens();
+				majFour();
+				OuvrirFenetreFournisseurs();
 			}
 		});
 		btnValider.setBounds(427, 389, 180, 30);
@@ -120,39 +123,28 @@ public class ModifierUnFourFenetre extends JDialog {
 		label.setBounds(56, 118, 95, 93);
 		getContentPane().add(label);
 
-		mdpField2 = new JPasswordField();
-		mdpField2.setBounds(427, 247, 180, 30);
-		getContentPane().add(mdpField2);
-
-		JLabel lbIdentifiant = new JLabel("Identifiant*:");
+		JLabel lbIdentifiant = new JLabel("Raison sociale *");
 		lbIdentifiant.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lbIdentifiant.setForeground(Color.BLACK);
 		lbIdentifiant.setHorizontalAlignment(SwingConstants.RIGHT);
 		lbIdentifiant.setBounds(301, 162, 116, 14);
 		getContentPane().add(lbIdentifiant);
 
-		JLabel lbMdp = new JLabel("Mot de passe*:");
+		JLabel lbMdp = new JLabel("Adresse");
 		lbMdp.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lbMdp.setForeground(Color.BLACK);
 		lbMdp.setHorizontalAlignment(SwingConstants.RIGHT);
 		lbMdp.setBounds(301, 209, 116, 14);
 		getContentPane().add(lbMdp);
 
-		JLabel lbConfirmerMdp = new JLabel("Confirmer le mot de passe*:");
-		lbConfirmerMdp.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lbConfirmerMdp.setForeground(Color.BLACK);
-		lbConfirmerMdp.setHorizontalAlignment(SwingConstants.RIGHT);
-		lbConfirmerMdp.setBounds(213, 254, 204, 14);
-		getContentPane().add(lbConfirmerMdp);
-
-		JLabel lbPrenom = new JLabel("Pr\u00E9nom");
+		JLabel lbPrenom = new JLabel("Code postal");
 		lbPrenom.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lbPrenom.setForeground(Color.BLACK);
 		lbPrenom.setHorizontalAlignment(SwingConstants.RIGHT);
 		lbPrenom.setBounds(248, 297, 169, 14);
 		getContentPane().add(lbPrenom);
 
-		JLabel lbNom = new JLabel("Nom");
+		JLabel lbNom = new JLabel("Ville");
 		lbNom.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lbNom.setForeground(Color.BLACK);
 		lbNom.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -163,7 +155,7 @@ public class ModifierUnFourFenetre extends JDialog {
 		btnRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
-				OuvrirFenetrePharmaciens();
+				OuvrirFenetreFournisseurs();
 			}
 		});
 		btnRetour.setBounds(12, 13, 97, 25);
@@ -179,43 +171,33 @@ public class ModifierUnFourFenetre extends JDialog {
 	}
 
 	// Ouvrir la fenetre de la liste des Pharmaciens
-	private void OuvrirFenetrePharmaciens() {
+	private void OuvrirFenetreFournisseurs() {
 		
-		PharmaciensFenetre pharmaciensFenetre = new PharmaciensFenetre();
-		pharmaciensFenetre.setVisible(true);
+		FournisseursFenetre fournisseursFenetre = new FournisseursFenetre();
+		fournisseursFenetre.setVisible(true);
 	}
 
 	// Mettre à jour le profil du pharmacien
-	private void majPhar() {
+	private void majFour() {
 
 		if (!emptyFields()) {
 			
-			String userName = textFieldIdentifiant.getText().trim();
-			String password1 = new String(mdpField.getPassword());
-			@SuppressWarnings("unused")
-			String password2 = new String(mdpField2.getPassword());
-			String firstName = textFieldPrenom.getText().trim();
-			String surname = textFieldNom.getText().trim();
-
-			if (passwordMatch()) {
-
-				if (!userName.equalsIgnoreCase("admin")) {
-					
-					try {
-						conn.majPharQuery(mdpActuel, userName, password1, firstName, surname);
-						System.out.println("updated");
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					dispose();
-				} else {
-					JOptionPane.showMessageDialog(null, "You cannot rename user into \"admin\".");
-				}
-
-			} else {
-				JOptionPane.showMessageDialog(null, "Password doesn't match.");
+			String raison_sociale = textFieldRaisonSociale.getText().trim();
+//			String password1 = new String(mdpField.getPassword());
+//			@SuppressWarnings("unused")
+//			String password2 = new String(mdpField2.getPassword());
+			String adresse_four = textFieldAdresseFour.getText().trim();
+			String code_postal_four = textFieldCodePostalFour.getText().trim();
+			String ville_four = textFieldVilleFour.getText().trim();
+	
+			try {
+				conn.majFourQuery(num_phar, raison_sociale, adresse_four, code_postal_four, ville_four);
+				System.out.println("updated");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
+			dispose();
 		} else {
 			JOptionPane.showMessageDialog(null,
 					"Make sure that all required fields are filled.");
@@ -227,28 +209,21 @@ public class ModifierUnFourFenetre extends JDialog {
 	@SuppressWarnings("deprecation")
 	private boolean emptyFields() {
 
-		boolean userName, password1, password2;
+		boolean raison_sociale, adresse_four, code_postal_four, ville_four;
 
-		userName = textFieldIdentifiant.getText().trim().equalsIgnoreCase("") ? true
+		raison_sociale = textFieldRaisonSociale.getText().trim().equalsIgnoreCase("") ? true
 				: false;
-		password1 = mdpField.getText().trim().equalsIgnoreCase("") ? true
+		adresse_four = textFieldAdresseFour.getText().trim().equalsIgnoreCase("") ? true
 				: false;
-		password2 = mdpField2.getText().trim().equalsIgnoreCase("") ? true
+		code_postal_four = textFieldCodePostalFour.getText().trim().equalsIgnoreCase("") ? true
+				: false;
+		ville_four = textFieldVilleFour.getText().trim().equalsIgnoreCase("") ? true
 				: false;
 
-		if (!userName || !password1 || !password2) {
+		if (!raison_sociale || !adresse_four || !code_postal_four || !ville_four) {
 			return false;
 		} else
 			return true;
 	}
 
-	// checks if password match
-	private boolean passwordMatch() {
-
-		@SuppressWarnings("deprecation")
-		boolean match = mdpField.getText().trim()
-				.equals(mdpField2.getText().trim()) ? true : false;
-
-		return match;
-	}
 }

@@ -63,16 +63,16 @@ public class AjouterUnFourFenetre extends JDialog {
 		return textFieldCodePostalFour;
 	}
 
-	public void setTextFieldCodePostalFour(JTextField textFieldFirstName) {
-		this.textFieldCodePostalFour = textFieldFirstName;
+	public void setTextFieldCodePostalFour(JTextField textFieldCodePostalFour) {
+		this.textFieldCodePostalFour = textFieldCodePostalFour;
 	}
 
 	public JTextField getTextFieldVilleFour() {
 		return textFieldVilleFour;
 	}
 
-	public void setTextFieldVilleFour(JTextField textFieldSurname) {
-		this.textFieldVilleFour = textFieldSurname;
+	public void setTextFieldVilleFour(JTextField textFieldVilleFour) {
+		this.textFieldVilleFour = textFieldVilleFour;
 	}
 
 	/**
@@ -206,8 +206,8 @@ public class AjouterUnFourFenetre extends JDialog {
 		String raison_sociale = textFieldRaisonSociale.getText().trim();
 		@SuppressWarnings("deprecation")
 		String adresse_four = textFieldAdresseFour.getText().trim();
-		String firstName = textFieldCodePostalFour.getText().trim();
-		String surname = textFieldVilleFour.getText().trim();
+		String code_postal_four = textFieldCodePostalFour.getText().trim();
+		String ville_four = textFieldVilleFour.getText().trim();
 
 		try {
 			listePhar = conn.getAllUnits();
@@ -222,22 +222,38 @@ public class AjouterUnFourFenetre extends JDialog {
 //					"Veuillez remplir les champs requis.");
 //		}
 
-	}
 
+		
+		// if doesn't exist
+		if (!emptyFields()) {
+			try {
+				conn.insertFourQuery(raison_sociale, adresse_four, code_postal_four, ville_four);
+				System.out.println("Ajout d'un fournisseur dans la BDD avec succès");
+				setVisible(false);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		} else {
+			JOptionPane.showMessageDialog(null,
+					"Ce pharmacien existe déjà");
+		}
+	}
+	
 	// checks if empty
-	@SuppressWarnings("deprecation")
 	private boolean emptyFields() {
 
-		boolean raison_sociale, adresse_four;
+		boolean raison_socialeExists;
 
-		raison_sociale = textFieldRaisonSociale.getText().trim().equalsIgnoreCase("") ? true
-				: false;
-		adresse_four = textFieldAdresseFour.getText().trim().equalsIgnoreCase("") ? true
+		raison_socialeExists = textFieldRaisonSociale.getText().trim().equalsIgnoreCase("") ? true
 				: false;
 
-		if (!raison_sociale || !adresse_four ) {
+		if (!raison_socialeExists) {
 			return false;
 		} else
 			return true;
 	}
+
+	
 }
