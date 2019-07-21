@@ -1,5 +1,5 @@
 /*
- * Add User Window class
+ * Edit User class
  */
 package view;
 
@@ -12,7 +12,7 @@ import java.awt.Toolkit;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.JTextField;
+import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
@@ -26,7 +26,7 @@ import java.awt.event.ActionEvent;
 import java.util.List;
 import java.awt.Font;
 
-public class FenetreAjouterUnFour extends JDialog {
+public class ModifierUnFourFenetre extends JDialog {
 
 	/**
 	 * 
@@ -36,44 +36,15 @@ public class FenetreAjouterUnFour extends JDialog {
 	// database class declaration
 	SQLiteCon conn;
 
-	List<Unit> listePhar;
+	List<Unit> listeFour;
 
-	private JTextField textFieldRaisonSociale;
-	private JTextField textFieldAdresseFour;
-	private JTextField textFieldCodePostalFour;
-	private JTextField textFieldVilleFour;
+	JTextField textFieldRaisonSociale;
+	JTextField textFieldAdresseFour;
+	JTextField textFieldCodePostalFour;
+	JTextField textFieldVilleFour;
 
-	public JTextField getTextFieldRaisonSociale() {
-		return textFieldRaisonSociale;
-	}
-
-	public void setTextFieldRaisonSociale(JTextField textFieldUserName) {
-		this.textFieldRaisonSociale = textFieldUserName;
-	}
-
-	public JTextField getTextFieldAdresseFour() {
-		return textFieldAdresseFour;
-	}
-
-	public void setTextFieldAdresseFour(JTextField passwordField) {
-		this.textFieldAdresseFour = passwordField;
-	}
-
-	public JTextField getTextFieldCodePostalFour() {
-		return textFieldCodePostalFour;
-	}
-
-	public void setTextFieldCodePostalFour(JTextField textFieldFirstName) {
-		this.textFieldCodePostalFour = textFieldFirstName;
-	}
-
-	public JTextField getTextFieldVilleFour() {
-		return textFieldVilleFour;
-	}
-
-	public void setTextFieldVilleFour(JTextField textFieldSurname) {
-		this.textFieldVilleFour = textFieldSurname;
-	}
+	String num_phar;
+	
 
 	/**
 	 * Launch the application.
@@ -82,7 +53,7 @@ public class FenetreAjouterUnFour extends JDialog {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FenetreAjouterUnFour dialog = new FenetreAjouterUnFour();
+					ModifierUnFourFenetre dialog = new ModifierUnFourFenetre();
 					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					dialog.setVisible(true);
 				} catch (Exception e) {
@@ -95,18 +66,20 @@ public class FenetreAjouterUnFour extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public FenetreAjouterUnFour() {
-		
+	public ModifierUnFourFenetre() {
+		getContentPane().setForeground(Color.BLACK);
+		getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 14));
+
 		// initialise database connection
 		conn = new SQLiteCon();
 
 		setResizable(false);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(FenetreAjouterUnFour.class.getResource("/view/User.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(ModifierUnFourFenetre.class.getResource("/view/User.png")));
 		setModal(true);
-		setTitle("Ajouter un pharmacien");
+		setTitle("Modifier le profil d'un fournisseur");
 		setBounds(100, 100, 968, 600);
-		getContentPane().setBackground(Color.WHITE);
 		getContentPane().setLayout(null);
+		getContentPane().setBackground(Color.WHITE);
 
 		textFieldRaisonSociale = new JTextField();
 		textFieldRaisonSociale.setBounds(427, 155, 180, 30);
@@ -116,23 +89,27 @@ public class FenetreAjouterUnFour extends JDialog {
 		textFieldAdresseFour = new JTextField();
 		textFieldAdresseFour.setBounds(427, 202, 180, 30);
 		getContentPane().add(textFieldAdresseFour);
+		textFieldAdresseFour.setColumns(10);
 
 		textFieldCodePostalFour = new JTextField();
 		textFieldCodePostalFour.setColumns(10);
 		textFieldCodePostalFour.setBounds(427, 290, 180, 30);
 		getContentPane().add(textFieldCodePostalFour);
+		textFieldCodePostalFour.setColumns(10);
 
 		textFieldVilleFour = new JTextField();
 		textFieldVilleFour.setColumns(10);
 		textFieldVilleFour.setBounds(427, 333, 180, 30);
 		getContentPane().add(textFieldVilleFour);
+		textFieldVilleFour.setColumns(10);
 
 		JButton btnValider = new JButton("Valider");
+		btnValider.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnValider.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				addFour();
-				OuvrirFenetreUnitsWindow();
+				majFour();
+				OuvrirFenetreFournisseurs();
 			}
 		});
 		btnValider.setBounds(427, 389, 180, 30);
@@ -141,7 +118,7 @@ public class FenetreAjouterUnFour extends JDialog {
 
 		JLabel label = new JLabel("");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setIcon(new ImageIcon(FenetreAjouterUnFour.class
+		label.setIcon(new ImageIcon(ModifierUnFourFenetre.class
 				.getResource("/view/User.png")));
 		label.setBounds(56, 118, 95, 93);
 		getContentPane().add(label);
@@ -178,49 +155,53 @@ public class FenetreAjouterUnFour extends JDialog {
 		btnRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
-				OuvrirFenetreUnitsWindow();
-			}		
+				OuvrirFenetreFournisseurs();
+			}
 		});
 		btnRetour.setBounds(12, 13, 97, 25);
 		getContentPane().add(btnRetour);
 		
-		JLabel lblAjouterUnPharmacien = new JLabel("Ajouter un fournisseur");
-		lblAjouterUnPharmacien.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAjouterUnPharmacien.setForeground(new Color(165, 42, 42));
-		lblAjouterUnPharmacien.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblAjouterUnPharmacien.setBounds(248, 83, 498, 25);
-		getContentPane().add(lblAjouterUnPharmacien);
+		JLabel lblAjoutDunPharmacien = new JLabel("Modifier le profil du fournisseur");
+		lblAjoutDunPharmacien.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAjoutDunPharmacien.setForeground(new Color(165, 42, 42));
+		lblAjoutDunPharmacien.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblAjoutDunPharmacien.setBounds(248, 83, 498, 25);
+		getContentPane().add(lblAjoutDunPharmacien);
 		setLocationRelativeTo(null);
 	}
 
 	// Ouvrir la fenetre de la liste des Pharmaciens
-	private void OuvrirFenetreUnitsWindow() {
+	private void OuvrirFenetreFournisseurs() {
 		
-		UnitsWindow unitsWindow = new UnitsWindow();
-		unitsWindow.setVisible(true);
+		FournisseursFenetre fournisseursFenetre = new FournisseursFenetre();
+		fournisseursFenetre.setVisible(true);
 	}
 
-	// adds Fournisseurs
-	private void addFour() {
+	// Mettre à jour le profil du pharmacien
+	private void majFour() {
 
-		String raison_sociale = textFieldRaisonSociale.getText().trim();
-		@SuppressWarnings("deprecation")
-		String adresse_four = textFieldAdresseFour.getText().trim();
-		String firstName = textFieldCodePostalFour.getText().trim();
-		String surname = textFieldVilleFour.getText().trim();
-
-		try {
-			listePhar = conn.getAllUnits();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		if (!emptyFields()) {
+			
+			String raison_sociale = textFieldRaisonSociale.getText().trim();
+//			String password1 = new String(mdpField.getPassword());
+//			@SuppressWarnings("unused")
+//			String password2 = new String(mdpField2.getPassword());
+			String adresse_four = textFieldAdresseFour.getText().trim();
+			String code_postal_four = textFieldCodePostalFour.getText().trim();
+			String ville_four = textFieldVilleFour.getText().trim();
+	
+			try {
+				conn.majFourQuery(num_phar, raison_sociale, adresse_four, code_postal_four, ville_four);
+				System.out.println("updated");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			dispose();
+		} else {
+			JOptionPane.showMessageDialog(null,
+					"Make sure that all required fields are filled.");
 		}
-		
-		// if not empty
-//		if (!emptyFields()) {
-//			JOptionPane.showMessageDialog(null,
-//					"Veuillez remplir les champs requis.");
-//		}
 
 	}
 
@@ -228,16 +209,21 @@ public class FenetreAjouterUnFour extends JDialog {
 	@SuppressWarnings("deprecation")
 	private boolean emptyFields() {
 
-		boolean raison_sociale, adresse_four;
+		boolean raison_sociale, adresse_four, code_postal_four, ville_four;
 
 		raison_sociale = textFieldRaisonSociale.getText().trim().equalsIgnoreCase("") ? true
 				: false;
 		adresse_four = textFieldAdresseFour.getText().trim().equalsIgnoreCase("") ? true
 				: false;
+		code_postal_four = textFieldCodePostalFour.getText().trim().equalsIgnoreCase("") ? true
+				: false;
+		ville_four = textFieldVilleFour.getText().trim().equalsIgnoreCase("") ? true
+				: false;
 
-		if (!raison_sociale || !adresse_four ) {
+		if (!raison_sociale || !adresse_four || !code_postal_four || !ville_four) {
 			return false;
 		} else
 			return true;
 	}
+
 }

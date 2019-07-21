@@ -81,7 +81,7 @@ public class MainWindow extends JFrame {
 	List<ProductJoin> currentListProductJoin;
 
 	// AddProduct Window declaration
-	AddProductWindow addProductWindow;
+	AjouterUnProduitFenetre ajouterUnProduitFenetre;
 
 	// EditProduct Window declaration
 	EditProductWindow editProductWindow;
@@ -90,7 +90,7 @@ public class MainWindow extends JFrame {
 	CategoriesWindow categoriesWindow;
 
 	// Units Window declaration
-	UnitsWindow unitsWindow;
+	FournisseursFenetre fournisseursFenetre;
 
 	// database class declaration
 	SQLiteCon conn;
@@ -743,15 +743,15 @@ public class MainWindow extends JFrame {
 	// add product
 	private void addProduct() {
 
-		// initialise AddProductWindow
-		addProductWindow = new AddProductWindow();
+		// initialise AjouterUnProduitFenetre
+		ajouterUnProduitFenetre = new AjouterUnProduitFenetre();
 		dispose();
-		addProductWindow.setVisible(true);
-		addProductWindow.textFieldName.setText("");
-		addProductWindow.textFieldType.setText("");
-		addProductWindow.textFieldStock.setText("");
+		ajouterUnProduitFenetre.setVisible(true);
+		ajouterUnProduitFenetre.textFieldName.setText("");
+		ajouterUnProduitFenetre.textFieldType.setText("");
+		ajouterUnProduitFenetre.textFieldStock.setText("");
 
-		while (addProductWindow.isVisible()) {
+		while (ajouterUnProduitFenetre.isVisible()) {
 
 		}
 
@@ -759,7 +759,7 @@ public class MainWindow extends JFrame {
 		refreshComboBox();
 	}
 
-	// remove product
+	// Supprimer un produit
 	private void removeProduct() {
 		int prodIdCol = 0;
 		int prodNameCol = 1;
@@ -772,7 +772,7 @@ public class MainWindow extends JFrame {
 			String num_prod = tableProduct.getValueAt(selectedRow, prodIdCol)
 					.toString().trim();
 
-			String libelle_produit = tableProduct.getValueAt(selectedRow, prodNameCol)
+			String code_barre = tableProduct.getValueAt(selectedRow, prodNameCol)
 					.toString().trim();
 
 			int reply = JOptionPane.showConfirmDialog(null,
@@ -781,7 +781,7 @@ public class MainWindow extends JFrame {
 			if (reply == JOptionPane.YES_OPTION) {
 
 				try {
-					conn.removeProductQuery(num_prod, libelle_produit);
+					conn.removeProductQuery(num_prod, code_barre);
 
 				} catch (Exception e) {
 					e.printStackTrace();

@@ -33,7 +33,7 @@ import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
-public class FenetrePharmaciens extends JDialog {
+public class PharmaciensFenetre extends JDialog {
 
 	/**
 	 * 
@@ -57,7 +57,7 @@ public class FenetrePharmaciens extends JDialog {
 			@Override
 			public void run() {
 				try {
-					FenetrePharmaciens dialog = new FenetrePharmaciens();
+					PharmaciensFenetre dialog = new PharmaciensFenetre();
 					dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 					dialog.setVisible(true);
 				} catch (Exception e) {
@@ -70,14 +70,14 @@ public class FenetrePharmaciens extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public FenetrePharmaciens() {
+	public PharmaciensFenetre() {
 		setFont(new Font("Tahoma", Font.PLAIN, 14));
 		getContentPane().setFocusTraversalKeysEnabled(false);
 
 		// connect to database
 		conn = new SQLiteCon();
 
-		setIconImage(Toolkit.getDefaultToolkit().getImage(FenetrePharmaciens.class.getResource("/view/User.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(PharmaciensFenetre.class.getResource("/view/User.png")));
 		setTitle("Liste des pharmaciens");
 		setModal(true);
 		setBounds(100, 100, 968, 703);
@@ -112,7 +112,7 @@ public class FenetrePharmaciens extends JDialog {
 
 		JLabel label = new JLabel("");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setIcon(new ImageIcon(FenetrePharmaciens.class
+		label.setIcon(new ImageIcon(PharmaciensFenetre.class
 				.getResource("/view/User.png")));
 		label.setBounds(56, 118, 95, 93);
 		getContentPane().add(label);
@@ -206,10 +206,10 @@ public class FenetrePharmaciens extends JDialog {
 
 	// Ajouter un pharmacien
 	private void ajouterUnPhar() {
-		FenetreAjouterUnPhar fenetreAjouterUnPhar = new FenetreAjouterUnPhar();
+		AjouterUnPharFenetre ajouterUnPharFenetre = new AjouterUnPharFenetre();
 		dispose();
-		fenetreAjouterUnPhar.setVisible(true);
-		while (fenetreAjouterUnPhar.isVisible()) {
+		ajouterUnPharFenetre.setVisible(true);
+		while (ajouterUnPharFenetre.isVisible()) {
 
 		}
 		getListePharToTable();
@@ -266,7 +266,7 @@ public class FenetrePharmaciens extends JDialog {
 	private void modifierUnPhar() {
 
 		if (!(tableListePhar.getSelectedRow() == -1)) {
-			FenetreModifierUnPhar fenetreModifierUnPhar = new FenetreModifierUnPhar();
+			ModifierUnPharFenetre modifierUnPharFenetre = new ModifierUnPharFenetre();
 
 			// insert data from table to the fields
 			int idCol = 0;
@@ -277,21 +277,21 @@ public class FenetrePharmaciens extends JDialog {
 
 			int selectedRow = tableListePhar.getSelectedRow();
 
-			fenetreModifierUnPhar.textFieldIdentifiant.setText(tableListePhar
+			modifierUnPharFenetre.textFieldIdentifiant.setText(tableListePhar
 					.getValueAt(selectedRow, userNameCol).toString().trim());
-			fenetreModifierUnPhar.mdpField.setText(tableListePhar
+			modifierUnPharFenetre.mdpField.setText(tableListePhar
 					.getValueAt(selectedRow, passwordCol).toString().trim());
-			fenetreModifierUnPhar.textFieldPrenom.setText(tableListePhar
+			modifierUnPharFenetre.textFieldPrenom.setText(tableListePhar
 					.getValueAt(selectedRow, firstNameCol).toString().trim());
-			fenetreModifierUnPhar.textFieldNom.setText(tableListePhar
+			modifierUnPharFenetre.textFieldNom.setText(tableListePhar
 					.getValueAt(selectedRow, surnameCol).toString().trim());
 
-			fenetreModifierUnPhar.mdpActuel = tableListePhar
+			modifierUnPharFenetre.mdpActuel = tableListePhar
 					.getValueAt(selectedRow, idCol).toString().trim();
 			dispose();
-			fenetreModifierUnPhar.setVisible(true);
+			modifierUnPharFenetre.setVisible(true);
 
-			while (fenetreModifierUnPhar.isVisible()) {
+			while (modifierUnPharFenetre.isVisible()) {
 
 			}
 			// Mise à jour la vue

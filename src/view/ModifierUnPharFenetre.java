@@ -26,7 +26,7 @@ import java.awt.event.ActionEvent;
 import java.util.List;
 import java.awt.Font;
 
-public class FenetreModifierUnPhar extends JDialog {
+public class ModifierUnPharFenetre extends JDialog {
 
 	/**
 	 * 
@@ -53,7 +53,7 @@ public class FenetreModifierUnPhar extends JDialog {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FenetreModifierUnPhar dialog = new FenetreModifierUnPhar();
+					ModifierUnPharFenetre dialog = new ModifierUnPharFenetre();
 					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					dialog.setVisible(true);
 				} catch (Exception e) {
@@ -66,7 +66,7 @@ public class FenetreModifierUnPhar extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public FenetreModifierUnPhar() {
+	public ModifierUnPharFenetre() {
 		getContentPane().setForeground(Color.BLACK);
 		getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 14));
 
@@ -74,7 +74,7 @@ public class FenetreModifierUnPhar extends JDialog {
 		conn = new SQLiteCon();
 
 		setResizable(false);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(FenetreModifierUnPhar.class.getResource("/view/User.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(ModifierUnPharFenetre.class.getResource("/view/User.png")));
 		setModal(true);
 		setTitle("Modifier le profil du pharmacien");
 		setBounds(100, 100, 968, 600);
@@ -115,7 +115,7 @@ public class FenetreModifierUnPhar extends JDialog {
 
 		JLabel label = new JLabel("");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setIcon(new ImageIcon(FenetreModifierUnPhar.class
+		label.setIcon(new ImageIcon(ModifierUnPharFenetre.class
 				.getResource("/view/User.png")));
 		label.setBounds(56, 118, 95, 93);
 		getContentPane().add(label);
@@ -181,8 +181,8 @@ public class FenetreModifierUnPhar extends JDialog {
 	// Ouvrir la fenetre de la liste des Pharmaciens
 	private void OuvrirFenetrePharmaciens() {
 		
-		FenetrePharmaciens fenetrePharmaciens = new FenetrePharmaciens();
-		fenetrePharmaciens.setVisible(true);
+		PharmaciensFenetre pharmaciensFenetre = new PharmaciensFenetre();
+		pharmaciensFenetre.setVisible(true);
 	}
 
 	// Mettre à jour le profil du pharmacien

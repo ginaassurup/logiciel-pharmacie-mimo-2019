@@ -34,7 +34,7 @@ import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
-public class UnitsWindow extends JDialog {
+public class FournisseursFenetre extends JDialog {
 
 	/**
 	 * 
@@ -59,7 +59,7 @@ public class UnitsWindow extends JDialog {
 			@Override
 			public void run() {
 				try {
-					UnitsWindow dialog = new UnitsWindow();
+					FournisseursFenetre dialog = new FournisseursFenetre();
 					dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 					dialog.setVisible(true);
 				} catch (Exception e) {
@@ -73,14 +73,14 @@ public class UnitsWindow extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public UnitsWindow() {
+	public FournisseursFenetre() {
 		getContentPane().setFocusTraversalKeysEnabled(false);
 
 		// connect to database
 		conn = new SQLiteCon();
 
-		setIconImage(Toolkit.getDefaultToolkit().getImage(UnitsWindow.class.getResource("/view/logo_new.png")));
-		setTitle("In - Units");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(FournisseursFenetre.class.getResource("/view/logo_new.png")));
+		setTitle("iste des pharmaciens");
 		setModal(true);
 		setResizable(false);
 		setBounds(100, 100, 968, 700);
@@ -141,7 +141,7 @@ public class UnitsWindow extends JDialog {
 		btnRemove.setBounds(32, 192, 88, 23);
 		getContentPane().add(btnRemove);
 
-		JButton btnEdit = new JButton("Edit");
+		JButton btnEdit = new JButton("Modifier");
 		btnEdit.setBackground(new Color(204, 204, 204));
 		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -154,16 +154,31 @@ public class UnitsWindow extends JDialog {
 		btnEdit.setBounds(32, 222, 88, 23);
 		getContentPane().add(btnEdit);
 		
-		JButton button = new JButton("Retour");
-		button.setBounds(14, 13, 97, 25);
-		getContentPane().add(button);
-		
 		JLabel lblListeDesFournisseurs = new JLabel("Liste des fournisseurs");
 		lblListeDesFournisseurs.setHorizontalAlignment(SwingConstants.CENTER);
 		lblListeDesFournisseurs.setForeground(new Color(165, 42, 42));
 		lblListeDesFournisseurs.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblListeDesFournisseurs.setBounds(208, 75, 498, 25);
 		getContentPane().add(lblListeDesFournisseurs);
+		
+		JButton btnRetour = new JButton("Retour");
+		btnRetour.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+				OuvrirMenuPrincipal();
+			}
+
+			// Ouvrir le menu principal
+			private void OuvrirMenuPrincipal() {
+				
+				MenuPrincipal menuPrincipal = new MenuPrincipal();
+				menuPrincipal.getFrmMenuPrincipal().setVisible(true);
+			}
+		});
+		btnRetour.setBounds(14, 13, 97, 25);
+		getContentPane().add(btnRetour);
+		
+		
 
 		setLocationRelativeTo(null);
 
@@ -179,7 +194,6 @@ public class UnitsWindow extends JDialog {
 			listeFour = conn.getAllUnits();
 
 			UnitTableModel model = new UnitTableModel(listeFour);
-
 			tableListeFour.setModel(model);
 
 			// remove/hide Id table
@@ -198,10 +212,10 @@ public class UnitsWindow extends JDialog {
 	// add category
 	private void ajouterUnFour() {
 		// Ajouter un pharmacien
-		FenetreAjouterUnFour fenetreAjouterUnFour = new FenetreAjouterUnFour();
+		AjouterUnFourFenetre ajouterUnFourFenetre = new AjouterUnFourFenetre();
 		dispose();
-		fenetreAjouterUnFour.setVisible(true);
-		while (fenetreAjouterUnFour.isVisible()) {
+		ajouterUnFourFenetre.setVisible(true);
+		while (ajouterUnFourFenetre.isVisible()) {
 
 		}
 		getListeFourToTable();
@@ -263,10 +277,10 @@ public class UnitsWindow extends JDialog {
 
 			int selectedRow = tableListeFour.getSelectedRow();
 
-			String catId = tableListeFour.getValueAt(selectedRow, idCol)
+			String id_four = tableListeFour.getValueAt(selectedRow, idCol)
 					.toString();
 
-			String catName = tableListeFour.getValueAt(selectedRow, nameCol)
+			String raison_sociale = tableListeFour.getValueAt(selectedRow, nameCol)
 					.toString();
 
 			int reply = JOptionPane.showConfirmDialog(null,
@@ -275,7 +289,7 @@ public class UnitsWindow extends JDialog {
 			if (reply == JOptionPane.YES_OPTION) {
 
 				try {
-					conn.removeUnitQuery(catId, catName);
+					conn.removeUnitQuery(id_four, raison_sociale);
 
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -289,66 +303,93 @@ public class UnitsWindow extends JDialog {
 			}
 
 		} else {
-			System.out.println("Nothing selected");
+			System.out.println("Aucune ligne est sélectionnée");
 			JOptionPane
 					.showMessageDialog(null,
-							"In order to remove unit please select category row first.");
+							"Veuillez sélectionner un fournisseur à supprimer");
 		}
 	}
 
-	// edit category
+	// Modifier un fournisseur
 	private void updateUnit() {
 
 		// if row selected
 		if (!(tableListeFour.getSelectedRow() == -1)) {
-
+			ModifierUnFourFenetre modifierUnFourFenetre = new ModifierUnFourFenetre();
+			modifierUnFourFenetre.setVisible(true);
+			
 			int idCol = 0;
-			int nameCol = 1;
+			int raisonSocialeCol = 1;
+			int adresseCol = 2;
+			int codePostalCol = 3;
+			int villeCol = 4;
 			int selectedRow = tableListeFour.getSelectedRow();
+			
+			modifierUnFourFenetre.textFieldRaisonSociale.setText(tableListeFour
+					.getValueAt(selectedRow, raisonSocialeCol).toString().trim());
+			modifierUnFourFenetre.textFieldAdresseFour.setText(tableListeFour
+					.getValueAt(selectedRow, adresseCol).toString().trim());
+			modifierUnFourFenetre.textFieldCodePostalFour.setText(tableListeFour
+					.getValueAt(selectedRow, codePostalCol).toString().trim());
+			modifierUnFourFenetre.textFieldVilleFour.setText(tableListeFour
+					.getValueAt(selectedRow, villeCol).toString().trim());
+			
+			dispose();
+			modifierUnFourFenetre.setVisible(true);
 
-			String id = tableListeFour.getValueAt(selectedRow, idCol)
-					.toString();
-			String currentUnit = tableListeFour.getValueAt(selectedRow,
-					nameCol).toString();
+			while (modifierUnFourFenetre.isVisible()) {
 
-			newUnit = JOptionPane.showInputDialog(
-					"Please enter new name of this unit.", currentUnit);
-			// if not empty
-			if (!newUnit.equalsIgnoreCase("")) {
-
-				// check if exists
-				boolean unitExists = false;
-				for (int i = 0; i < listeFour.size(); i++) {
-					if (listeFour.get(i).getRaison_sociale()
-							.equalsIgnoreCase(newUnit)) {
-						unitExists = true;
-						break;
-					}
-				}
-
-				// if doesn't exist
-				if (!unitExists
-						|| (newUnit.equalsIgnoreCase(currentUnit))) {
-					try {
-						conn.updateUnitQuery(currentUnit, newUnit,
-								id);
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					getUnitsToTable();
-				} else {
-					JOptionPane.showMessageDialog(null,
-							"This unit already exists.");
-				}
-
-			} else {
-				JOptionPane.showMessageDialog(null,
-						"Name of unit can't be empty.");
 			}
-
+			// Mise à jour la vue
+			getListeFourToTable();
 		} else {
-			JOptionPane.showMessageDialog(null, "Please select unit first.");
+			JOptionPane.showMessageDialog(null,
+					"Veuillez sélectionner un fournisseur à modifier !");
 		}
 	}
+//			String id = tableListeFour.getValueAt(selectedRow, idCol)
+//					.toString();
+//			String currentUnit = tableListeFour.getValueAt(selectedRow,
+//					nameCol).toString();
+
+//			newUnit = JOptionPane.showInputDialog(
+//					"Please enter new name of this unit.", currentUnit);
+//			// if not empty
+//			if (!newUnit.equalsIgnoreCase("")) {
+//
+//				// check if exists
+//				boolean unitExists = false;
+//				for (int i = 0; i < listeFour.size(); i++) {
+//					if (listeFour.get(i).getRaison_sociale()
+//							.equalsIgnoreCase(newUnit)) {
+//						unitExists = true;
+//						break;
+//					}
+//				}
+//
+//				// if doesn't exist
+//				if (!unitExists
+//						|| (newUnit.equalsIgnoreCase(currentUnit))) {
+//					try {
+//						conn.majFourQuery(currentUnit, newUnit,
+//								id);
+//					} catch (Exception e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//					getUnitsToTable();
+//				} else {
+//					JOptionPane.showMessageDialog(null,
+//							"This unit already exists.");
+//				}
+//
+//			} else {
+//				JOptionPane.showMessageDialog(null,
+//						"Name of unit can't be empty.");
+//			}
+//
+//		} else {
+//			JOptionPane.showMessageDialog(null, "Please select unit first.");
+//		}
+//	}
 }

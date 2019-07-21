@@ -158,10 +158,25 @@ public class MenuPrincipal extends JFrame{
 		getFrmMenuPrincipal().getContentPane().add(btnCommande);
 		
 		JButton btnFournisseur = new JButton("Fournisseurs");
+		// Si c'est l'admin, activer le boutton settings
+		if (conn.currentUser.equalsIgnoreCase("admin")) {
+			btnFournisseur.setEnabled(true);
+		} else {
+			btnFournisseur.setEnabled(false);
+		}
 		btnFournisseur.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				frmMenuPrincipal.dispose();
+				ouvrirUnitsWindow();
+			}
+
+			// opens listePhar window
+			private void ouvrirUnitsWindow() {
+				FournisseursFenetre fournisseursFenetre = new FournisseursFenetre();
+				fournisseursFenetre.setVisible(true);
 			}
 		});
+		
 		btnFournisseur.setPreferredSize(new Dimension(260, 60));
 		btnFournisseur.setForeground(Color.BLACK);
 		btnFournisseur.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -185,8 +200,8 @@ public class MenuPrincipal extends JFrame{
 
 			// opens listePhar window
 			private void openUsers() {
-				FenetrePharmaciens fenetrePharmaciens = new FenetrePharmaciens();
-				fenetrePharmaciens.setVisible(true);
+				PharmaciensFenetre pharmaciensFenetre = new PharmaciensFenetre();
+				pharmaciensFenetre.setVisible(true);
 			}
 		});
 		btnPharmaciens.setPreferredSize(new Dimension(260, 60));
@@ -205,11 +220,24 @@ public class MenuPrincipal extends JFrame{
 		getFrmMenuPrincipal().getContentPane().add(btnStatistiques);
 		
 		JButton btnSeDconnecter = new JButton("Se d\u00E9connecter");
+		btnSeDconnecter.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				frmMenuPrincipal.dispose();
+				OuvrirConnexionFenetre();
+			}
+		});
 		btnSeDconnecter.setBounds(776, 45, 162, 25);
 		getFrmMenuPrincipal().getContentPane().add(btnSeDconnecter);
 		btnSeDconnecter.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnSeDconnecter.setBackground(Color.WHITE);
 		getFrmMenuPrincipal().setBounds(100, 100, 968, 500);
 		getFrmMenuPrincipal().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+
+	// Ouvrir le menu principal
+	private void OuvrirConnexionFenetre() {
+		
+		ConnexionFenetre fenetre = new ConnexionFenetre();
+		fenetre.frmConnexion.setVisible(true);
 	}
 }
