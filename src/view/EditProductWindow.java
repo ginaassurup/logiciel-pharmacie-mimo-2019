@@ -112,8 +112,39 @@ public class EditProductWindow extends JDialog {
 
 		textFieldType = new JTextField();
 		textFieldType.setColumns(10);
-		textFieldType.setBounds(188, 120, 162, 20);
+		textFieldType.setBounds(269, 261, 350, 30);
 		contentPanel.add(textFieldType);
+		
+		JLabel lblType = new JLabel("Categorie");
+		lblType.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblType.setForeground(new Color(0, 0, 0));
+		lblType.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblType.setBounds(131, 218, 113, 30);
+		contentPanel.add(lblType);
+		
+//		JLabel lblCategory = new JLabel("Categorie:");
+//		lblCategory.setForeground(Color.LIGHT_GRAY);
+//		lblCategory.setHorizontalAlignment(SwingConstants.RIGHT);
+//		lblCategory.setBounds(116, 83, 62, 14);
+//		contentPanel.add(lblCategory);
+		
+		textFieldStock = new JTextField();
+		textFieldStock.setColumns(10);
+		textFieldStock.setBounds(269, 304, 350, 30);
+		contentPanel.add(textFieldStock);
+		
+		JLabel lblStock = new JLabel("Quantit\u00E9 stock");
+		lblStock.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblStock.setForeground(new Color(0, 0, 0));
+		lblStock.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblStock.setBounds(131, 304, 113, 30);
+		contentPanel.add(lblStock);
+		
+//		JLabel lblStock = new JLabel("Stock:");
+//		lblStock.setForeground(Color.LIGHT_GRAY);
+//		lblStock.setHorizontalAlignment(SwingConstants.RIGHT);
+//		lblStock.setBounds(116, 163, 62, 14);
+//		contentPanel.add(lblStock);
 
 		textFieldStock = new JTextField();
 		textFieldStock.setColumns(10);
@@ -126,11 +157,6 @@ public class EditProductWindow extends JDialog {
 		lblName.setBounds(116, 43, 62, 14);
 		contentPanel.add(lblName);
 
-		JLabel lblCategory = new JLabel("Categorie:");
-		lblCategory.setForeground(Color.LIGHT_GRAY);
-		lblCategory.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblCategory.setBounds(116, 83, 62, 14);
-		contentPanel.add(lblCategory);
 
 		JLabel lblType = new JLabel("Type:");
 		lblType.setForeground(Color.LIGHT_GRAY);
@@ -138,11 +164,7 @@ public class EditProductWindow extends JDialog {
 		lblType.setBounds(116, 123, 62, 14);
 		contentPanel.add(lblType);
 
-		JLabel lblStock = new JLabel("Stock:");
-		lblStock.setForeground(Color.LIGHT_GRAY);
-		lblStock.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblStock.setBounds(116, 163, 62, 14);
-		contentPanel.add(lblStock);
+		
 
 		JButton btnEditProduct = new JButton("Update ProduitDetail");
 		btnEditProduct.setBackground(new Color(204, 204, 204));
