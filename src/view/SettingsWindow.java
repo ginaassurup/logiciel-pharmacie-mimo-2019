@@ -198,8 +198,8 @@ public class SettingsWindow extends JDialog {
 
 	// opens listePhar window
 	private void openUsers() {
-		FenetrePharmaciens fenetrePharmaciens = new FenetrePharmaciens();
-		fenetrePharmaciens.setVisible(true);
+		PharmaciensFenetre pharmaciensFenetre = new PharmaciensFenetre();
+		pharmaciensFenetre.setVisible(true);
 	}
 
 	// removes all products

@@ -140,6 +140,12 @@ public class MenuPrincipal extends JFrame{
 		mntmSeDconnecter.setToolTipText("Exit application");
 		mntmSeDconnecter.setMnemonic(KeyEvent.VK_E);
 		mnParamtres.add(mntmSeDconnecter);
+		mntmSeDconnecter.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				System.exit(0);
+			}
+		});
 		
 		JMenu mnSeDconnecter = new JMenu("");
 		mnSeDconnecter.setMnemonic(KeyEvent.VK_F);

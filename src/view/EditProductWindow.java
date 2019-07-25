@@ -86,16 +86,13 @@ public class EditProductWindow extends JDialog {
 
 		setModal(true);
 		setResizable(false);
-		setTitle("In - Edit ProduitDetail");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(
-				EditProductWindow.class
-						.getResource("/view/logo_new.png")));
-		setBounds(100, 100, 396, 356);
+		setTitle("Modifier un produit");
+		setBounds(100, 100, 968, 700);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
-		contentPanel.setBackground(new Color(56, 56, 56));
+		contentPanel.setBackground(Color.WHITE);
 
 		textFieldName = new JTextField();
 		textFieldName.setBounds(188, 40, 162, 20);
@@ -115,8 +112,39 @@ public class EditProductWindow extends JDialog {
 
 		textFieldType = new JTextField();
 		textFieldType.setColumns(10);
-		textFieldType.setBounds(188, 120, 162, 20);
+		textFieldType.setBounds(269, 261, 350, 30);
 		contentPanel.add(textFieldType);
+		
+		JLabel lblType = new JLabel("Categorie");
+		lblType.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblType.setForeground(new Color(0, 0, 0));
+		lblType.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblType.setBounds(131, 218, 113, 30);
+		contentPanel.add(lblType);
+		
+//		JLabel lblCategory = new JLabel("Categorie:");
+//		lblCategory.setForeground(Color.LIGHT_GRAY);
+//		lblCategory.setHorizontalAlignment(SwingConstants.RIGHT);
+//		lblCategory.setBounds(116, 83, 62, 14);
+//		contentPanel.add(lblCategory);
+		
+		textFieldStock = new JTextField();
+		textFieldStock.setColumns(10);
+		textFieldStock.setBounds(269, 304, 350, 30);
+		contentPanel.add(textFieldStock);
+		
+		JLabel lblStock = new JLabel("Quantit\u00E9 stock");
+		lblStock.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblStock.setForeground(new Color(0, 0, 0));
+		lblStock.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblStock.setBounds(131, 304, 113, 30);
+		contentPanel.add(lblStock);
+		
+//		JLabel lblStock = new JLabel("Stock:");
+//		lblStock.setForeground(Color.LIGHT_GRAY);
+//		lblStock.setHorizontalAlignment(SwingConstants.RIGHT);
+//		lblStock.setBounds(116, 163, 62, 14);
+//		contentPanel.add(lblStock);
 
 		textFieldStock = new JTextField();
 		textFieldStock.setColumns(10);
@@ -129,11 +157,6 @@ public class EditProductWindow extends JDialog {
 		lblName.setBounds(116, 43, 62, 14);
 		contentPanel.add(lblName);
 
-		JLabel lblCategory = new JLabel("Categorie:");
-		lblCategory.setForeground(Color.LIGHT_GRAY);
-		lblCategory.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblCategory.setBounds(116, 83, 62, 14);
-		contentPanel.add(lblCategory);
 
 		JLabel lblType = new JLabel("Type:");
 		lblType.setForeground(Color.LIGHT_GRAY);
@@ -141,11 +164,7 @@ public class EditProductWindow extends JDialog {
 		lblType.setBounds(116, 123, 62, 14);
 		contentPanel.add(lblType);
 
-		JLabel lblStock = new JLabel("Stock:");
-		lblStock.setForeground(Color.LIGHT_GRAY);
-		lblStock.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblStock.setBounds(116, 163, 62, 14);
-		contentPanel.add(lblStock);
+		
 
 		JButton btnEditProduct = new JButton("Update ProduitDetail");
 		btnEditProduct.setBackground(new Color(204, 204, 204));
@@ -157,14 +176,8 @@ public class EditProductWindow extends JDialog {
 				updateProduct();
 			}
 		});
-		btnEditProduct.setBounds(188, 274, 162, 23);
+		btnEditProduct.setBounds(408, 489, 162, 23);
 		contentPanel.add(btnEditProduct);
-
-		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon(EditProductWindow.class
-				.getResource("/view/logo_new_64_no_bckg.png")));
-		label.setBounds(10, 10, 72, 72);
-		contentPanel.add(label);
 
 		JButton btnNewCat = new JButton("New");
 		btnNewCat.setBackground(new Color(204, 204, 204));
@@ -285,19 +298,19 @@ public class EditProductWindow extends JDialog {
 			if (reply == JOptionPane.YES_OPTION) {
 
 				String newProdName = textFieldName.getText().toString().trim();
-				String catName = comboBoxCategory.getSelectedItem().toString()
+				String nom_cat = comboBoxCategory.getSelectedItem().toString()
 						.trim();
-				String typeName = textFieldType.getText().toString().trim();
-				String quantityName = textFieldStock.getText().toString()
+				String forme = textFieldType.getText().toString().trim();
+				String qtte_stock = textFieldStock.getText().toString()
 						.trim();
-				String unitName = comboBoxUnits.getSelectedItem().toString()
-						.trim();
-
-				String stockAlarm = textFieldStockAlarm.getText().toString()
+				String nom_four = comboBoxUnits.getSelectedItem().toString()
 						.trim();
 
-				if (stockAlarm.equalsIgnoreCase("")) {
-					stockAlarm = "0";
+				String qtte_stock_alarme = textFieldStockAlarm.getText().toString()
+						.trim();
+
+				if (qtte_stock_alarme.equalsIgnoreCase("")) {
+					qtte_stock_alarme = "0";
 				}
 
 				System.out.println("current: " + currentProductName
@@ -323,7 +336,7 @@ public class EditProductWindow extends JDialog {
 					nameChanged = true;
 				}
 
-				if (!typeName.equalsIgnoreCase(currentTypeName)){
+				if (!forme.equalsIgnoreCase(currentTypeName)){
 					typeChanged = true;
 				}
 				
@@ -332,7 +345,7 @@ public class EditProductWindow extends JDialog {
 					if (products.get(i).getLibelle_produit().equalsIgnoreCase(newProdName)) {
 
 						productExists = true;
-						if (products.get(i).getForme().equalsIgnoreCase(typeName)) {
+						if (products.get(i).getForme().equalsIgnoreCase(forme)) {
 							typeExists = true;
 							break;
 						}
@@ -357,8 +370,8 @@ public class EditProductWindow extends JDialog {
 				if (!bothExists || !nameChanged && !typeChanged) {
 					try {
 						conn.updateProductQuery(currentId, currentProductName,
-								newProdName, catName, typeName, quantityName,
-								unitName, stockAlarm);
+								newProdName, nom_cat, forme, qtte_stock,
+								nom_four, qtte_stock_alarme);
 
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
@@ -450,8 +463,8 @@ public class EditProductWindow extends JDialog {
 	// opens Units window
 	private void openUnits() {
 
-		UnitsWindow unitsWindow = new UnitsWindow();
-		unitsWindow.setVisible(true);
+		FournisseursFenetre fournisseursFenetre = new FournisseursFenetre();
+		fournisseursFenetre.setVisible(true);
 
 		// refreshes combobox after change
 		SwingUtilities.invokeLater(new Runnable() {
@@ -462,7 +475,7 @@ public class EditProductWindow extends JDialog {
 				DefaultComboBoxModel model = new DefaultComboBoxModel(
 						getUnitsToCombo());
 				comboBoxUnits.setModel(model);
-				comboBoxUnits.setSelectedItem(unitsWindow.newUnit);
+				comboBoxUnits.setSelectedItem(fournisseursFenetre.newUnit);
 			}
 		});
 

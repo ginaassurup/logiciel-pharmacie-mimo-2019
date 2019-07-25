@@ -21,7 +21,7 @@ import dao.SQLiteCon;
 
 import java.awt.Font;
 
-public class FenetreConnexion {
+public class ConnexionFenetre {
 
 	// database connection class declaration
 	public SQLiteCon conn;
@@ -29,7 +29,7 @@ public class FenetreConnexion {
 	// fields that need access and change
 	private JTextField textFieldIdentifiant;
 	private JPasswordField mdpField;
-	private JFrame frmConnexion;
+	JFrame frmConnexion;
 
 	/**
 	 * Launch the application.
@@ -39,7 +39,7 @@ public class FenetreConnexion {
 			@Override
 			public void run() {
 				try {
-					FenetreConnexion fenetre = new FenetreConnexion();
+					ConnexionFenetre fenetre = new ConnexionFenetre();
 					fenetre.frmConnexion.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -51,7 +51,7 @@ public class FenetreConnexion {
 	/**
 	 * Create the application.
 	 */
-	public FenetreConnexion() {
+	public ConnexionFenetre() {
 
 		initialize();
 		
