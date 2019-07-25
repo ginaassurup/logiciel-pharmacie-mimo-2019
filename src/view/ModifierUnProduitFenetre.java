@@ -51,7 +51,7 @@ public class ModifierUnProduitFenetre extends JDialog {
 
 	// fields that need access
 	private final JPanel contentPanel = new JPanel();
-//	public JTextField textFieldCodeBarre;
+	public JTextField textFieldCodeBarre;
 	public JTextField textFieldName;
 	public JTextField textFieldType;
 	public JTextField textFieldStock;
@@ -63,7 +63,8 @@ public class ModifierUnProduitFenetre extends JDialog {
 	JComboBox<String> comboBoxCategory;
 	JComboBox<String> comboBoxUnits;
 	JTextField textFieldStockAlarm;
-	private JTextField textFieldCodeBarre;
+
+	private String num_prodActuel;
 
 	/**
 	 * Launch the application.
@@ -235,7 +236,7 @@ public class ModifierUnProduitFenetre extends JDialog {
 		textFieldCodeBarre.setBounds(333, 129, 350, 30);
 		contentPanel.add(textFieldCodeBarre);
 		
-		JLabel lblAjouterUnProduit = new JLabel("Ajouter un produit");
+		JLabel lblAjouterUnProduit = new JLabel("Modifier un produit");
 		lblAjouterUnProduit.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAjouterUnProduit.setForeground(new Color(165, 42, 42));
 		lblAjouterUnProduit.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -369,9 +370,9 @@ public class ModifierUnProduitFenetre extends JDialog {
 					qtte_stock_alarme = "0";
 				}
 
-				System.out.println(libelle_produit + " " + nom_cat + " " + forme + " " + qtte_stock + " " + qtte_stock_alarme + " " + prix_vente +  " " + prix_achat +  " " + nom_four);
-				System.out.println("current: " + currentProductName
-						+ " ! new: " + newProdName);
+				System.out.println(code_barre + " " + libelle_produit + " " + nom_cat + " " + forme + " " + qtte_stock + " " + qtte_stock_alarme + " " + prix_vente +  " " + prix_achat +  " " + nom_four);
+				System.out.println("current: " + libelle_produit
+						+ " ! new: " + libelle_produit);
 
 				try {
 					products = conn.getProductsJoin();
@@ -389,27 +390,27 @@ public class ModifierUnProduitFenetre extends JDialog {
 				
 				boolean typeChanged = false;
 				
-				if (!currentProductName.equalsIgnoreCase(newProdName)){
-					nameChanged = true;
-				}
-
-				if (!typeName.equalsIgnoreCase(currentTypeName)){
-					typeChanged = true;
-				}
+//				if (!currentProductName.equalsIgnoreCase(newProdName)){
+//					nameChanged = true;
+//				}
+//
+//				if (!nom_cat.equalsIgnoreCase(currentTypeName)){
+//					typeChanged = true;
+//				}
 				
-				for (int i = 0; i < products.size(); i++) {
-
-					if (products.get(i).getLibelle_produit().equalsIgnoreCase(newProdName)) {
-
-						productExists = true;
-						if (products.get(i).getForme().equalsIgnoreCase(typeName)) {
-							typeExists = true;
-							break;
-						}
-
-					}
-
-				}
+//				for (int i = 0; i < products.size(); i++) {
+//
+//					if (products.get(i).getLibelle_produit().equalsIgnoreCase(newProdName)) {
+//
+//						productExists = true;
+//						if (products.get(i).getForme().equalsIgnoreCase(nom_cat)) {
+//							typeExists = true;
+//							break;
+//						}
+//
+//					}
+//
+//				}
 
 				// check type
 
@@ -426,16 +427,20 @@ public class ModifierUnProduitFenetre extends JDialog {
 				// if product with the same type exists
 				if (!bothExists || !nameChanged && !typeChanged) {
 					try {
-						conn.updateProductQuery(currentId, currentProductName,
-								newProdName, catName, typeName, quantityName,
-								unitName, stockAlarm);
+						conn.updateProductQuery(num_prodActuel, libelle_produit, nom_cat,
+							 forme, qtte_stock, qtte_stock_alarme, prix_vente, nom_four);
+//						conn.updateProductQuery(currentId, currentProductName,
+//								newProdName, catName, typeName, quantityName,
+//								unitName, stockAlarm);
+//						updateProductQuery(String currentId, String currentProductName, String libelle_produit, String nom_cat,
+//								String forme, String qtte_stock, String nom_four, String qtte_stock_alarme)
 
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 
-					currentProductName = textFieldName.getText().toString()
+					libelle_produit = textFieldName.getText().toString()
 							.trim();
 
 					dispose();
@@ -458,90 +463,90 @@ public class ModifierUnProduitFenetre extends JDialog {
 		
 		
 	// adds new product
-	private void addProduct() {
-		click = false;
-		if (fieldsCheck()) {
-			String code_barre = textFieldCodeBarre.getText().toString().trim();
-			String libelle_produit = textFieldName.getText().toString().trim();
-			String nom_cat = comboBoxCategory.getSelectedItem().toString().trim();
-			String forme = textFieldType.getText().toString().trim();
-			String qtte_stock = textFieldStock.getText().toString().trim();
-			String qtte_stock_alarme = textFieldStockAlarm.getText().toString().trim();
-			String prix_vente = textFieldPrixVente.getText().toString().trim();
-			String prix_achat = textFieldPrixAchat.getText().toString().trim();
-			String nom_four = comboBoxUnits.getSelectedItem().toString().trim();
-
-
-
-			if (qtte_stock_alarme.equalsIgnoreCase("")) {
-				qtte_stock_alarme = "0";
-			}
-
-			System.out.println(libelle_produit + " " + nom_cat + " " + forme + " " + qtte_stock + " " + qtte_stock_alarme + " " + prix_vente +  " " + prix_achat +  " " + nom_four);
-
-			try {
-				products = conn.getProductsJoin();
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			// check if exists
-			boolean productExists = false;
-			boolean typeExists = false;
-			boolean bothExists = false;
-			// if product name and type the same
-			for (int i = 0; i < products.size(); i++) {
-				if (products.get(i).getLibelle_produit().equalsIgnoreCase(libelle_produit)) {
-					System.out.println("Exists " + products.get(i).getLibelle_produit()
-							+ " " + libelle_produit);
-					productExists = true;
-					break;
-
-				}
-				
-			}
-			
-			for (int i = 0; i < products.size(); i++) {
-			
-				if (products.get(i).getForme().equalsIgnoreCase(forme)) {
-					typeExists = true;
-					break;
-				}
-			
-			}
-
-			if(productExists & typeExists){
-				bothExists = true;
-			}
-			
-			if (!bothExists) {
-				try {
-					conn.insertProductQuery(code_barre, libelle_produit, nom_cat, forme,
-							qtte_stock, qtte_stock_alarme, prix_vente, prix_achat, nom_four);
-					
-//					public void insertProductQuery(String code_barre, String libelle_produit, String nom_cat,
-//							String forme, String qtte_stock, String qtte_stock_alarme, String prix_vente, String prix_achat, String nom_four)
-					// refresh table
-					click = true;
-					setVisible(false);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-				clearFields();
-			} else {
-				JOptionPane.showMessageDialog(null,
-						"ProduitDetail with the same name and type exists.");
-			}
-		} else {
-			JOptionPane
-					.showMessageDialog(
-							null,
-							"Please fill up all the fields and make sure that \"Stock\" & \"Stock Alarm\" are numeric.");
-		}
-
-	}
+//	private void addProduct() {
+//		click = false;
+//		if (fieldsCheck()) {
+//			String code_barre = textFieldCodeBarre.getText().toString().trim();
+//			String libelle_produit = textFieldName.getText().toString().trim();
+//			String nom_cat = comboBoxCategory.getSelectedItem().toString().trim();
+//			String forme = textFieldType.getText().toString().trim();
+//			String qtte_stock = textFieldStock.getText().toString().trim();
+//			String qtte_stock_alarme = textFieldStockAlarm.getText().toString().trim();
+//			String prix_vente = textFieldPrixVente.getText().toString().trim();
+//			String prix_achat = textFieldPrixAchat.getText().toString().trim();
+//			String nom_four = comboBoxUnits.getSelectedItem().toString().trim();
+//
+//
+//
+//			if (qtte_stock_alarme.equalsIgnoreCase("")) {
+//				qtte_stock_alarme = "0";
+//			}
+//
+//			System.out.println(libelle_produit + " " + nom_cat + " " + forme + " " + qtte_stock + " " + qtte_stock_alarme + " " + prix_vente +  " " + prix_achat +  " " + nom_four);
+//
+//			try {
+//				products = conn.getProductsJoin();
+//			} catch (Exception e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//			// check if exists
+//			boolean productExists = false;
+//			boolean typeExists = false;
+//			boolean bothExists = false;
+//			// if product name and type the same
+//			for (int i = 0; i < products.size(); i++) {
+//				if (products.get(i).getLibelle_produit().equalsIgnoreCase(libelle_produit)) {
+//					System.out.println("Exists " + products.get(i).getLibelle_produit()
+//							+ " " + libelle_produit);
+//					productExists = true;
+//					break;
+//
+//				}
+//				
+//			}
+//			
+//			for (int i = 0; i < products.size(); i++) {
+//			
+//				if (products.get(i).getForme().equalsIgnoreCase(forme)) {
+//					typeExists = true;
+//					break;
+//				}
+//			
+//			}
+//
+//			if(productExists & typeExists){
+//				bothExists = true;
+//			}
+//			
+//			if (!bothExists) {
+//				try {
+//					conn.insertProductQuery(code_barre, libelle_produit, nom_cat, forme,
+//							qtte_stock, qtte_stock_alarme, prix_vente, prix_achat, nom_four);
+//					
+////					public void insertProductQuery(String code_barre, String libelle_produit, String nom_cat,
+////							String forme, String qtte_stock, String qtte_stock_alarme, String prix_vente, String prix_achat, String nom_four)
+//					// refresh table
+//					click = true;
+//					setVisible(false);
+//				} catch (Exception e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//
+//				clearFields();
+//			} else {
+//				JOptionPane.showMessageDialog(null,
+//						"ProduitDetail with the same name and type exists.");
+//			}
+//		} else {
+//			JOptionPane
+//					.showMessageDialog(
+//							null,
+//							"Please fill up all the fields and make sure that \"Stock\" & \"Stock Alarm\" are numeric.");
+//		}
+//
+//	}
 
 	// checks if required fields are filled up
 	private boolean fieldsCheck() {
