@@ -80,7 +80,7 @@ public class FournisseursFenetre extends JDialog {
 		conn = new SQLiteCon();
 
 		setIconImage(Toolkit.getDefaultToolkit().getImage(FournisseursFenetre.class.getResource("/view/logo_new.png")));
-		setTitle("iste des pharmaciens");
+		setTitle("Liste des fournisseurs");
 		setModal(true);
 		setResizable(false);
 		setBounds(100, 100, 968, 700);
@@ -142,15 +142,15 @@ public class FournisseursFenetre extends JDialog {
 		getContentPane().add(btnRemove);
 
 		JButton btnEdit = new JButton("Modifier");
+		btnEdit.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnEdit.setBackground(new Color(204, 204, 204));
+		btnEdit.setFocusPainted(false);
 		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
 				updateUnit();
 			}
 		});
-		btnEdit.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnEdit.setFocusPainted(false);
 		btnEdit.setBounds(32, 222, 88, 23);
 		getContentPane().add(btnEdit);
 		
@@ -186,7 +186,7 @@ public class FournisseursFenetre extends JDialog {
 
 	}
 
-	// get all products to the table (join table query)
+	// get all fournisseurs to the table (join table query)
 	private void getUnitsToTable() {
 
 		try {
@@ -316,7 +316,7 @@ public class FournisseursFenetre extends JDialog {
 		// if row selected
 		if (!(tableListeFour.getSelectedRow() == -1)) {
 			ModifierUnFourFenetre modifierUnFourFenetre = new ModifierUnFourFenetre();
-			modifierUnFourFenetre.setVisible(true);
+			//modifierUnFourFenetre.setVisible(true);
 			
 			int idCol = 0;
 			int raisonSocialeCol = 1;
@@ -325,6 +325,7 @@ public class FournisseursFenetre extends JDialog {
 			int villeCol = 4;
 			int selectedRow = tableListeFour.getSelectedRow();
 			
+		
 			modifierUnFourFenetre.textFieldRaisonSociale.setText(tableListeFour
 					.getValueAt(selectedRow, raisonSocialeCol).toString().trim());
 			modifierUnFourFenetre.textFieldAdresseFour.setText(tableListeFour
