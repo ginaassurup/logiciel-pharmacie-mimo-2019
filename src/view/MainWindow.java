@@ -84,7 +84,7 @@ public class MainWindow extends JFrame {
 	AjouterUnProduitFenetre ajouterUnProduitFenetre;
 
 	// EditProduct Window declaration
-	EditProductWindow editProductWindow;
+	ModifierUnProduitFenetre modifierUnProduitFenetre;
 
 	// Categories Window declaration
 	CategoriesWindow categoriesWindow;
@@ -808,7 +808,7 @@ public class MainWindow extends JFrame {
 	// edit product
 	private void editProduct() {
 		if (!(tableProduct.getSelectedRow() == -1)) {
-			editProductWindow = new EditProductWindow();
+			modifierUnProduitFenetre = new ModifierUnProduitFenetre();
 
 			int idCol = 0;
 			int nameCol = 1;
@@ -817,6 +817,7 @@ public class MainWindow extends JFrame {
 			int stockCol = 4;
 			int unitCol = 5;
 			int stockAlarmCol = 6;
+			int prixVenteCol = 7;
 
 			int selectedRow = tableProduct.getSelectedRow();
 
@@ -824,30 +825,33 @@ public class MainWindow extends JFrame {
 			
 			String idStr = "" +tableProduct.getValueAt(selectedRow, idCol);
 			
-			editProductWindow.currentId = idStr;
-			editProductWindow.textFieldName.setText(tableProduct
+//			modifierUnProduitFenetre. = idStr;
+//			modifierUnProduitFenetre.textFieldCodeBarre.setText();
+			modifierUnProduitFenetre.textFieldName.setText(tableProduct
 					.getValueAt(selectedRow, nameCol).toString().trim());
-			editProductWindow.comboBoxCategory.setSelectedItem(tableProduct
+			modifierUnProduitFenetre.comboBoxCategory.setSelectedItem(tableProduct
 					.getValueAt(selectedRow, catCol));
-			editProductWindow.textFieldType.setText(tableProduct
+			modifierUnProduitFenetre.textFieldType.setText(tableProduct
 					.getValueAt(selectedRow, typeCol).toString().trim());
-			editProductWindow.textFieldStock.setText(tableProduct
+			modifierUnProduitFenetre.textFieldStock.setText(tableProduct
 					.getValueAt(selectedRow, stockCol).toString().trim());
-			editProductWindow.comboBoxUnits.setSelectedItem(tableProduct
+			modifierUnProduitFenetre.comboBoxUnits.setSelectedItem(tableProduct
 					.getValueAt(selectedRow, unitCol));
 
-			editProductWindow.textFieldStockAlarm.setText(tableProduct
+			modifierUnProduitFenetre.textFieldStockAlarm.setText(tableProduct
 					.getValueAt(selectedRow, stockAlarmCol).toString().trim());
+			modifierUnProduitFenetre.textFieldPrixVente.setText(tableProduct
+					.getValueAt(selectedRow, prixVenteCol).toString().trim());
 
-			currentProductName = editProductWindow.textFieldName.getText()
+			currentProductName = modifierUnProduitFenetre.textFieldName.getText()
 					.toString().trim();
 
-			editProductWindow.currentProductName = currentProductName;
-			editProductWindow.currentTypeName = tableProduct.getValueAt(
-					selectedRow, typeCol).toString();
+//			modifierUnProduitFenetre.currentProductName = currentProductName;
+//			modifierUnProduitFenetre.currentTypeName = tableProduct.getValueAt(
+//					selectedRow, typeCol).toString();
 
-			editProductWindow.setVisible(true);
-			while (editProductWindow.isVisible()) {
+			modifierUnProduitFenetre.setVisible(true);
+			while (modifierUnProduitFenetre.isVisible()) {
 
 			}
 
