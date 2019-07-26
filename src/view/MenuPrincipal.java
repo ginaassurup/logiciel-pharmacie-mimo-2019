@@ -93,6 +93,19 @@ public class MenuPrincipal extends JFrame{
 		button_1.setBounds(345, 148, 260, 40);
 		getFrmMenuPrincipal().getContentPane().add(button_1);
 		
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				frmMenuPrincipal.dispose();
+				ouvrirUnitsWindow();
+			}
+
+			// opens listePhar window
+			private void ouvrirUnitsWindow() {
+				TicketFenetre ticketFenetre = new TicketFenetre();
+				ticketFenetre.setVisible(true);
+			}
+		});
+		
 		JButton btnInfoProduit = new JButton("Information sur un produit");
 		btnInfoProduit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
