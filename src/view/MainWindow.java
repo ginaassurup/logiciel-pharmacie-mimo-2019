@@ -479,7 +479,7 @@ public class MainWindow extends JFrame {
 	private void colourIfStockAlarm() {
 	
 		MyRenderer colorRenderer = new MyRenderer();
-		tableProduct.getColumnModel().getColumn(4).setCellRenderer(colorRenderer);	
+		tableProduct.getColumnModel().getColumn(5).setCellRenderer(colorRenderer);	
 	}
 
 	// get all categories to comboBox
@@ -809,17 +809,17 @@ public class MainWindow extends JFrame {
 	private void editProduct() {
 		if (!(tableProduct.getSelectedRow() == -1)) {
 			modifierUnProduitFenetre = new ModifierUnProduitFenetre();
-
-			int idCol = -1;
-			int codebarreCol=0;
-			int nameCol = 1;
-			int catCol = 2;
-			int typeCol = 3;
-			int stockCol = 4;
-			int stockAlarmCol = 5;
-			int prixVenteCol = 6;
-			int prixAchatCol = 7;
-			int unitCol = 8;
+			dispose();
+			int idCol = 0;
+			int codebarreCol=1;
+			int nameCol = 2;
+			int catCol = 3;
+			int typeCol = 4;
+			int stockCol = 5;
+			int stockAlarmCol = 6;
+			int prixVenteCol = 7;
+			int prixAchatCol = 8;
+			int unitCol = 9;
 			int selectedRow = tableProduct.getSelectedRow();
 
 			//System.out.println(tableProduct.getValueAt(selectedRow, idCol));
@@ -850,7 +850,7 @@ public class MainWindow extends JFrame {
 			
 			currentProductName = modifierUnProduitFenetre.textFieldName.getText()
 					.toString().trim();
-			System.out.println("Num_prod choisi: " + currentProductName);
+			System.out.println("Produit choisi: " + currentProductName);
 
 //			modifierUnProduitFenetre.currentProductName = currentProductName;
 //			modifierUnProduitFenetre.currentTypeName = tableProduct.getValueAt(
@@ -888,7 +888,6 @@ public class MainWindow extends JFrame {
 				currentListProductJoin = conn.searchProductsJoinCat(
 						currentProductSearch, firstCatStr);
 			} else {
-
 				currentListProductJoin = conn.searchProductsJoinCat("",
 						firstCatStr);
 			}
@@ -898,8 +897,7 @@ public class MainWindow extends JFrame {
 			e.printStackTrace();
 		}
 
-		ProductJoinTableModel model = new ProductJoinTableModel(
-				currentListProductJoin);
+		ProductJoinTableModel model = new ProductJoinTableModel(currentListProductJoin);
 
 		tableProduct.setModel(model);
 //		hideProductIdColumn();

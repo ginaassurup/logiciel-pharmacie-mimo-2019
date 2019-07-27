@@ -376,6 +376,7 @@ public class ModifierUnProduitFenetre extends JDialog {
 
 				try {
 					products = conn.getProductsJoin();
+					System.out.println("Ligne 379");
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -427,8 +428,8 @@ public class ModifierUnProduitFenetre extends JDialog {
 				// if product with the same type exists
 				if (!bothExists || !nameChanged && !typeChanged) {
 					try {
-						conn.updateProductQuery(num_prodActuel, libelle_produit, nom_cat,
-							 forme, qtte_stock, qtte_stock_alarme, prix_vente, nom_four);
+						conn.updateProductQuery(num_prodActuel, code_barre, libelle_produit, nom_cat,
+							 forme, qtte_stock, qtte_stock_alarme, prix_vente, prix_achat, nom_four);
 						System.out.println("Num_prod mis à jour: "+num_prodActuel);
 //						conn.updateProductQuery(currentId, currentProductName,
 //								newProdName, catName, typeName, quantityName,
