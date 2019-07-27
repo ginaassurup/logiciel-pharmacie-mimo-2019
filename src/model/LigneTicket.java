@@ -4,7 +4,6 @@ package model;
 public class LigneTicket {
 	
 	private int id_ligne;
-	private ProductJoin product;
 	private int num_ligne;
 	private int num_prod;
 	private int code_barre;
@@ -30,25 +29,19 @@ public class LigneTicket {
 		this.num_ligne = num_ligne;
 	}
 	public int getNum_prod() {
-		if(this.product != null)
-		return this.getProduct().getNum_prod();
-		return 0;
+		return num_prod;
 	}
 	public void setNum_prod(int num_prod) {
 		this.num_prod = num_prod;
 	}
 	public int getCode_barre() {
-		if(this.product != null)
-		return this.product.getCode_barre();
-		return 0;
+		return code_barre;
 	}
 	public void setCode_barre(int code_barre) {
 		this.code_barre = code_barre;
 	}
 	public String getLibelle_produit() {
-		if(this.product != null)
-		return this.product.getLibelle_produit();
-		return "";
+		return libelle_produit;
 	}
 	public void setLibelle_produit(String libelle_produit) {
 		this.libelle_produit = libelle_produit;
@@ -60,25 +53,16 @@ public class LigneTicket {
 		this.qtte_vendu = qtte_vendu;
 	}
 	public float getPrix_vente() {
-		if(this.product != null)
-			return this.product.getPrix_vente();
-		return 0;
+		return prix_vente;
 	}
 	public void setPrix_vente(float prix_vente) {
 		this.prix_vente = prix_vente;
 	}
 	
 	public float getMontant() {
-		return this.getPrix_vente() * this.qtte_vendu;
+		return this.prix_vente * this.qtte_vendu;
 	}
 	
-	
-	public ProductJoin getProduct() {
-		return product;
-	}
-	public void setProduct(ProductJoin product) {
-		this.product = product;
-	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
