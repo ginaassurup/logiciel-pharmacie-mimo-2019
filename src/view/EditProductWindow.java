@@ -115,12 +115,12 @@ public class EditProductWindow extends JDialog {
 		textFieldType.setBounds(269, 261, 350, 30);
 		contentPanel.add(textFieldType);
 		
-		JLabel lblType = new JLabel("Categorie");
-		lblType.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblType.setForeground(new Color(0, 0, 0));
-		lblType.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblType.setBounds(131, 218, 113, 30);
-		contentPanel.add(lblType);
+		JLabel lblCat = new JLabel("Categorie");
+		lblCat.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblCat.setForeground(new Color(0, 0, 0));
+		lblCat.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblCat.setBounds(131, 218, 113, 30);
+		contentPanel.add(lblCat);
 		
 //		JLabel lblCategory = new JLabel("Categorie:");
 //		lblCategory.setForeground(Color.LIGHT_GRAY);

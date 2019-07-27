@@ -43,7 +43,7 @@ public class ModifierUnFourFenetre extends JDialog {
 	JTextField textFieldCodePostalFour;
 	JTextField textFieldVilleFour;
 
-	String num_phar;
+	String id_four;
 	
 
 	/**
@@ -84,24 +84,24 @@ public class ModifierUnFourFenetre extends JDialog {
 		textFieldRaisonSociale = new JTextField();
 		textFieldRaisonSociale.setBounds(427, 155, 180, 30);
 		getContentPane().add(textFieldRaisonSociale);
-		textFieldRaisonSociale.setColumns(10);
+		//textFieldRaisonSociale.setColumns(10);
 
 		textFieldAdresseFour = new JTextField();
 		textFieldAdresseFour.setBounds(427, 202, 180, 30);
 		getContentPane().add(textFieldAdresseFour);
-		textFieldAdresseFour.setColumns(10);
+		//textFieldAdresseFour.setColumns(10);
 
 		textFieldCodePostalFour = new JTextField();
-		textFieldCodePostalFour.setColumns(10);
+		//textFieldCodePostalFour.setColumns(10);
 		textFieldCodePostalFour.setBounds(427, 290, 180, 30);
 		getContentPane().add(textFieldCodePostalFour);
-		textFieldCodePostalFour.setColumns(10);
+		
 
 		textFieldVilleFour = new JTextField();
-		textFieldVilleFour.setColumns(10);
+		//textFieldVilleFour.setColumns(10);
 		textFieldVilleFour.setBounds(427, 333, 180, 30);
 		getContentPane().add(textFieldVilleFour);
-		textFieldVilleFour.setColumns(10);
+		
 
 		JButton btnValider = new JButton("Valider");
 		btnValider.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -123,33 +123,33 @@ public class ModifierUnFourFenetre extends JDialog {
 		label.setBounds(56, 118, 95, 93);
 		getContentPane().add(label);
 
-		JLabel lbIdentifiant = new JLabel("Raison sociale *");
-		lbIdentifiant.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lbIdentifiant.setForeground(Color.BLACK);
-		lbIdentifiant.setHorizontalAlignment(SwingConstants.RIGHT);
-		lbIdentifiant.setBounds(301, 162, 116, 14);
-		getContentPane().add(lbIdentifiant);
+		JLabel lbRaisonSociale = new JLabel("Raison sociale *");
+		lbRaisonSociale.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lbRaisonSociale.setForeground(Color.BLACK);
+		lbRaisonSociale.setHorizontalAlignment(SwingConstants.RIGHT);
+		lbRaisonSociale.setBounds(301, 162, 116, 14);
+		getContentPane().add(lbRaisonSociale);
 
-		JLabel lbMdp = new JLabel("Adresse");
-		lbMdp.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lbMdp.setForeground(Color.BLACK);
-		lbMdp.setHorizontalAlignment(SwingConstants.RIGHT);
-		lbMdp.setBounds(301, 209, 116, 14);
-		getContentPane().add(lbMdp);
+		JLabel lbAdrFour = new JLabel("Adresse");
+		lbAdrFour.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lbAdrFour.setForeground(Color.BLACK);
+		lbAdrFour.setHorizontalAlignment(SwingConstants.RIGHT);
+		lbAdrFour.setBounds(301, 209, 116, 14);
+		getContentPane().add(lbAdrFour);
 
-		JLabel lbPrenom = new JLabel("Code postal");
-		lbPrenom.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lbPrenom.setForeground(Color.BLACK);
-		lbPrenom.setHorizontalAlignment(SwingConstants.RIGHT);
-		lbPrenom.setBounds(248, 297, 169, 14);
-		getContentPane().add(lbPrenom);
+		JLabel lbCPFour = new JLabel("Code postal");
+		lbCPFour.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lbCPFour.setForeground(Color.BLACK);
+		lbCPFour.setHorizontalAlignment(SwingConstants.RIGHT);
+		lbCPFour.setBounds(248, 297, 169, 14);
+		getContentPane().add(lbCPFour);
 
-		JLabel lbNom = new JLabel("Ville");
-		lbNom.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lbNom.setForeground(Color.BLACK);
-		lbNom.setHorizontalAlignment(SwingConstants.RIGHT);
-		lbNom.setBounds(248, 340, 169, 14);
-		getContentPane().add(lbNom);
+		JLabel lbVilleFour = new JLabel("Ville");
+		lbVilleFour.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lbVilleFour.setForeground(Color.BLACK);
+		lbVilleFour.setHorizontalAlignment(SwingConstants.RIGHT);
+		lbVilleFour.setBounds(248, 340, 169, 14);
+		getContentPane().add(lbVilleFour);
 		
 		JButton btnRetour = new JButton("Retour");
 		btnRetour.addActionListener(new ActionListener() {
@@ -161,12 +161,12 @@ public class ModifierUnFourFenetre extends JDialog {
 		btnRetour.setBounds(12, 13, 97, 25);
 		getContentPane().add(btnRetour);
 		
-		JLabel lblAjoutDunPharmacien = new JLabel("Modifier le profil du fournisseur");
-		lblAjoutDunPharmacien.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAjoutDunPharmacien.setForeground(new Color(165, 42, 42));
-		lblAjoutDunPharmacien.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblAjoutDunPharmacien.setBounds(248, 83, 498, 25);
-		getContentPane().add(lblAjoutDunPharmacien);
+		JLabel lbModifFour = new JLabel("Modifier le profil du fournisseur");
+		lbModifFour.setHorizontalAlignment(SwingConstants.CENTER);
+		lbModifFour.setForeground(new Color(165, 42, 42));
+		lbModifFour.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lbModifFour.setBounds(248, 83, 498, 25);
+		getContentPane().add(lbModifFour);
 		setLocationRelativeTo(null);
 	}
 
@@ -182,6 +182,7 @@ public class ModifierUnFourFenetre extends JDialog {
 
 		if (!emptyFields()) {
 			
+			
 			String raison_sociale = textFieldRaisonSociale.getText().trim();
 //			String password1 = new String(mdpField.getPassword());
 //			@SuppressWarnings("unused")
@@ -191,13 +192,15 @@ public class ModifierUnFourFenetre extends JDialog {
 			String ville_four = textFieldVilleFour.getText().trim();
 	
 			try {
-				conn.majFourQuery(num_phar, raison_sociale, adresse_four, code_postal_four, ville_four);
+				conn.majFourQuery(id_four, raison_sociale, adresse_four, code_postal_four, ville_four);
 				System.out.println("updated");
+				System.out.println("Id_four mise à jour: "+id_four);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			dispose();
+			//id_four = "";
 		} else {
 			JOptionPane.showMessageDialog(null,
 					"Make sure that all required fields are filled.");
@@ -206,9 +209,8 @@ public class ModifierUnFourFenetre extends JDialog {
 	}
 
 	// checks if empty
-	@SuppressWarnings("deprecation")
+	//@SuppressWarnings("deprecation")
 	private boolean emptyFields() {
-
 		boolean raison_sociale, adresse_four, code_postal_four, ville_four;
 
 		raison_sociale = textFieldRaisonSociale.getText().trim().equalsIgnoreCase("") ? true

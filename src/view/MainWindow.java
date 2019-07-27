@@ -810,7 +810,8 @@ public class MainWindow extends JFrame {
 		if (!(tableProduct.getSelectedRow() == -1)) {
 			modifierUnProduitFenetre = new ModifierUnProduitFenetre();
 
-			int idCol = 0;
+			int idCol = -1;
+			int codebarreCol=0;
 			int nameCol = 1;
 			int catCol = 2;
 			int typeCol = 3;
@@ -818,15 +819,16 @@ public class MainWindow extends JFrame {
 			int unitCol = 5;
 			int stockAlarmCol = 6;
 			int prixVenteCol = 7;
-
 			int selectedRow = tableProduct.getSelectedRow();
 
-			System.out.println(tableProduct.getValueAt(selectedRow, idCol));
-			
-			String idStr = "" +tableProduct.getValueAt(selectedRow, idCol);
+			//System.out.println(tableProduct.getValueAt(selectedRow, idCol));
+		
+			//String idStr = "" +tableProduct.getValueAt(selectedRow, idCol);
 			
 //			modifierUnProduitFenetre. = idStr;
 //			modifierUnProduitFenetre.textFieldCodeBarre.setText();
+			modifierUnProduitFenetre.num_prodActuel = tableProduct.getValueAt(selectedRow, idCol).toString().trim();
+			modifierUnProduitFenetre.textFieldCodeBarre.setText(tableProduct.getValueAt(selectedRow, codebarreCol).toString().trim());
 			modifierUnProduitFenetre.textFieldName.setText(tableProduct
 					.getValueAt(selectedRow, nameCol).toString().trim());
 			modifierUnProduitFenetre.comboBoxCategory.setSelectedItem(tableProduct
@@ -845,6 +847,7 @@ public class MainWindow extends JFrame {
 
 			currentProductName = modifierUnProduitFenetre.textFieldName.getText()
 					.toString().trim();
+			System.out.println("Num_prod choisi: " + modifierUnProduitFenetre.num_prodActuel);
 
 //			modifierUnProduitFenetre.currentProductName = currentProductName;
 //			modifierUnProduitFenetre.currentTypeName = tableProduct.getValueAt(
@@ -859,7 +862,7 @@ public class MainWindow extends JFrame {
 			refreshComboBox();
 		} else {
 			JOptionPane.showMessageDialog(null,
-					"In order to edit product please select product row first.");
+					"Veuillez choisir le produit à modifier.");
 		}
 	}
 
