@@ -819,11 +819,10 @@ public class MainWindow extends JFrame {
 			int unitCol = 5;
 			int stockAlarmCol = 6;
 			int prixVenteCol = 7;
-
 			int selectedRow = tableProduct.getSelectedRow();
 
 			//System.out.println(tableProduct.getValueAt(selectedRow, idCol));
-			
+		
 			//String idStr = "" +tableProduct.getValueAt(selectedRow, idCol);
 			
 //			modifierUnProduitFenetre. = idStr;

@@ -211,7 +211,6 @@ public class ModifierUnFourFenetre extends JDialog {
 	// checks if empty
 	//@SuppressWarnings("deprecation")
 	private boolean emptyFields() {
-
 		boolean raison_sociale, adresse_four, code_postal_four, ville_four;
 
 		raison_sociale = textFieldRaisonSociale.getText().trim().equalsIgnoreCase("") ? true

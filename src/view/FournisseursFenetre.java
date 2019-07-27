@@ -322,8 +322,7 @@ public class FournisseursFenetre extends JDialog {
 			int adresseCol = 2;
 			int codePostalCol = 3;
 			int villeCol = 4;
-			int selectedRow = tableListeFour.getSelectedRow();
-			
+			int selectedRow = tableListeFour.getSelectedRow();			
 			
 			modifierUnFourFenetre.id_four = tableListeFour.getValueAt(selectedRow, idCol).toString().trim();
 			modifierUnFourFenetre.textFieldRaisonSociale.setText(tableListeFour

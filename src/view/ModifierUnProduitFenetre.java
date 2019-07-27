@@ -338,7 +338,6 @@ public class ModifierUnProduitFenetre extends JDialog {
 	private void updateProduct() {
 
 		if (!emptyfieldsCheck()) {
-
 			int reply = JOptionPane.showConfirmDialog(null,
 					"Do you really want to update this product?", "Update?",
 					JOptionPane.YES_NO_OPTION);
