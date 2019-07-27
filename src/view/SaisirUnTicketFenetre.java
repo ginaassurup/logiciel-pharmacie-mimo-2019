@@ -4,66 +4,51 @@
 
 package view;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
-import java.text.DateFormat;
-import java.text.MessageFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.basic.BasicComboPopup;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableColumn;
-
-import dao.SQLiteCon;
-
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JList;
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
-import javax.swing.JComboBox;
+import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.JLabel;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.basic.BasicComboBoxRenderer;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableColumn;
 
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
-import java.awt.Toolkit;
-
+import dao.SQLiteCon;
 import model.Categorie;
 import model.LigneTicket;
 import model.LigneTicketTableModel;
 import model.MyRenderer;
-import model.ProduitDetail;
 import model.ProductJoin;
 import model.ProductJoinTableModel;
 import model.ProductTableModel;
-
-import java.awt.event.KeyAdapter;
-import java.awt.Font;
-
-import javax.swing.ListSelectionModel;
-
-import java.awt.Color;
-import java.awt.SystemColor;
-
-import javax.swing.JSeparator;
-import javax.swing.ImageIcon;
-import javax.swing.JToggleButton;
-import javax.swing.JTextArea;
+import model.ProduitDetail;
 
 public class SaisirUnTicketFenetre extends JFrame {
 
@@ -128,7 +113,7 @@ public class SaisirUnTicketFenetre extends JFrame {
 	public SaisirUnTicketFenetre() {
 		
 		// initialise connection
-//		conn = new SQLiteCon();
+		conn = new SQLiteCon();
 
 		createMenuBar();
 		setResizable(false);
@@ -165,7 +150,7 @@ public class SaisirUnTicketFenetre extends JFrame {
 		tableTicket.setRequestFocusEnabled(false);
 
 		tableTicket.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
+		
 		scrollPane.setViewportView(tableTicket);
 //		BasicComboPopup popup = (BasicComboPopup)child;
 //		JList list = popup.getList();
@@ -226,7 +211,7 @@ public class SaisirUnTicketFenetre extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 
-				addProduct();
+				addRow();
 			}
 		});
 		btnAddProduct.setFont(new Font("Tahoma", Font.PLAIN, 10));
@@ -241,7 +226,7 @@ public class SaisirUnTicketFenetre extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 
-				removeProduct();
+				removeRow();
 			}
 		});
 		
@@ -287,6 +272,7 @@ public class SaisirUnTicketFenetre extends JFrame {
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
+		
 		JButton btnValider = new JButton("Valider");
 		btnValider.setBounds(744, 609, 153, 43);
 		contentPane.add(btnValider);
@@ -298,11 +284,71 @@ public class SaisirUnTicketFenetre extends JFrame {
 		initTicket();
 	}
 
+	
+	@SuppressWarnings({ "serial", "unchecked" })
 	private void initTicket() {
 		List<LigneTicket> ligne = new ArrayList<>(1);
-		ligne.add(new LigneTicket("test"));
+		
 		LigneTicketTableModel model = new LigneTicketTableModel(ligne);
+		model.addRow(new LigneTicket("1"));
+		
+		
 		tableTicket.setModel(model);
+		tableTicket.getModel().addTableModelListener(new TicketTableModelListener());
+		
+		TableColumn codeBarreColumn = tableTicket.getColumnModel().getColumn(1);
+		List<ProductJoin> productsJoin = null;
+		try {
+			productsJoin = conn.getProductsJoin();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		JComboBox<ProductJoin> comboBox = new JComboBox<>();
+		comboBox.setRenderer(new BasicComboBoxRenderer() {
+			public Component getListCellRendererComponent(
+		            JList list, Object value, int index,
+		            boolean isSelected, boolean cellHasFocus)
+		        {
+		            super.getListCellRendererComponent(list, value, index,
+		                isSelected, cellHasFocus);
+		 
+		            if (value != null)
+		            {
+		                ProductJoin item = (ProductJoin)value;
+		                setText( item.getLibelle_produit().toUpperCase() );
+		            }
+		 
+		            if (index == -1)
+		            {
+		            	ProductJoin item = (ProductJoin)value;
+		            	if (item != null)
+		            		setText( "" + item.getLibelle_produit() );
+		            	else 
+		            		setText("");
+		            }
+		 
+		 
+		            return this;
+		        }
+		});
+		comboBox.addItemListener(new ItemListener() {
+	        public void itemStateChanged(ItemEvent arg0) {
+	           if( arg0.getStateChange() == ItemEvent.SELECTED)
+	           {
+	        	   System.out.print(arg0.getItem());
+	           }
+	        }
+		});
+		for (ProductJoin pj : productsJoin)
+		{
+			comboBox.addItem(pj);
+			
+			
+		}
+		
+		
+		codeBarreColumn.setCellEditor(new DefaultCellEditor(comboBox));
 	}
 
 	// Ouvrir le menu principal
@@ -409,21 +455,23 @@ public class SaisirUnTicketFenetre extends JFrame {
 	 */
 
 	// add product
-	private void addProduct() {
+	private void addRow() {
 
-		// initialise AjouterUnProduitFenetre
-		ajouterUnProduitFenetre = new AjouterUnProduitFenetre();
-		dispose();
-		ajouterUnProduitFenetre.setVisible(true);
-		ajouterUnProduitFenetre.textFieldName.setText("");
-		ajouterUnProduitFenetre.textFieldType.setText("");
-		ajouterUnProduitFenetre.textFieldStock.setText("");
+		float total = ((LigneTicketTableModel)tableTicket.getModel()).addRow(new LigneTicket(""));
+		textField.setText(String.valueOf(total));
+		
+		
+		//refreshTable();
+//		refreshComboBox();
+	}
+	
 
-		while (ajouterUnProduitFenetre.isVisible()) {
+	// add product
+	private void removeRow() {
 
-		}
-
-		refreshTable();
+		((LigneTicketTableModel)tableTicket.getModel()).removeRow();
+		
+		//refreshTable();
 //		refreshComboBox();
 	}
 
