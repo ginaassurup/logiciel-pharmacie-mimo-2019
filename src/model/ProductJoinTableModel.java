@@ -14,6 +14,7 @@ public class ProductJoinTableModel extends AbstractTableModel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+//	private static final int NUM_PROD_COL = 0;
 	private static final int CODE_BARRE_COL = 0;
 	private static final int LIBELLE_PRODUIT_COL = 1;
 	private static final int CATEGORIE_COL = 2;
@@ -22,7 +23,7 @@ public class ProductJoinTableModel extends AbstractTableModel {
 	private static final int QTTE_STOCK_ALARME_COL = 5;
 	private static final int PRIX_VENTE_COL = 6;
 	private static final int PRIX_ACHAT_COL = 7;	
-	private static final int RAISON_SOCIALE_COL = 8;
+	private static final int RAISON_SOCIALE_COL =8;
 
 
 	private String[] columnNames = { "Code barre","Libellé", "Catégorie", "Forme",
@@ -56,6 +57,8 @@ public class ProductJoinTableModel extends AbstractTableModel {
 
 		switch (col) {
 		
+		//case NUM_PROD_COL:
+			//return tempProductJoin.getNum_prod();
 		case CODE_BARRE_COL:
 			return tempProductJoin.getCode_barre();
 		case LIBELLE_PRODUIT_COL:
