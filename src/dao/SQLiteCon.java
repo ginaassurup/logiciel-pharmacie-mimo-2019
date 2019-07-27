@@ -808,8 +808,8 @@ public class SQLiteCon {
 
 	// update product
 	
-	public void updateProductQuery(String num_prod, String libelle_produit, String nom_cat,
-			String forme, String qtte_stock, String qtte_stock_alarme, String prix_vente, String nom_four) throws Exception {
+	public void updateProductQuery(String num_prod, String code_barre, String libelle_produit, String nom_cat,
+			String forme, String qtte_stock, String qtte_stock_alarme, String prix_vente, String prix_achat, String nom_four) throws Exception {
 		
 
 		PreparedStatement myStmt = null;
@@ -820,7 +820,7 @@ public class SQLiteCon {
 		// get ID of unitName
 		int id_four = getId_four(nom_four);
 
-		System.out.println(num_prod + "sg");
+		System.out.println(num_prod);
 				
 		try {
 
@@ -829,17 +829,19 @@ public class SQLiteCon {
 //							+ "WHERE Id = ?");
 
 			myStmt = myConn.prepareStatement(
-					"UPDATE ProduitDetail SET libelle_produit = ?, id_cat = ?, forme = ?, qtte_stock = ?, id_four = ?, qtte_stock_alarme = ?, prix_vente = ?"
+					"UPDATE ProduitDetail SET code_barre=?, libelle_produit = ?, id_cat = ?, forme = ?, qtte_stock = ?, id_four = ?, qtte_stock_alarme = ?, prix_vente = ?"
 							+ "WHERE num_prod = ?");
 
-			myStmt.setString(1, libelle_produit);
-			myStmt.setString(2, "" + id_cat);
-			myStmt.setString(3, forme);
-			myStmt.setString(4, qtte_stock);
-			myStmt.setString(5, "" + id_four);
-			myStmt.setString(6, qtte_stock_alarme);
-			myStmt.setString(6, prix_vente);
-			myStmt.setString(7, num_prod);
+			myStmt.setString(1, code_barre);
+			myStmt.setString(2, libelle_produit);
+			myStmt.setString(3, "" + id_cat);
+			myStmt.setString(4, forme);
+			myStmt.setString(5, qtte_stock);
+			myStmt.setString(6, "" + id_four);
+			myStmt.setString(7, qtte_stock_alarme);
+			myStmt.setString(8, prix_vente);
+			myStmt.setString(9, prix_achat);
+			myStmt.setString(10, num_prod);
 			
 //			myStmt.setString(1, prodName);
 //			myStmt.setString(2, "" + catId);
@@ -848,7 +850,7 @@ public class SQLiteCon {
 //			myStmt.setString(5, "" + unitId);
 //			myStmt.setString(6, stockAlarm);
 //			myStmt.setString(7, currentId);
-
+			System.out.println("Update Product Query");
 			myStmt.executeUpdate();
 		} finally {
 			close(myStmt, null);
