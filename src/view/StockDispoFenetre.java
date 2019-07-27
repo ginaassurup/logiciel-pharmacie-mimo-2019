@@ -327,8 +327,8 @@ public class StockDispoFenetre extends JFrame {
 			tableProduct.setModel(model);
 
 			
-//			hideProductIdColumn();
-//			hideStockAlarmColumn();
+			hideProductIdColumn();
+			hidePrixAchatColumn();
 			allignColumn();
 			colourIfStockAlarm();
 			
@@ -342,23 +342,23 @@ public class StockDispoFenetre extends JFrame {
 
 		TableColumn productIdColumn = tableProduct.getColumnModel()
 				.getColumn(0);
-		// tableCategories.getColumnModel().removeColumn(myTableColumn0);
+		//tableCategories.getColumnModel().removeColumn(myTableColumn0);
 		productIdColumn.setMaxWidth(0);
 		productIdColumn.setMinWidth(0);
 		productIdColumn.setPreferredWidth(0);
 
 	}
 
-	// hides stockAlarm column
-	private void hideStockAlarmColumn() {
+	// hides prix achat column
+	private void hidePrixAchatColumn() {
 
 		// hides stockAlarm column
-		TableColumn stockAlarmColumn = tableProduct.getColumnModel().getColumn(
-				6);
+		TableColumn prixAchatColumn = tableProduct.getColumnModel().getColumn(
+				8);
 		// tableCategories.getColumnModel().removeColumn(myTableColumn0);
-		stockAlarmColumn.setMaxWidth(0);
-		stockAlarmColumn.setMinWidth(0);
-		stockAlarmColumn.setPreferredWidth(0);
+		prixAchatColumn.setMaxWidth(0);
+		prixAchatColumn.setMinWidth(0);
+		prixAchatColumn.setPreferredWidth(0);
 
 	}
 
