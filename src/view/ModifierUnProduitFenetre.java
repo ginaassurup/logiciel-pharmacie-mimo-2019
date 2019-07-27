@@ -55,6 +55,7 @@ public class ModifierUnProduitFenetre extends JDialog {
 	public JTextField textFieldName;
 	public JTextField textFieldType;
 	public JTextField textFieldStock;
+	public JTextField textFieldStockAlarm;
 	public JTextField textFieldPrixVente;
 	public JTextField textFieldPrixAchat;
 	boolean click;
@@ -62,7 +63,7 @@ public class ModifierUnProduitFenetre extends JDialog {
 
 	JComboBox<String> comboBoxCategory;
 	JComboBox<String> comboBoxUnits;
-	JTextField textFieldStockAlarm;
+	
 
 	public String num_prodActuel;
 

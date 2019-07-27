@@ -816,9 +816,10 @@ public class MainWindow extends JFrame {
 			int catCol = 2;
 			int typeCol = 3;
 			int stockCol = 4;
-			int unitCol = 5;
-			int stockAlarmCol = 6;
-			int prixVenteCol = 7;
+			int stockAlarmCol = 5;
+			int prixVenteCol = 6;
+			int prixAchatCol = 7;
+			int unitCol = 8;
 			int selectedRow = tableProduct.getSelectedRow();
 
 			//System.out.println(tableProduct.getValueAt(selectedRow, idCol));
@@ -844,10 +845,12 @@ public class MainWindow extends JFrame {
 					.getValueAt(selectedRow, stockAlarmCol).toString().trim());
 			modifierUnProduitFenetre.textFieldPrixVente.setText(tableProduct
 					.getValueAt(selectedRow, prixVenteCol).toString().trim());
-
+			modifierUnProduitFenetre.textFieldPrixAchat.setText(tableProduct
+					.getValueAt(selectedRow, prixAchatCol).toString().trim());
+			
 			currentProductName = modifierUnProduitFenetre.textFieldName.getText()
 					.toString().trim();
-			System.out.println("Num_prod choisi: " + modifierUnProduitFenetre.num_prodActuel);
+			System.out.println("Num_prod choisi: " + currentProductName);
 
 //			modifierUnProduitFenetre.currentProductName = currentProductName;
 //			modifierUnProduitFenetre.currentTypeName = tableProduct.getValueAt(
