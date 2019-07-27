@@ -317,7 +317,6 @@ public class FournisseursFenetre extends JDialog {
 		if (!(tableListeFour.getSelectedRow() == -1)) {
 			ModifierUnFourFenetre modifierUnFourFenetre = new ModifierUnFourFenetre();
 			//modifierUnFourFenetre.setVisible(true);
-			
 			int idCol = 0;
 			int raisonSocialeCol = 1;
 			int adresseCol = 2;
@@ -325,7 +324,8 @@ public class FournisseursFenetre extends JDialog {
 			int villeCol = 4;
 			int selectedRow = tableListeFour.getSelectedRow();
 			
-		
+			
+			modifierUnFourFenetre.id_four = tableListeFour.getValueAt(selectedRow, idCol).toString().trim();
 			modifierUnFourFenetre.textFieldRaisonSociale.setText(tableListeFour
 					.getValueAt(selectedRow, raisonSocialeCol).toString().trim());
 			modifierUnFourFenetre.textFieldAdresseFour.setText(tableListeFour
@@ -334,6 +334,9 @@ public class FournisseursFenetre extends JDialog {
 					.getValueAt(selectedRow, codePostalCol).toString().trim());
 			modifierUnFourFenetre.textFieldVilleFour.setText(tableListeFour
 					.getValueAt(selectedRow, villeCol).toString().trim());
+			
+			
+			System.out.println("Id_four choisi: "+modifierUnFourFenetre.id_four);
 			
 			dispose();
 			modifierUnFourFenetre.setVisible(true);

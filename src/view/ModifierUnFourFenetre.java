@@ -182,6 +182,7 @@ public class ModifierUnFourFenetre extends JDialog {
 
 		if (!emptyFields()) {
 			
+			
 			String raison_sociale = textFieldRaisonSociale.getText().trim();
 //			String password1 = new String(mdpField.getPassword());
 //			@SuppressWarnings("unused")
@@ -193,11 +194,13 @@ public class ModifierUnFourFenetre extends JDialog {
 			try {
 				conn.majFourQuery(id_four, raison_sociale, adresse_four, code_postal_four, ville_four);
 				System.out.println("updated");
+				System.out.println("Id_four mise à jour: "+id_four);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			dispose();
+			//id_four = "";
 		} else {
 			JOptionPane.showMessageDialog(null,
 					"Make sure that all required fields are filled.");
