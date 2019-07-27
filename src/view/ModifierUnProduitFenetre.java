@@ -64,7 +64,7 @@ public class ModifierUnProduitFenetre extends JDialog {
 	JComboBox<String> comboBoxUnits;
 	JTextField textFieldStockAlarm;
 
-	private String num_prodActuel;
+	public String num_prodActuel;
 
 	/**
 	 * Launch the application.
@@ -337,8 +337,7 @@ public class ModifierUnProduitFenetre extends JDialog {
 	// updates product
 	private void updateProduct() {
 
-		if (fieldsCheck()) {
-
+		if (!emptyfieldsCheck()) {
 			int reply = JOptionPane.showConfirmDialog(null,
 					"Do you really want to update this product?", "Update?",
 					JOptionPane.YES_NO_OPTION);
@@ -429,6 +428,7 @@ public class ModifierUnProduitFenetre extends JDialog {
 					try {
 						conn.updateProductQuery(num_prodActuel, libelle_produit, nom_cat,
 							 forme, qtte_stock, qtte_stock_alarme, prix_vente, nom_four);
+						System.out.println("Num_prod mis à jour: "+num_prodActuel);
 //						conn.updateProductQuery(currentId, currentProductName,
 //								newProdName, catName, typeName, quantityName,
 //								unitName, stockAlarm);
@@ -549,7 +549,7 @@ public class ModifierUnProduitFenetre extends JDialog {
 //	}
 
 	// checks if required fields are filled up
-	private boolean fieldsCheck() {
+	private boolean emptyfieldsCheck() {
 
 		boolean name, category, type, stock, unit, stockAlarm;
 
@@ -564,7 +564,7 @@ public class ModifierUnProduitFenetre extends JDialog {
 
 		stockAlarm = !isNumeric(textFieldStockAlarm.getText()) ? true : false;
 
-		if (name || type || category || stock || unit || stockAlarm) {
+		if (!name || !type || !category || !stock || !unit || !stockAlarm) {
 			return false;
 		} else
 			return true;
