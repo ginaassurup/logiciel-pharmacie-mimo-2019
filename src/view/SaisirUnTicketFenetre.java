@@ -282,7 +282,7 @@ public class SaisirUnTicketFenetre extends JFrame {
 	@SuppressWarnings({ "serial", "unchecked" })
 	private void initTicket() {
 		
-		t.setName("Ticket No : XXX");
+		t.setName("Ticket No : "+t.getId_ticket());
 		try {
 			t  = conn.createTicketQuery(t);
 		} catch (SQLException e1) {
@@ -382,7 +382,7 @@ public class SaisirUnTicketFenetre extends JFrame {
 
 		((LigneTicketTableModel)tableTicket.getModel()).addRow(new LigneTicket(t.getId_ticket(),""));
 		montantField.setText(String.valueOf(t.getTotal()));
-		
+		//conn.removeStockQuery(prodId, prodName, quantity, prodStock, prodStockAlarm);
 		
 		//refreshTable();
 //		refreshComboBox();

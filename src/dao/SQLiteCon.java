@@ -756,7 +756,9 @@ public class SQLiteCon {
 			myStmt.setFloat(3, l.getMontant());
 			myStmt.setInt(4, l.getId_ticket());
 			
+			
 			myStmt.executeUpdate();
+			
 			
 			}
 			
@@ -941,8 +943,8 @@ public class SQLiteCon {
 	}
 
 	// add stock
-	public void addStockQuery(String prodId, String prodName, int quantity) throws Exception {
-
+	//public void addStockQuery(String prodId, String prodName, int quantity) throws Exception {
+	public void addStockQuery(String prodId, int quantity) throws Exception {
 		PreparedStatement myStmt = null;
 
 		String qString = "" + quantity;
@@ -950,11 +952,11 @@ public class SQLiteCon {
 		try {
 
 			myStmt = myConn.prepareStatement(
-					"UPDATE ProduitDetail SET Stock = (ProduitDetail.Stock + ?) " + "WHERE Id = ? AND Name = ?");
-
-			myStmt.setString(1, qString);
+					//"UPDATE ProduitDetail SET qtte_stock = ProduitDetail.qtte_stock + ? " + "WHERE num_prod = ? AND libelle_produit = ?");
+			"UPDATE ProduitDetail SET qtte_stock = ProduitDetail.qtte_stock + ? " + "WHERE num_prod = ? ");
+			myStmt.setInt(1, quantity);
 			myStmt.setString(2, prodId);
-			myStmt.setString(3, prodName);
+			//myStmt.setString(3, prodName);
 
 			myStmt.executeUpdate();
 		} finally {
@@ -983,16 +985,17 @@ public class SQLiteCon {
 
 			PreparedStatement myStmt = null;
 
-			String qString = "" + quantity;
+			//String qString = "" + quantity;
 
 			try {
 
 				myStmt = myConn.prepareStatement(
-						"UPDATE ProduitDetail SET Stock = (ProduitDetail.Stock - ?) " + "WHERE Id = ? AND Name = ?");
+						//"UPDATE ProduitDetail SET Stock = (ProduitDetail.Stock - ?) " + "WHERE Id = ? AND Name = ?");
+				"UPDATE ProduitDetail SET qtte_stock = (ProduitDetail.qtte_stock - ?) " + "WHERE num_prod = ?");
 
-				myStmt.setString(1, qString);
+				myStmt.setInt(1, quantity);
 				myStmt.setString(2, prodId);
-				myStmt.setString(3, prodName);
+				//myStmt.setString(3, prodName);
 
 				myStmt.executeUpdate();
 			} finally {

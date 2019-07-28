@@ -621,16 +621,16 @@ public class MainWindow extends JFrame {
 	@SuppressWarnings("static-access")
 	private void addStock() {
 		int prodIdCol = 0;
-		int prodCol = 1;
+		//int prodCol = 1;
 
 		// if row selected
 		if (!(tableProduct.getSelectedRow() == -1)) {
 			int selectedRow = tableProduct.getSelectedRow();
-
+			System.out.println("Ligne de stock à maj: "+selectedRow);
 			String prodId = tableProduct.getValueAt(selectedRow, prodIdCol)
 					.toString().trim();
-			String prodName = tableProduct.getValueAt(selectedRow, prodCol)
-					.toString().trim();
+			//String prodName = tableProduct.getValueAt(selectedRow, prodCol)
+					//.toString().trim();
 
 			boolean numeric = false;
 			int quantity = 0;
@@ -660,7 +660,8 @@ public class MainWindow extends JFrame {
 			} while (!numeric);
 
 			try {
-				conn.addStockQuery(prodId, prodName, quantity);
+				//conn.addStockQuery(prodId, prodName, quantity);
+				conn.addStockQuery(prodId, quantity);
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -679,8 +680,8 @@ public class MainWindow extends JFrame {
 	@SuppressWarnings("static-access")
 	private void removeStock() {
 		int prodIdCol = 0;
-		int prodCol = 1;
-		int prodStockCol = 4;
+		int prodCol = 2;
+		int prodStockCol = 5;
 		int prodStockAlarmCol = 6;
 
 		// if row selected
