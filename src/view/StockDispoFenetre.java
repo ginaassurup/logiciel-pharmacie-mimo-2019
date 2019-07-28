@@ -61,7 +61,7 @@ import java.awt.SystemColor;
 import javax.swing.JSeparator;
 import javax.swing.ImageIcon;
 
-public class MainWindow extends JFrame {
+public class StockDispoFenetre extends JFrame {
 
 	/**
 	 * 
@@ -99,8 +99,6 @@ public class MainWindow extends JFrame {
 	JTable tableProduct;
 	private JComboBox<String> comboBoxCategory;
 	private JTextField textFieldSearch;
-	private JButton buttonPlus;
-	private JButton buttonMinus;
 	private JPanel contentPane;
 
 	/**
@@ -111,7 +109,7 @@ public class MainWindow extends JFrame {
 			@Override
 			public void run() {
 				try {
-					MainWindow frame = new MainWindow();
+					StockDispoFenetre frame = new StockDispoFenetre();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -124,7 +122,7 @@ public class MainWindow extends JFrame {
 	 * Create the frame.
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes", "static-access" })
-	public MainWindow() {
+	public StockDispoFenetre() {
 		
 		// initialise connection
 		conn = new SQLiteCon();
@@ -132,7 +130,7 @@ public class MainWindow extends JFrame {
 		createMenuBar();
 		setResizable(false);
 
-		setTitle("Produits | Utilisateur : " + conn.currentUser);
+		setTitle("Stock disponible | Utilisateur : ");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1180, 828);
 		contentPane = new JPanel();
@@ -184,22 +182,8 @@ public class MainWindow extends JFrame {
 			}
 		});
 		comboBoxCategory.setMaximumRowCount(20);
-		comboBoxCategory.setBounds(158, 122, 125, 30);
+		comboBoxCategory.setBounds(177, 122, 125, 30);
 		contentPane.add(comboBoxCategory);
-
-		JButton btnCategories = new JButton("Cat\u00E9gorie");
-		btnCategories.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		//btnCategories.setBackground(new Color(75, 190, 95));
-		btnCategories.setBackground(new Color(204, 204, 204));
-		btnCategories.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				openCategories();
-			}
-		});
-		btnCategories.setFocusPainted(false);
-		btnCategories.setBounds(299, 722, 82, 30);
-		contentPane.add(btnCategories);
 
 		textFieldSearch = new JTextField();
 
@@ -255,25 +239,13 @@ public class MainWindow extends JFrame {
 		btnShowAll.setFocusPainted(false);
 		btnShowAll.setBounds(1023, 121, 113, 30);
 		contentPane.add(btnShowAll);
-
-		JLabel lblProducts = new JLabel("Gestion des produits");
-		lblProducts.setForeground(Color.BLACK);
-		lblProducts.setHorizontalAlignment(SwingConstants.CENTER);
-		lblProducts.setBounds(105, 695, 244, 14);
-		contentPane.add(lblProducts);
-
-		JLabel lblStock = new JLabel("Stock");
-		lblStock.setForeground(Color.BLACK);
-		lblStock.setHorizontalAlignment(SwingConstants.CENTER);
-		lblStock.setBounds(979, 699, 75, 14);
-		contentPane.add(lblStock);
 		
 		JLabel labelLogo = new JLabel("");
 		labelLogo.setIcon(null);
 		labelLogo.setBounds(319, 516, 64, 64);
 		contentPane.add(labelLogo);
 		
-		JLabel lblProduits = new JLabel("Gestion des Produits");
+		JLabel lblProduits = new JLabel("Stock disponible");
 		lblProduits.setHorizontalAlignment(SwingConstants.CENTER);
 		lblProduits.setForeground(new Color(165, 42, 42));
 		lblProduits.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -307,78 +279,6 @@ public class MainWindow extends JFrame {
 		
 		JSeparator separator_1 = new JSeparator();
 		menu_1.add(separator_1);
-
-		JButton btnAddProduct = new JButton("Ajouter");
-		btnAddProduct.setBounds(43, 722, 80, 30);
-		contentPane.add(btnAddProduct);
-		btnAddProduct.setBackground(new Color(204, 204, 204));
-		btnAddProduct.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-
-				addProduct();
-			}
-		});
-		btnAddProduct.setFont(new Font("Tahoma", Font.PLAIN, 10));
-				
-		btnAddProduct.setFocusPainted(false);
-						
-		JButton btnRemoveProduct = new JButton("Supprimer");
-		btnRemoveProduct.setBounds(125, 722, 80, 30);
-		contentPane.add(btnRemoveProduct);
-		btnRemoveProduct.setBackground(new Color(204, 204, 204));
-		btnRemoveProduct.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-
-				removeProduct();
-			}
-		});
-		
-		btnRemoveProduct.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnRemoveProduct.setFocusPainted(false);
-	
-		JButton btnEdit = new JButton("Modifier");
-		btnEdit.setBounds(207, 722, 80, 30);
-		contentPane.add(btnEdit);
-		btnEdit.setBackground(new Color(204, 204, 204));
-		btnEdit.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				// edit product
-				editProduct();
-
-			}
-		});
-				
-		btnEdit.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnEdit.setFocusPainted(false);
-		
-		buttonPlus = new JButton("+");
-		buttonPlus.setBounds(1007, 722, 125, 30);
-		contentPane.add(buttonPlus);
-		buttonPlus.setBackground(new Color(204, 204, 204));
-		buttonPlus.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				addStock();
-			}
-		});
-		
-		buttonPlus.setFocusPainted(false);
-		
-		buttonMinus = new JButton("-");
-		buttonMinus.setBounds(880, 722, 125, 30);
-		contentPane.add(buttonMinus);
-		buttonMinus.setBackground(new Color(204, 204, 204));
-		buttonMinus.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				removeStock();
-			}
-		});
-		buttonMinus.setFocusPainted(false);
 				
 		JButton btnRetour = new JButton("Retour");
 		btnRetour.addActionListener(new ActionListener() {
@@ -393,7 +293,7 @@ public class MainWindow extends JFrame {
 		JLabel lblFiltreParCatgorie = new JLabel("Filtrer par cat\u00E9gorie");
 		lblFiltreParCatgorie.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblFiltreParCatgorie.setForeground(Color.BLACK);
-		lblFiltreParCatgorie.setBounds(40, 131, 111, 14);
+		lblFiltreParCatgorie.setBounds(40, 131, 125, 14);
 		contentPane.add(lblFiltreParCatgorie);
 		setLocationRelativeTo(null);
 
@@ -412,17 +312,6 @@ public class MainWindow extends JFrame {
 	private void createMenuBar() {
 	}
 
-	// opens Categories Window
-	private void openCategories() {
-		categoriesWindow = new CategoriesWindow();
-		categoriesWindow.setVisible(true);
-		while (categoriesWindow.isShowing()) {
-			//
-		}
-		refreshComboBox();
-		getProductsJoin();
-	}
-
 	/*
 	 * Get data to the table and combobox
 	 */
@@ -438,8 +327,8 @@ public class MainWindow extends JFrame {
 			tableProduct.setModel(model);
 
 			
-//			hideProductIdColumn();
-//			hideStockAlarmColumn();
+			hideProductIdColumn();
+			hidePrixAchatColumn();
 			allignColumn();
 			colourIfStockAlarm();
 			
@@ -453,23 +342,23 @@ public class MainWindow extends JFrame {
 
 		TableColumn productIdColumn = tableProduct.getColumnModel()
 				.getColumn(0);
-		// tableCategories.getColumnModel().removeColumn(myTableColumn0);
+		//tableCategories.getColumnModel().removeColumn(myTableColumn0);
 		productIdColumn.setMaxWidth(0);
 		productIdColumn.setMinWidth(0);
 		productIdColumn.setPreferredWidth(0);
 
 	}
 
-	// hides stockAlarm column
-	private void hideStockAlarmColumn() {
+	// hides prix achat column
+	private void hidePrixAchatColumn() {
 
 		// hides stockAlarm column
-		TableColumn stockAlarmColumn = tableProduct.getColumnModel().getColumn(
-				6);
+		TableColumn prixAchatColumn = tableProduct.getColumnModel().getColumn(
+				8);
 		// tableCategories.getColumnModel().removeColumn(myTableColumn0);
-		stockAlarmColumn.setMaxWidth(0);
-		stockAlarmColumn.setMinWidth(0);
-		stockAlarmColumn.setPreferredWidth(0);
+		prixAchatColumn.setMaxWidth(0);
+		prixAchatColumn.setMinWidth(0);
+		prixAchatColumn.setPreferredWidth(0);
 
 	}
 
@@ -610,268 +499,6 @@ public class MainWindow extends JFrame {
 
 		} else if (evt.getStateChange() == ItemEvent.DESELECTED) {
 			// Item is no longer selected
-		}
-	}
-
-	/*
-	 * Add and remove stock
-	 */
-
-	// add stock method
-	@SuppressWarnings("static-access")
-	private void addStock() {
-		int prodIdCol = 0;
-		int prodCol = 1;
-
-		// if row selected
-		if (!(tableProduct.getSelectedRow() == -1)) {
-			int selectedRow = tableProduct.getSelectedRow();
-
-			String prodId = tableProduct.getValueAt(selectedRow, prodIdCol)
-					.toString().trim();
-			String prodName = tableProduct.getValueAt(selectedRow, prodCol)
-					.toString().trim();
-
-			boolean numeric = false;
-			int quantity = 0;
-
-			JOptionPane inpOption = new JOptionPane();
-			String strDialogResponse = "";
-
-			do {
-				// Shows a inputdialog
-				strDialogResponse = inpOption
-						.showInputDialog("How much do you want to add: ");
-				// if OK is pushed then (if not strDialogResponse is null)
-				if (strDialogResponse != null) {
-
-					try {
-						quantity = Integer.parseInt(strDialogResponse.trim());
-						numeric = true;
-					} catch (NumberFormatException e) {
-						JOptionPane.showMessageDialog(null,
-								"Please enter numeric value.");
-						numeric = false;
-					}
-				}// If cancel button is pressed
-				else {
-					break;
-				}
-			} while (!numeric);
-
-			try {
-				conn.addStockQuery(prodId, prodName, quantity);
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-			// refresh view here
-			refreshTable();
-		} else {
-
-			JOptionPane.showMessageDialog(null,
-					"In order to change the stock please select product first.");
-		}
-	}
-
-	// remove stock method
-	@SuppressWarnings("static-access")
-	private void removeStock() {
-		int prodIdCol = 0;
-		int prodCol = 1;
-		int prodStockCol = 4;
-		int prodStockAlarmCol = 6;
-
-		// if row selected
-		if (!(tableProduct.getSelectedRow() == -1)) {
-
-			int selectedRow = tableProduct.getSelectedRow();
-
-			String prodId = tableProduct.getValueAt(selectedRow, prodIdCol)
-					.toString().trim();
-			String prodName = tableProduct.getValueAt(selectedRow, prodCol)
-					.toString().trim();
-
-			String prodStock = tableProduct
-					.getValueAt(selectedRow, prodStockCol).toString().trim();
-
-			String prodStockAlarm = tableProduct
-					.getValueAt(selectedRow, prodStockAlarmCol).toString()
-					.trim();
-
-			boolean numeric = false;
-			int quantity = 0;
-			JOptionPane inpOption = new JOptionPane();
-			String strDialogResponse = "";
-
-			do {
-				// Shows a input dialog
-				strDialogResponse = inpOption
-						.showInputDialog("How much do you want to remove?: ");
-				// if OK is pushed then (if not strDialogResponse is null)
-				if (strDialogResponse != null) {
-
-					try {
-						quantity = Integer.parseInt(strDialogResponse);
-						numeric = true;
-					} catch (NumberFormatException e) {
-						JOptionPane.showMessageDialog(null,
-								"Please enter numeric value.");
-						numeric = false;
-					}
-				}// If cancel button is pressed
-				else {
-					break;
-				}
-			} while (!numeric);
-
-			try {
-				conn.removeStockQuery(prodId, prodName, quantity, prodStock,
-						prodStockAlarm);
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			// refresh view
-			refreshTable();
-		} else {
-			System.out.println("Nothing selected");
-			JOptionPane.showMessageDialog(null,
-					"In order to change the stock please select product first.");
-		}
-	}
-
-	/*
-	 * Add and Remove product
-	 */
-
-	// add product
-	private void addProduct() {
-
-		// initialise AjouterUnProduitFenetre
-		ajouterUnProduitFenetre = new AjouterUnProduitFenetre();
-		dispose();
-		ajouterUnProduitFenetre.setVisible(true);
-		ajouterUnProduitFenetre.textFieldName.setText("");
-		ajouterUnProduitFenetre.textFieldType.setText("");
-		ajouterUnProduitFenetre.textFieldStock.setText("");
-
-		while (ajouterUnProduitFenetre.isVisible()) {
-
-		}
-
-		refreshTable();
-		refreshComboBox();
-	}
-
-	// Supprimer un produit
-	private void removeProduct() {
-		int prodIdCol = 0;
-		int prodNameCol = 1;
-
-		// if row selected
-		if (!(tableProduct.getSelectedRow() == -1)) {
-
-			int selectedRow = tableProduct.getSelectedRow();
-
-			String num_prod = tableProduct.getValueAt(selectedRow, prodIdCol)
-					.toString().trim();
-
-			String code_barre = tableProduct.getValueAt(selectedRow, prodNameCol)
-					.toString().trim();
-
-			int reply = JOptionPane.showConfirmDialog(null,
-					"Voulez-vous vraiment supprimer ce produit ?", "Remove ?",
-					JOptionPane.YES_NO_OPTION);
-			if (reply == JOptionPane.YES_OPTION) {
-
-				try {
-					conn.removeProductQuery(num_prod, code_barre);
-
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-
-				// refresh view here
-				refreshTable();
-
-				JOptionPane.showMessageDialog(null, "ProduitDetail removed.");
-
-			} else {
-				// do nothing
-			}
-
-		} else {
-			System.out.println("Nothing selected");
-			JOptionPane
-					.showMessageDialog(null,
-							"In order to remove product please select product row first.");
-		}
-
-	}
-
-	// edit product
-	private void editProduct() {
-		if (!(tableProduct.getSelectedRow() == -1)) {
-			modifierUnProduitFenetre = new ModifierUnProduitFenetre();
-			dispose();
-			int idCol = 0;
-			int codebarreCol=1;
-			int nameCol = 2;
-			int catCol = 3;
-			int typeCol = 4;
-			int stockCol = 5;
-			int stockAlarmCol = 6;
-			int prixVenteCol = 7;
-			int prixAchatCol = 8;
-			int unitCol = 9;
-			int selectedRow = tableProduct.getSelectedRow();
-
-			//System.out.println(tableProduct.getValueAt(selectedRow, idCol));
-		
-			//String idStr = "" +tableProduct.getValueAt(selectedRow, idCol);
-			
-//			modifierUnProduitFenetre. = idStr;
-//			modifierUnProduitFenetre.textFieldCodeBarre.setText();
-			modifierUnProduitFenetre.num_prodActuel = tableProduct.getValueAt(selectedRow, idCol).toString().trim();
-			modifierUnProduitFenetre.textFieldCodeBarre.setText(tableProduct.getValueAt(selectedRow, codebarreCol).toString().trim());
-			modifierUnProduitFenetre.textFieldName.setText(tableProduct
-					.getValueAt(selectedRow, nameCol).toString().trim());
-			modifierUnProduitFenetre.comboBoxCategory.setSelectedItem(tableProduct
-					.getValueAt(selectedRow, catCol));
-			modifierUnProduitFenetre.textFieldType.setText(tableProduct
-					.getValueAt(selectedRow, typeCol).toString().trim());
-			modifierUnProduitFenetre.textFieldStock.setText(tableProduct
-					.getValueAt(selectedRow, stockCol).toString().trim());
-			modifierUnProduitFenetre.comboBoxUnits.setSelectedItem(tableProduct
-					.getValueAt(selectedRow, unitCol));
-
-			modifierUnProduitFenetre.textFieldStockAlarm.setText(tableProduct
-					.getValueAt(selectedRow, stockAlarmCol).toString().trim());
-			modifierUnProduitFenetre.textFieldPrixVente.setText(tableProduct
-					.getValueAt(selectedRow, prixVenteCol).toString().trim());
-			modifierUnProduitFenetre.textFieldPrixAchat.setText(tableProduct
-					.getValueAt(selectedRow, prixAchatCol).toString().trim());
-			
-			currentProductName = modifierUnProduitFenetre.textFieldName.getText()
-					.toString().trim();
-			System.out.println("Produit choisi: " + currentProductName);
-
-//			modifierUnProduitFenetre.currentProductName = currentProductName;
-//			modifierUnProduitFenetre.currentTypeName = tableProduct.getValueAt(
-//					selectedRow, typeCol).toString();
-
-			modifierUnProduitFenetre.setVisible(true);
-			while (modifierUnProduitFenetre.isVisible()) {
-
-			}
-
-			refreshTable();
-			refreshComboBox();
-		} else {
-			JOptionPane.showMessageDialog(null,
-					"Veuillez choisir le produit à modifier.");
 		}
 	}
 

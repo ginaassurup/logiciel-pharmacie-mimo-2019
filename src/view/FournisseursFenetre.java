@@ -79,8 +79,7 @@ public class FournisseursFenetre extends JDialog {
 		// connect to database
 		conn = new SQLiteCon();
 
-		setIconImage(Toolkit.getDefaultToolkit().getImage(FournisseursFenetre.class.getResource("/view/logo_new.png")));
-		setTitle("Liste des fournisseurs");
+		setTitle("Liste des fournisseurs | Utilisateur : " + conn.currentUser);
 		setModal(true);
 		setResizable(false);
 		setBounds(100, 100, 968, 700);
@@ -124,10 +123,10 @@ public class FournisseursFenetre extends JDialog {
 				ajouterUnFour();
 			}
 		});
-		btnAdd.setBounds(32, 162, 88, 23);
+		btnAdd.setBounds(14, 162, 100, 23);
 		getContentPane().add(btnAdd);
 
-		JButton btnRemove = new JButton("Remove");
+		JButton btnRemove = new JButton("Supprimer");
 		btnRemove.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnRemove.setBackground(new Color(204, 204, 204));
 		btnRemove.setFocusPainted(false);
@@ -138,7 +137,7 @@ public class FournisseursFenetre extends JDialog {
 				removeUnit();
 			}
 		});
-		btnRemove.setBounds(32, 192, 88, 23);
+		btnRemove.setBounds(14, 192, 100, 23);
 		getContentPane().add(btnRemove);
 
 		JButton btnEdit = new JButton("Modifier");
@@ -151,7 +150,7 @@ public class FournisseursFenetre extends JDialog {
 				updateUnit();
 			}
 		});
-		btnEdit.setBounds(32, 222, 88, 23);
+		btnEdit.setBounds(14, 222, 100, 23);
 		getContentPane().add(btnEdit);
 		
 		JLabel lblListeDesFournisseurs = new JLabel("Liste des fournisseurs");
