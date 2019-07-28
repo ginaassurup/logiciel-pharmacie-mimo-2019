@@ -33,7 +33,7 @@ public class LigneTicket {
 	}
 	public int getNum_prod() {
 		if(this.product != null)
-		return this.getProduct().getNum_prod();
+			return this.getProduct().getNum_prod();
 		return 0;
 	}
 	public void setNum_prod(int num_prod) {
@@ -41,7 +41,7 @@ public class LigneTicket {
 	}
 	public int getCode_barre() {
 		if(this.product != null)
-		return this.product.getCode_barre();
+			return this.product.getCode_barre();
 		return 0;
 	}
 	public void setCode_barre(int code_barre) {
@@ -49,7 +49,7 @@ public class LigneTicket {
 	}
 	public String getLibelle_produit() {
 		if(this.product != null)
-		return this.product.getLibelle_produit();
+			return this.product.getLibelle_produit();
 		return "";
 	}
 	public void setLibelle_produit(String libelle_produit) {
