@@ -50,16 +50,19 @@ values (1, "Sanofi France", "56 rue La Boetie", 75008, "Paris")
 CREATE TABLE IF NOT EXISTS LigneTicket(
 id_ligne integer NOT NULL PRIMARY KEY AUTOINCREMENT,
 num_prod integer NOT NULL REFERENCES ProduitDetail(num_prod),
-qtte_vendu interger NOT NULL);
-ALTER TABLE LigneTicket ADD COLUMN montant_ligne float
-
+qtte_vendu interger NOT NULL,
+montant_ligne float NOT NULL,
+id_ticket integer NOT NULL REFERENCES Ticket(id_ticket)
+);
 
 
 CREATE TABLE IF NOT EXISTS Ticket(
 id_ticket integer NOT NULL PRIMARY KEY AUTOINCREMENT,
-id_ligne integer NOT NULL REFERENCES LigneTicket(id_ligne));
+libelle VARCHAR(30) NOT NULL,
+montant_ticket float NOT NULL
+);
 
-
+libelle_produit VARCHAR(100) NOT NULL REFERENCES ProduitDetail(libelle_produit),
 code_barre integer NOT NULL REFERENCES ProduitDetail(code_barre),
 libelle_produit VARCHAR(100) NOT NULL REFERENCES ProduitDetail(libelle_produit),
 prix_vente float NOT NULL REFERENCES ProduitDetail(prix_vente),

@@ -132,7 +132,7 @@ public class AjouterUnProduitFenetre extends JDialog {
 		lblName.setBounds(195, 177, 113, 30);
 		contentPanel.add(lblName);
 
-		JLabel lblCategory = new JLabel("Categorie");
+		JLabel lblCategory = new JLabel("Catégorie");
 		lblCategory.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblCategory.setForeground(Color.BLACK);
 		lblCategory.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -172,8 +172,9 @@ public class AjouterUnProduitFenetre extends JDialog {
 		btnNewCat.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-				openCategories();
+				
+				dispose();
+				openCategories();		
 
 			}
 		});

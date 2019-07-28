@@ -20,11 +20,12 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import model.Categorie;
-import model.ProduitDetail;
-import model.ProductJoin;
-import model.Unit;
+import model.LigneTicket;
 import model.PharmacienDetail;
-import view.MainWindow;
+import model.ProductJoin;
+import model.ProduitDetail;
+import model.Ticket;
+import model.Unit;
 import view.MenuPrincipal;
 
 public class SQLiteCon {
@@ -245,7 +246,7 @@ public class SQLiteCon {
 		}
 	}
 
-	// Mettre à jour le profil d'un pharmacien query
+	// Mettre ï¿½ jour le profil d'un pharmacien query
 	public void majPharQuery(String num_phar, String identifiant, String mdp, String prenom_phar, String nom_phar)
 			throws Exception {
 
@@ -374,7 +375,7 @@ public class SQLiteCon {
 		}
 	}
 
-	// Supprimer une catégorie
+	// Supprimer une catï¿½gorie
 	public void removeCategoryQuery(String id_cat, String nom_cat) throws Exception {
 
 		PreparedStatement myStmt = null;
@@ -545,7 +546,7 @@ public class SQLiteCon {
 			myStmt.execute();
 			// JOptionPane.showMessageDialog(null, "Categorie removed");
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Ce fournisseur est attaché à un produit. Impossible de le supprimer !");
+			JOptionPane.showMessageDialog(null, "Ce fournisseur est attachï¿½ ï¿½ un produit. Impossible de le supprimer !");
 		} finally {
 			close(myStmt, null);
 
@@ -711,6 +712,84 @@ public class SQLiteCon {
 			close(myStmt, myRs);
 		}
 	}
+	
+	// Créer un Ticket query	
+	public Ticket createTicketQuery(Ticket t) throws SQLException {
+		
+		try {
+			myStmt = myConn.prepareStatement(
+					"INSERT INTO Ticket (libelle, montant_ticket)"
+							+ "VALUES (?,?)", Statement.RETURN_GENERATED_KEYS);
+
+//			myStmt.setInt(1, t.getId_ticket());
+			myStmt.setString(1, t.getName());
+			myStmt.setFloat(2, t.getTotal());
+			System.out.println("Montant: " + t.getTotal() );
+			
+			myStmt.executeUpdate();
+			
+			try (ResultSet generatedKeys = myStmt.getGeneratedKeys()) {
+	            if (generatedKeys.next()) {
+	            	t.setId_ticket(generatedKeys.getInt(1));
+	                return t;
+	            }
+	            else {
+	                throw new SQLException("Creating user failed, no ID obtained.");
+	            }
+	        }
+		} finally {
+			close(myStmt, null);
+		}
+	}
+	
+	//	Mettre à jour le montant d'un ticket
+	public void majMontantTicketQuery(int id_ticket, String libelle, float montant_ticket)
+			throws Exception {
+
+		PreparedStatement myStmt = null;
+
+		try {
+
+			myStmt = myConn.prepareStatement(
+					"UPDATE Ticket SET montant_ticket = ?, libelle = ?"
+							+ "WHERE id_ticket = ?");
+
+			myStmt.setFloat(1, montant_ticket);
+			myStmt.setString(2, libelle);
+			myStmt.setInt(3, id_ticket);
+
+			myStmt.executeUpdate();
+		} finally {
+			close(myStmt, null);
+		}
+	}
+	
+	//	Créer une Ligne de ticket query
+	public void createTicketLigneQuery(List<LigneTicket> tickets) throws SQLException {
+		
+		try {
+			for(LigneTicket l : tickets)
+			{
+			myStmt = myConn.prepareStatement(
+					"INSERT INTO LigneTicket (num_prod, qtte_vendu, montant_ligne, id_ticket)"
+							+ "VALUES (?,?,?,?)");
+
+			myStmt.setInt(1, l.getNum_prod());
+			myStmt.setInt(2, l.getQtte_vendu());
+			myStmt.setFloat(3, l.getMontant());
+			myStmt.setInt(4, l.getId_ticket());
+			
+			
+			myStmt.executeUpdate();
+			
+			
+			}
+			
+			return;
+		} finally {
+			close(myStmt, null);
+		}
+	}
 
 	// Ajouter un produit
 	public void insertProductQuery(String code_barre, String libelle_produit, String nom_cat, String forme,
@@ -808,8 +887,8 @@ public class SQLiteCon {
 
 	// update product
 	
-	public void updateProductQuery(String num_prod, String libelle_produit, String nom_cat,
-			String forme, String qtte_stock, String qtte_stock_alarme, String prix_vente, String nom_four) throws Exception {
+	public void updateProductQuery(String num_prod, String code_barre, String libelle_produit, String nom_cat,
+			String forme, String qtte_stock, String qtte_stock_alarme, String prix_vente, String prix_achat, String nom_four) throws Exception {
 		
 
 		PreparedStatement myStmt = null;
@@ -820,7 +899,7 @@ public class SQLiteCon {
 		// get ID of unitName
 		int id_four = getId_four(nom_four);
 
-		System.out.println(num_prod + "sg");
+		System.out.println(num_prod);
 				
 		try {
 
@@ -829,17 +908,19 @@ public class SQLiteCon {
 //							+ "WHERE Id = ?");
 
 			myStmt = myConn.prepareStatement(
-					"UPDATE ProduitDetail SET libelle_produit = ?, id_cat = ?, forme = ?, qtte_stock = ?, id_four = ?, qtte_stock_alarme = ?, prix_vente = ?"
+					"UPDATE ProduitDetail SET code_barre=?, libelle_produit = ?, id_cat = ?, forme = ?, qtte_stock = ?, id_four = ?, qtte_stock_alarme = ?, prix_vente = ?"
 							+ "WHERE num_prod = ?");
 
-			myStmt.setString(1, libelle_produit);
-			myStmt.setString(2, "" + id_cat);
-			myStmt.setString(3, forme);
-			myStmt.setString(4, qtte_stock);
-			myStmt.setString(5, "" + id_four);
-			myStmt.setString(6, qtte_stock_alarme);
-			myStmt.setString(6, prix_vente);
-			myStmt.setString(7, num_prod);
+			myStmt.setString(1, code_barre);
+			myStmt.setString(2, libelle_produit);
+			myStmt.setString(3, "" + id_cat);
+			myStmt.setString(4, forme);
+			myStmt.setString(5, qtte_stock);
+			myStmt.setString(6, "" + id_four);
+			myStmt.setString(7, qtte_stock_alarme);
+			myStmt.setString(8, prix_vente);
+			myStmt.setString(9, prix_achat);
+			myStmt.setString(10, num_prod);
 			
 //			myStmt.setString(1, prodName);
 //			myStmt.setString(2, "" + catId);
@@ -848,7 +929,7 @@ public class SQLiteCon {
 //			myStmt.setString(5, "" + unitId);
 //			myStmt.setString(6, stockAlarm);
 //			myStmt.setString(7, currentId);
-
+			System.out.println("Update Product Query");
 			myStmt.executeUpdate();
 		} finally {
 			close(myStmt, null);
@@ -885,8 +966,8 @@ public class SQLiteCon {
 	}
 
 	// add stock
-	public void addStockQuery(String prodId, String prodName, int quantity) throws Exception {
-
+	//public void addStockQuery(String prodId, String prodName, int quantity) throws Exception {
+	public void addStockQuery(String prodId, int quantity) throws Exception {
 		PreparedStatement myStmt = null;
 
 		String qString = "" + quantity;
@@ -894,11 +975,11 @@ public class SQLiteCon {
 		try {
 
 			myStmt = myConn.prepareStatement(
-					"UPDATE ProduitDetail SET Stock = (ProduitDetail.Stock + ?) " + "WHERE Id = ? AND Name = ?");
-
-			myStmt.setString(1, qString);
+					//"UPDATE ProduitDetail SET qtte_stock = ProduitDetail.qtte_stock + ? " + "WHERE num_prod = ? AND libelle_produit = ?");
+			"UPDATE ProduitDetail SET qtte_stock = ProduitDetail.qtte_stock + ? " + "WHERE num_prod = ? ");
+			myStmt.setInt(1, quantity);
 			myStmt.setString(2, prodId);
-			myStmt.setString(3, prodName);
+			//myStmt.setString(3, prodName);
 
 			myStmt.executeUpdate();
 		} finally {
@@ -927,16 +1008,17 @@ public class SQLiteCon {
 
 			PreparedStatement myStmt = null;
 
-			String qString = "" + quantity;
+			//String qString = "" + quantity;
 
 			try {
 
 				myStmt = myConn.prepareStatement(
-						"UPDATE ProduitDetail SET Stock = (ProduitDetail.Stock - ?) " + "WHERE Id = ? AND Name = ?");
+						//"UPDATE ProduitDetail SET Stock = (ProduitDetail.Stock - ?) " + "WHERE Id = ? AND Name = ?");
+				"UPDATE ProduitDetail SET qtte_stock = (ProduitDetail.qtte_stock - ?) " + "WHERE num_prod = ?");
 
-				myStmt.setString(1, qString);
+				myStmt.setInt(1, quantity);
 				myStmt.setString(2, prodId);
-				myStmt.setString(3, prodName);
+				//myStmt.setString(3, prodName);
 
 				myStmt.executeUpdate();
 			} finally {

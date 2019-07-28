@@ -111,10 +111,7 @@ public class ProductJoin {
 	
 	@Override
 	public String toString() {
-		return String
-				.format("ProduitDetail [num_prod=%s, code_barre=%s, libelle_produit=%s, nom_cat=%s, forme=%s, qtte_stock=%s, qtte_stock_alarme=%s,"
-						+ "prix_vente=%s, prix_achat=%s, raison_sociale=%s]",
-						num_prod, code_barre, libelle_produit, nom_cat, forme, qtte_stock, qtte_stock_alarme, prix_vente, prix_achat, raison_sociale);
+		return this.getLibelle_produit();
 		
 //				.format("ProduitDetail [libelle_produit=%s, nom_cat=%s, forme=%s, qtte_stock=%s]",
 //						libelle_produit, nom_cat, forme, qtte_stock);

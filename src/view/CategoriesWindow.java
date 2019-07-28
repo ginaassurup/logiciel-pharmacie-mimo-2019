@@ -31,6 +31,7 @@ import dao.SQLiteCon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import javax.swing.SwingConstants;
 
 public class CategoriesWindow extends JDialog {
 
@@ -76,15 +77,14 @@ public class CategoriesWindow extends JDialog {
 		// connect to database
 		conn = new SQLiteCon();
 
-		setIconImage(Toolkit.getDefaultToolkit().getImage(CategoriesWindow.class.getResource("/view/logo_new.png")));
-		setTitle("In - Categories");
+		setTitle("Liste des catégories du produit | Utilisateur : " + conn.currentUser);
 		setModal(true);
 		setResizable(false);
-		setBounds(100, 100, 254, 242);
+		setBounds(100, 100, 711, 483);
 		getContentPane().setLayout(null);
-		getContentPane().setBackground(new Color(56, 56, 56));
+		getContentPane().setBackground(Color.WHITE);
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(115, 11, 120, 192);
+		scrollPane.setBounds(193, 158, 439, 215);
 		getContentPane().add(scrollPane);
 
 		tableCategories = new JTable() {
@@ -99,6 +99,7 @@ public class CategoriesWindow extends JDialog {
 				super.changeSelection(rowIndex, columnIndex, !extend, extend);
 			}
 		};
+		tableCategories.setLocation(194, 0);
 		tableCategories.setFocusable(false);
 
 		scrollPane.setViewportView(tableCategories);
@@ -109,15 +110,10 @@ public class CategoriesWindow extends JDialog {
 		tableCategories.setRequestFocusEnabled(false);
 		tableCategories.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon(CategoriesWindow.class.getResource("/view/logo_new_64_no_bckg.png")));
-		label.setBounds(22, 11, 72, 72);
-		getContentPane().add(label);
-
-		JButton btnAdd = new JButton("Add");
+		JButton btnAdd = new JButton("Ajouter");
 		btnAdd.setFocusPainted(false);
 		btnAdd.setBackground(new Color(204, 204, 204));
-		btnAdd.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnAdd.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnAdd.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -126,11 +122,11 @@ public class CategoriesWindow extends JDialog {
 				addCategory();
 			}
 		});
-		btnAdd.setBounds(14, 119, 88, 23);
+		btnAdd.setBounds(14, 162, 100, 23);
 		getContentPane().add(btnAdd);
 
-		JButton btnRemove = new JButton("Remove");
-		btnRemove.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		JButton btnRemove = new JButton("Supprimer");
+		btnRemove.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnRemove.setBackground(new Color(204, 204, 204));
 		btnRemove.setFocusPainted(false);
 		btnRemove.addActionListener(new ActionListener() {
@@ -140,10 +136,10 @@ public class CategoriesWindow extends JDialog {
 				removeCategory();
 			}
 		});
-		btnRemove.setBounds(14, 149, 88, 23);
+		btnRemove.setBounds(14, 192, 100, 23);
 		getContentPane().add(btnRemove);
 
-		JButton btnEdit = new JButton("Edit");
+		JButton btnEdit = new JButton("Modifier");
 		btnEdit.setBackground(new Color(204, 204, 204));
 		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -151,10 +147,35 @@ public class CategoriesWindow extends JDialog {
 				updateCategory();
 			}
 		});
-		btnEdit.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnEdit.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnEdit.setFocusPainted(false);
-		btnEdit.setBounds(14, 179, 88, 23);
+		btnEdit.setBounds(14, 222, 100, 23);
 		getContentPane().add(btnEdit);
+		
+		JButton btnRetour = new JButton("Retour");
+		btnRetour.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+				ouvrirAjouterUnProduitFenetre();
+				
+			}
+
+			// Ouvrir la gestion des produits
+			private void ouvrirAjouterUnProduitFenetre() {
+				
+				AjouterUnProduitFenetre ajoutfenetre = new AjouterUnProduitFenetre();
+				ajoutfenetre.setVisible(true);
+			}
+		});
+		btnRetour.setBounds(14, 13, 97, 25);
+		getContentPane().add(btnRetour);
+		
+		JLabel lblListeDesCatgories = new JLabel("Liste des cat\u00E9gories de produit");
+		lblListeDesCatgories.setHorizontalAlignment(SwingConstants.CENTER);
+		lblListeDesCatgories.setForeground(new Color(165, 42, 42));
+		lblListeDesCatgories.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblListeDesCatgories.setBounds(193, 81, 439, 25);
+		getContentPane().add(lblListeDesCatgories);
 
 		setLocationRelativeTo(null);
 
@@ -189,7 +210,7 @@ public class CategoriesWindow extends JDialog {
 	// add category
 	private void addCategory() {
 
-		newCategory = JOptionPane.showInputDialog("New category name").trim();
+		newCategory = JOptionPane.showInputDialog("Entrez le nom de la nouvelle catégorie que vous voulez ajouer").trim();
 
 		// if not empty
 		if (!newCategory.equalsIgnoreCase("")) {
@@ -244,7 +265,7 @@ public class CategoriesWindow extends JDialog {
 			System.out.println(catId + " " + catName);
 
 			int reply = JOptionPane.showConfirmDialog(null,
-					"Do you really want to remove this category?", "Remove?",
+					"Voulez-vous vraiment supprimer cette catégorie ?", "Supprimer ?",
 					JOptionPane.YES_NO_OPTION);
 			if (reply == JOptionPane.YES_OPTION) {
 
@@ -266,7 +287,7 @@ public class CategoriesWindow extends JDialog {
 			System.out.println("Nothing selected");
 			JOptionPane
 					.showMessageDialog(null,
-							"In order to remove category please select category row first.");
+							"Veuillez choisir une catégorie à supprimer");
 		}
 	}
 
@@ -286,7 +307,7 @@ public class CategoriesWindow extends JDialog {
 					nameCol).toString();
 
 			newCategory = JOptionPane.showInputDialog(
-					"Please enter new name of this category", currentCategory);
+					"Entrez le nouveau nom de cette catégorie", currentCategory);
 			// if not empty
 			if (!newCategory.equalsIgnoreCase("")) {
 
@@ -325,7 +346,7 @@ public class CategoriesWindow extends JDialog {
 			}
 
 		} else {
-			JOptionPane.showMessageDialog(null, "Please select category first.");
+			JOptionPane.showMessageDialog(null, "Veuillez choisir une ligne de catégorie");
 		}
 	}
 }

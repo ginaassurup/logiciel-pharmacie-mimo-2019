@@ -96,43 +96,59 @@ public class MenuPrincipal extends JFrame{
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				frmMenuPrincipal.dispose();
-				ouvrirUnitsWindow();
+				ouvrirSaisirUnTicketFenetre();
 			}
 
 			// opens listePhar window
-			private void ouvrirUnitsWindow() {
-				TicketFenetre ticketFenetre = new TicketFenetre();
-				ticketFenetre.setVisible(true);
+			private void ouvrirSaisirUnTicketFenetre() {
+				SaisirUnTicketFenetre saisirUnTicketFenetre = new SaisirUnTicketFenetre();
+				saisirUnTicketFenetre.setVisible(true);
 			}
 		});
 		
-		JButton btnInfoProduit = new JButton("Information sur un produit");
-		btnInfoProduit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				frmMenuPrincipal.dispose();
-				openMainWindow();
-			}
-
-			// opens listePhar window
-			private void openMainWindow() {
-				MainWindow mainWindow = new MainWindow();
-				mainWindow.setVisible(true);
-			}
-		});
+		JButton btnInfoProduit = new JButton("Gestion des produits");
 		btnInfoProduit.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnInfoProduit.setPreferredSize(new Dimension(260, 60));
 		btnInfoProduit.setForeground(Color.BLACK);
 		btnInfoProduit.setBackground(Color.WHITE);
 		btnInfoProduit.setBounds(345, 237, 260, 40);
 		getFrmMenuPrincipal().getContentPane().add(btnInfoProduit);
+		if (conn.currentUser.equalsIgnoreCase("admin")) {
+			btnInfoProduit.setEnabled(true);
+		} else {
+			btnInfoProduit.setEnabled(false);
+		}
+		btnInfoProduit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				frmMenuPrincipal.dispose();
+				openMainWindow();
+			}
+
+			// opens liste Produits window
+			private void openMainWindow() {
+				MainWindow mainWindow = new MainWindow();
+				mainWindow.setVisible(true);
+			}
+		});
 		
-		JButton button_3 = new JButton("Stock disponible");
-		button_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		button_3.setPreferredSize(new Dimension(260, 60));
-		button_3.setForeground(Color.BLACK);
-		button_3.setBackground(Color.WHITE);
-		button_3.setBounds(345, 327, 260, 40);
-		getFrmMenuPrincipal().getContentPane().add(button_3);
+		JButton buttonStockDispo = new JButton("Stock disponible");
+		buttonStockDispo.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		buttonStockDispo.setPreferredSize(new Dimension(260, 60));
+		buttonStockDispo.setForeground(Color.BLACK);
+		buttonStockDispo.setBackground(Color.WHITE);
+		buttonStockDispo.setBounds(345, 327, 260, 40);
+		getFrmMenuPrincipal().getContentPane().add(buttonStockDispo);
+		buttonStockDispo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				frmMenuPrincipal.dispose();
+				openStockDispo();
+			}
+			
+			private void openStockDispo() {
+				StockDispoFenetre stockWindow = new StockDispoFenetre();
+				stockWindow.setVisible(true);
+				}
+			});
 		
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBounds(0, 0, 962, 30);
