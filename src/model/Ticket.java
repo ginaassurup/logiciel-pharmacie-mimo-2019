@@ -6,6 +6,7 @@ import java.util.List;
 public class Ticket {
 	private int id_ticket;
 	private String name;
+	private float montant_ticket;
 	private List<LigneTicket> lignes;
 	
 	public Ticket() {
@@ -18,6 +19,23 @@ public class Ticket {
 	}
 	public void setId_ticket(int id_ticket) {
 		this.id_ticket = id_ticket;
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public float getMontant_ticket() {
+		return this.getTotal();
+	}
+
+
+	public void setMontant_ticket(float montant_ticket) {
+		this.montant_ticket = this.getTotal();
 	}
 
 
@@ -40,16 +58,6 @@ public class Ticket {
 		this.lignes = lignes;
 	}
 	
-
-	public String getName() {
-		return name;
-	}
-
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 
 	public float getTotal() {
 		float total = 0;

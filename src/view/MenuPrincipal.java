@@ -96,13 +96,13 @@ public class MenuPrincipal extends JFrame{
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				frmMenuPrincipal.dispose();
-				ouvrirUnitsWindow();
+				ouvrirSaisirUnTicketFenetre();
 			}
 
 			// opens listePhar window
-			private void ouvrirUnitsWindow() {
-				TicketFenetre ticketFenetre = new TicketFenetre();
-				ticketFenetre.setVisible(true);
+			private void ouvrirSaisirUnTicketFenetre() {
+				SaisirUnTicketFenetre saisirUnTicketFenetre = new SaisirUnTicketFenetre();
+				saisirUnTicketFenetre.setVisible(true);
 			}
 		});
 		

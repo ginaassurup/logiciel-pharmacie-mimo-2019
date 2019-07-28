@@ -718,10 +718,12 @@ public class SQLiteCon {
 		
 		try {
 			myStmt = myConn.prepareStatement(
-					"INSERT INTO ticket (libelle)"
-							+ "VALUES (?)", Statement.RETURN_GENERATED_KEYS);
+					"INSERT INTO ticket (libelle, montant_ticket)"
+							+ "VALUES (?,?)", Statement.RETURN_GENERATED_KEYS);
 
+//			myStmt.setInt(1, t.getId_ticket());
 			myStmt.setString(1, t.getName());
+			myStmt.setFloat(2, t.getTotal());
 			
 			myStmt.executeUpdate();
 			
@@ -746,7 +748,7 @@ public class SQLiteCon {
 			for(LigneTicket l : tickets)
 			{
 			myStmt = myConn.prepareStatement(
-					"INSERT INTO LigneTicket (num_prod, qtte_vendu, montant_ligne, ticket_id)"
+					"INSERT INTO LigneTicket (num_prod, qtte_vendu, montant_ligne, id_ticket)"
 							+ "VALUES (?,?,?,?)");
 
 			myStmt.setInt(1, l.getNum_prod());
