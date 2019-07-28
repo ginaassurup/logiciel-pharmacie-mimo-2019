@@ -20,11 +20,12 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import model.Categorie;
-import model.ProduitDetail;
-import model.ProductJoin;
-import model.Unit;
+import model.LigneTicket;
 import model.PharmacienDetail;
-import view.MainWindow;
+import model.ProductJoin;
+import model.ProduitDetail;
+import model.Ticket;
+import model.Unit;
 import view.MenuPrincipal;
 
 public class SQLiteCon {
@@ -245,7 +246,7 @@ public class SQLiteCon {
 		}
 	}
 
-	// Mettre à jour le profil d'un pharmacien query
+	// Mettre ï¿½ jour le profil d'un pharmacien query
 	public void majPharQuery(String num_phar, String identifiant, String mdp, String prenom_phar, String nom_phar)
 			throws Exception {
 
@@ -374,7 +375,7 @@ public class SQLiteCon {
 		}
 	}
 
-	// Supprimer une catégorie
+	// Supprimer une catï¿½gorie
 	public void removeCategoryQuery(String id_cat, String nom_cat) throws Exception {
 
 		PreparedStatement myStmt = null;
@@ -545,7 +546,7 @@ public class SQLiteCon {
 			myStmt.execute();
 			// JOptionPane.showMessageDialog(null, "Categorie removed");
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Ce fournisseur est attaché à un produit. Impossible de le supprimer !");
+			JOptionPane.showMessageDialog(null, "Ce fournisseur est attachï¿½ ï¿½ un produit. Impossible de le supprimer !");
 		} finally {
 			close(myStmt, null);
 
@@ -709,6 +710,57 @@ public class SQLiteCon {
 			return list;
 		} finally {
 			close(myStmt, myRs);
+		}
+	}
+	
+	
+	public Ticket createTicketQuery(Ticket t) throws SQLException {
+		
+		try {
+			myStmt = myConn.prepareStatement(
+					"INSERT INTO ticket (libelle)"
+							+ "VALUES (?)", Statement.RETURN_GENERATED_KEYS);
+
+			myStmt.setString(1, t.getName());
+			
+			myStmt.executeUpdate();
+			
+			try (ResultSet generatedKeys = myStmt.getGeneratedKeys()) {
+	            if (generatedKeys.next()) {
+	            	t.setId_ticket(generatedKeys.getInt(1));
+	                return t;
+	            }
+	            else {
+	                throw new SQLException("Creating user failed, no ID obtained.");
+	            }
+	        }
+		} finally {
+			close(myStmt, null);
+		}
+	}
+	
+	
+public void createTicketLigneQuery(List<LigneTicket> tickets) throws SQLException {
+		
+		try {
+			for(LigneTicket l : tickets)
+			{
+			myStmt = myConn.prepareStatement(
+					"INSERT INTO LigneTicket (num_prod, qtte_vendu, montant_ligne, ticket_id)"
+							+ "VALUES (?,?,?,?)");
+
+			myStmt.setInt(1, l.getNum_prod());
+			myStmt.setInt(2, l.getQtte_vendu());
+			myStmt.setFloat(3, l.getMontant());
+			myStmt.setInt(4, l.getId_ticket());
+			
+			myStmt.executeUpdate();
+			
+			}
+			
+			return;
+		} finally {
+			close(myStmt, null);
 		}
 	}
 

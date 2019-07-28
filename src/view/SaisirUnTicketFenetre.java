@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +50,7 @@ import model.ProductJoin;
 import model.ProductJoinTableModel;
 import model.ProductTableModel;
 import model.ProduitDetail;
+import model.Ticket;
 
 public class SaisirUnTicketFenetre extends JFrame {
 
@@ -85,6 +87,7 @@ public class SaisirUnTicketFenetre extends JFrame {
 	SQLiteCon conn;
 
 	// fields, buttons, tables that need access
+	private Ticket t = new Ticket();
 	JTable tableTicket;
 	private JPanel contentPane;
 	private JTextField textField;
@@ -233,22 +236,7 @@ public class SaisirUnTicketFenetre extends JFrame {
 		btnRemoveProduct.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnRemoveProduct.setFocusPainted(false);
 	
-		JButton btnEdit = new JButton("Modifier");
-		btnEdit.setBounds(203, 550, 80, 30);
-		contentPane.add(btnEdit);
-		btnEdit.setBackground(new Color(204, 204, 204));
-		btnEdit.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				// edit product
-				editProduct();
-
-			}
-		});
-				
-		btnEdit.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnEdit.setFocusPainted(false);
+		
 				
 		JButton btnRetour = new JButton("Retour");
 		btnRetour.addActionListener(new ActionListener() {
@@ -271,13 +259,21 @@ public class SaisirUnTicketFenetre extends JFrame {
 		textField.setBounds(744, 552, 153, 39);
 		contentPane.add(textField);
 		textField.setColumns(10);
+		textField.setText(String.valueOf(t.getTotal()));
 		
 		
 		JButton btnValider = new JButton("Valider");
 		btnValider.setBounds(744, 609, 153, 43);
 		contentPane.add(btnValider);
 		setLocationRelativeTo(null);
+		btnValider.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				validateTicket();
+				dispose();
+			}
 
+			
+		});
 //		getProductsJoin();
 		// refreshTable();
 		
@@ -287,10 +283,17 @@ public class SaisirUnTicketFenetre extends JFrame {
 	
 	@SuppressWarnings({ "serial", "unchecked" })
 	private void initTicket() {
-		List<LigneTicket> ligne = new ArrayList<>(1);
 		
-		LigneTicketTableModel model = new LigneTicketTableModel(ligne);
-		model.addRow(new LigneTicket("1"));
+		t.setName("Ticket No : XXX");
+		try {
+			t  = conn.createTicketQuery(t);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		LigneTicketTableModel model = new LigneTicketTableModel(t.getLignes());
+		model.addRow(new LigneTicket(t.getId_ticket(),""));
 		
 		
 		tableTicket.setModel(model);
@@ -457,12 +460,23 @@ public class SaisirUnTicketFenetre extends JFrame {
 	// add product
 	private void addRow() {
 
-		float total = ((LigneTicketTableModel)tableTicket.getModel()).addRow(new LigneTicket(""));
-		textField.setText(String.valueOf(total));
+		((LigneTicketTableModel)tableTicket.getModel()).addRow(new LigneTicket(t.getId_ticket(),""));
+		textField.setText(String.valueOf(t.getTotal()));
 		
 		
 		//refreshTable();
 //		refreshComboBox();
+	}
+	
+	private void validateTicket() {
+		
+		try {
+			conn.createTicketLigneQuery(t.getLignes());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 

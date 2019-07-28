@@ -34,18 +34,14 @@ public class LigneTicketTableModel extends AbstractTableModel {
 	}
 	
 	
-	public float addRow(LigneTicket row)
+	public  void addRow(LigneTicket row)
 	{
-		float total = 0;
 		row.setNum_ligne(this.ligneTicket.size() + 1);
 		this.ligneTicket.add(row);
-		for(LigneTicket lt : this.ligneTicket)
-		{
-			total+= lt.getMontant();
-		}
+		
 		this.fireTableDataChanged();
 		
-		return total;
+		return;
 	}
 	
 	public void removeRow()
@@ -102,6 +98,7 @@ public class LigneTicketTableModel extends AbstractTableModel {
 		
 		}
 		fireTableCellUpdated(row, col);
+		
 	}
 
 	@Override

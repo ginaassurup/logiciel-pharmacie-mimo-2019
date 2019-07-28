@@ -1,14 +1,15 @@
 package model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Ticket {
 	private int id_ticket;
-	private Set<LigneTicket> lignes;
+	private String name;
+	private List<LigneTicket> lignes;
 	
 	public Ticket() {
-		lignes = new HashSet<LigneTicket>();
+		lignes = new ArrayList<LigneTicket>();
 	}
 	
 	
@@ -28,6 +29,28 @@ public class Ticket {
 		this.lignes.remove(ligne);
 	}
 	
+	
+	
+	public List<LigneTicket> getLignes() {
+		return lignes;
+	}
+
+
+	public void setLignes(List<LigneTicket> lignes) {
+		this.lignes = lignes;
+	}
+	
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
 	public float getTotal() {
 		float total = 0;
 		for (LigneTicket l: lignes) {

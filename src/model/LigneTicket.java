@@ -11,11 +11,13 @@ public class LigneTicket {
 	private String libelle_produit;
 	private float prix_vente;
 	private int qtte_vendu;
+	private int id_ticket;
 	
 	
-	public LigneTicket(String libelle_produit) {
+	public LigneTicket(int id_ticket,String libelle_produit) {
 		super();
 		this.libelle_produit = libelle_produit;
+		this.id_ticket = id_ticket;
 	}
 	public int getId_ligne() {
 		return id_ligne;
@@ -73,6 +75,12 @@ public class LigneTicket {
 	}
 	
 	
+	public int getId_ticket() {
+		return id_ticket;
+	}
+	public void setId_ticket(int id_ticket) {
+		this.id_ticket = id_ticket;
+	}
 	public ProductJoin getProduct() {
 		return product;
 	}
