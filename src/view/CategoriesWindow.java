@@ -156,14 +156,15 @@ public class CategoriesWindow extends JDialog {
 		btnRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
-				OuvrirMainWindow();
+				ouvrirAjouterUnProduitFenetre();
+				
 			}
 
 			// Ouvrir la gestion des produits
-			private void OuvrirMainWindow() {
+			private void ouvrirAjouterUnProduitFenetre() {
 				
-				MainWindow mainwindow = new MainWindow();
-				mainwindow.setVisible(true);
+				AjouterUnProduitFenetre ajoutfenetre = new AjouterUnProduitFenetre();
+				ajoutfenetre.setVisible(true);
 			}
 		});
 		btnRetour.setBounds(14, 13, 97, 25);

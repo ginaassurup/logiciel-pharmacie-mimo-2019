@@ -106,7 +106,7 @@ public class MenuPrincipal extends JFrame{
 			}
 		});
 		
-		JButton btnInfoProduit = new JButton("Information sur un produit");
+		JButton btnInfoProduit = new JButton("Gestion des produits");
 		btnInfoProduit.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnInfoProduit.setPreferredSize(new Dimension(260, 60));
 		btnInfoProduit.setForeground(Color.BLACK);

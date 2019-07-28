@@ -713,17 +713,18 @@ public class SQLiteCon {
 		}
 	}
 	
-	
+	// Créer un Ticket query	
 	public Ticket createTicketQuery(Ticket t) throws SQLException {
 		
 		try {
 			myStmt = myConn.prepareStatement(
-					"INSERT INTO ticket (libelle, montant_ticket)"
+					"INSERT INTO Ticket (libelle, montant_ticket)"
 							+ "VALUES (?,?)", Statement.RETURN_GENERATED_KEYS);
 
 //			myStmt.setInt(1, t.getId_ticket());
 			myStmt.setString(1, t.getName());
 			myStmt.setFloat(2, t.getTotal());
+			System.out.println("Montant: " + t.getTotal() );
 			
 			myStmt.executeUpdate();
 			
@@ -741,7 +742,28 @@ public class SQLiteCon {
 		}
 	}
 	
+	//	Mettre à jour le montant d'un ticket
+	public void majMontantTicketQuery(int id_ticket, float montant_ticket)
+			throws Exception {
+
+		PreparedStatement myStmt = null;
+
+		try {
+
+			myStmt = myConn.prepareStatement(
+					"UPDATE Ticket SET montant_ticket = ?"
+							+ "WHERE id_ticket = ?");
+
+			myStmt.setFloat(1, montant_ticket);
+			myStmt.setInt(2, id_ticket);
+
+			myStmt.executeUpdate();
+		} finally {
+			close(myStmt, null);
+		}
+	}
 	
+	//	Créer une Ligne de ticket query
 	public void createTicketLigneQuery(List<LigneTicket> tickets) throws SQLException {
 		
 		try {

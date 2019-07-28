@@ -26,6 +26,7 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -269,15 +270,13 @@ public class SaisirUnTicketFenetre extends JFrame {
 		btnValider.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				validateTicket();
+				majMontantTicket();
 				dispose();
-			}
-
-			
+			}		
 		});
 		
 		initTicket();
 	}
-
 	
 	@SuppressWarnings({ "serial", "unchecked" })
 	private void initTicket() {
@@ -352,6 +351,23 @@ public class SaisirUnTicketFenetre extends JFrame {
 		
 		codeBarreColumn.setCellEditor(new DefaultCellEditor(comboBox));
 	}
+	
+	// Mettre à jour le montant du ticket après avoir validé
+	private void majMontantTicket() {
+		
+		try {
+
+			float montant_ticket = t.getTotal();
+			int id_ticket = t.getId_ticket();
+			conn.majMontantTicketQuery(id_ticket, montant_ticket);
+
+			System.out.println("updated");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
 
 	// Ouvrir le menu principal
 	private void OuvrirMenuPrincipal() {
@@ -392,6 +408,7 @@ public class SaisirUnTicketFenetre extends JFrame {
 		
 		try {
 			conn.createTicketLigneQuery(t.getLignes());
+			System.out.println("Montant: " + t.getTotal() );
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

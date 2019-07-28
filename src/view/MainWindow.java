@@ -187,20 +187,6 @@ public class MainWindow extends JFrame {
 		comboBoxCategory.setBounds(158, 122, 125, 30);
 		contentPane.add(comboBoxCategory);
 
-		JButton btnCategories = new JButton("Cat\u00E9gorie");
-		btnCategories.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		//btnCategories.setBackground(new Color(75, 190, 95));
-		btnCategories.setBackground(new Color(204, 204, 204));
-		btnCategories.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				openCategories();
-			}
-		});
-		btnCategories.setFocusPainted(false);
-		btnCategories.setBounds(299, 722, 82, 30);
-		contentPane.add(btnCategories);
-
 		textFieldSearch = new JTextField();
 
 		textFieldSearch.addKeyListener(new KeyAdapter() {
@@ -257,12 +243,14 @@ public class MainWindow extends JFrame {
 		contentPane.add(btnShowAll);
 
 		JLabel lblProducts = new JLabel("Gestion des produits");
+		lblProducts.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblProducts.setForeground(Color.BLACK);
 		lblProducts.setHorizontalAlignment(SwingConstants.CENTER);
-		lblProducts.setBounds(105, 695, 244, 14);
+		lblProducts.setBounds(39, 699, 244, 14);
 		contentPane.add(lblProducts);
 
 		JLabel lblStock = new JLabel("Stock");
+		lblStock.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblStock.setForeground(Color.BLACK);
 		lblStock.setHorizontalAlignment(SwingConstants.CENTER);
 		lblStock.setBounds(979, 699, 75, 14);
