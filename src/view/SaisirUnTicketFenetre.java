@@ -204,7 +204,7 @@ public class SaisirUnTicketFenetre extends JFrame {
 		menu_1.add(separator_1);
 
 		JButton btnAddProduct = new JButton("Ajouter");
-		btnAddProduct.setBounds(39, 550, 80, 30);
+		btnAddProduct.setBounds(39, 552, 97, 30);
 		contentPane.add(btnAddProduct);
 		btnAddProduct.setBackground(new Color(204, 204, 204));
 		btnAddProduct.addActionListener(new ActionListener() {
@@ -214,12 +214,12 @@ public class SaisirUnTicketFenetre extends JFrame {
 				addRow();
 			}
 		});
-		btnAddProduct.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnAddProduct.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				
 		btnAddProduct.setFocusPainted(false);
 						
 		JButton btnRemoveProduct = new JButton("Supprimer");
-		btnRemoveProduct.setBounds(121, 550, 80, 30);
+		btnRemoveProduct.setBounds(148, 552, 97, 30);
 		contentPane.add(btnRemoveProduct);
 		btnRemoveProduct.setBackground(new Color(204, 204, 204));
 		btnRemoveProduct.addActionListener(new ActionListener() {
@@ -230,7 +230,7 @@ public class SaisirUnTicketFenetre extends JFrame {
 			}
 		});
 		
-		btnRemoveProduct.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnRemoveProduct.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnRemoveProduct.setFocusPainted(false);
 	
 		
@@ -264,6 +264,8 @@ public class SaisirUnTicketFenetre extends JFrame {
 		
 		
 		JButton btnValider = new JButton("Valider");
+		btnValider.setForeground(new Color(165, 42, 42));
+		btnValider.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnValider.setBounds(744, 609, 153, 43);
 		contentPane.add(btnValider);
 		setLocationRelativeTo(null);
@@ -359,7 +361,8 @@ public class SaisirUnTicketFenetre extends JFrame {
 
 			float montant_ticket = t.getTotal();
 			int id_ticket = t.getId_ticket();
-			conn.majMontantTicketQuery(id_ticket, montant_ticket);
+			String libelle = "Ticket No: " + t.getId_ticket();
+			conn.majMontantTicketQuery(id_ticket, libelle , montant_ticket);
 
 			System.out.println("updated");
 		} catch (Exception e) {

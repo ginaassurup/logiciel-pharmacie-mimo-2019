@@ -743,7 +743,7 @@ public class SQLiteCon {
 	}
 	
 	//	Mettre à jour le montant d'un ticket
-	public void majMontantTicketQuery(int id_ticket, float montant_ticket)
+	public void majMontantTicketQuery(int id_ticket, String libelle, float montant_ticket)
 			throws Exception {
 
 		PreparedStatement myStmt = null;
@@ -751,11 +751,12 @@ public class SQLiteCon {
 		try {
 
 			myStmt = myConn.prepareStatement(
-					"UPDATE Ticket SET montant_ticket = ?"
+					"UPDATE Ticket SET montant_ticket = ?, libelle = ?"
 							+ "WHERE id_ticket = ?");
 
 			myStmt.setFloat(1, montant_ticket);
-			myStmt.setInt(2, id_ticket);
+			myStmt.setString(2, libelle);
+			myStmt.setInt(3, id_ticket);
 
 			myStmt.executeUpdate();
 		} finally {
