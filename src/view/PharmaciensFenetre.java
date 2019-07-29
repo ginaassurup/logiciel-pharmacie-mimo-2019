@@ -197,7 +197,7 @@ public class PharmaciensFenetre extends JDialog {
 			ListePharmaciens model = new ListePharmaciens(listePhar);
 			tableListePhar.setModel(model);
 
-//			hideColumns();
+			hideMdpColumn();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -220,7 +220,7 @@ public class PharmaciensFenetre extends JDialog {
 		int idCol = 0;
 		int nameCol = 1;
 
-		// Si une ligne est sélectionnée
+		// Si une ligne est sï¿½lectionnï¿½e
 		if (!(tableListePhar.getSelectedRow() == -1)) {
 
 			int selectedRow = tableListePhar.getSelectedRow();
@@ -247,7 +247,7 @@ public class PharmaciensFenetre extends JDialog {
 						e.printStackTrace();
 					}
 
-					// Mise à jour la vue
+					// Mise ï¿½ jour la vue
 					getListePharToTable();
 
 				} else {
@@ -255,10 +255,10 @@ public class PharmaciensFenetre extends JDialog {
 				}
 			}
 		} else {
-			System.out.println("Aucune ligne est sélectionnée");
+			System.out.println("Aucune ligne est sï¿½lectionnï¿½e");
 			JOptionPane
 					.showMessageDialog(null,
-							"Veuillez sélectionner un pharmacien à supprimer");
+							"Veuillez sï¿½lectionner un pharmacien ï¿½ supprimer");
 		}
 	}
 
@@ -294,28 +294,22 @@ public class PharmaciensFenetre extends JDialog {
 			while (modifierUnPharFenetre.isVisible()) {
 
 			}
-			// Mise à jour la vue
+			// Mise ï¿½ jour la vue
 			getListePharToTable();
 
 		} else {
 			JOptionPane.showMessageDialog(null,
-					"Veuillez sélectionner un pharmacien à modifier !");
+					"Veuillez sï¿½lectionner un pharmacien ï¿½ modifier !");
 		}
 	}
 
 	// hides columns
-//	private void hideColumns() {
-//		// remove/hide Id table
-//		TableColumn myTableColumn0 = tableListePhar.getColumnModel().getColumn(0);
-//		TableColumn myTableColumn2 = tableListePhar.getColumnModel().getColumn(2);
-//
-//		// tableCategories.getColumnModel().removeColumn(myTableColumn0);
-//		myTableColumn0.setMaxWidth(0);
-//		myTableColumn0.setMinWidth(0);
-//		myTableColumn0.setPreferredWidth(0);
-//
-//		myTableColumn2.setMaxWidth(0);
-//		myTableColumn2.setMinWidth(0);
-//		myTableColumn2.setPreferredWidth(0);
-//	}
+	private void hideMdpColumn() {
+		TableColumn myTableColumn2 = tableListePhar.getColumnModel().getColumn(2);
+
+		myTableColumn2.setMaxWidth(0);
+		myTableColumn2.setMinWidth(0);
+		myTableColumn2.setPreferredWidth(0);
+	}
+
 }

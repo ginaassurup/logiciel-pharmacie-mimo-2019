@@ -395,7 +395,7 @@ public class SaisirUnTicketFenetre extends JFrame {
 	private void addRow() {
 		System.out.println("Add Row");
 		for (LigneTicket ligne: t.getLignes()) {
-			if (ligne.getQtte_vendu() < ligne.getProduct().getQtte_stock()) {
+			if (ligne.getQtte_vendu() > ligne.getProduct().getQtte_stock()) {
 				JOptionPane.showMessageDialog(null, "Le stock actuel du produit \"" + ligne.getProduct().getLibelle_produit() + "\" n'est pas suffisant pour la vente. " + 
 						 "Veuillez saisir une quantité inférieure à " + ligne.getProduct().getQtte_stock() + ".");
 				System.out.println("Libelle: "+ligne.getProduct().getLibelle_produit());
