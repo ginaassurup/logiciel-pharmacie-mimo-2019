@@ -106,7 +106,7 @@ public class MenuPrincipal extends JFrame{
 			}
 		});
 		
-		JButton btnInfoProduit = new JButton("Information sur un produit");
+		JButton btnInfoProduit = new JButton("Gestion des produits");
 		btnInfoProduit.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnInfoProduit.setPreferredSize(new Dimension(260, 60));
 		btnInfoProduit.setForeground(Color.BLACK);
@@ -126,8 +126,8 @@ public class MenuPrincipal extends JFrame{
 
 			// opens liste Produits window
 			private void openMainWindow() {
-				MainWindow mainWindow = new MainWindow();
-				mainWindow.setVisible(true);
+				ProduitsFenetre produitsFenetre = new ProduitsFenetre();
+				produitsFenetre.setVisible(true);
 			}
 		});
 		

@@ -132,7 +132,7 @@ public class AjouterUnProduitFenetre extends JDialog {
 		lblName.setBounds(195, 177, 113, 30);
 		contentPanel.add(lblName);
 
-		JLabel lblCategory = new JLabel("Categorie");
+		JLabel lblCategory = new JLabel("Catégorie");
 		lblCategory.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblCategory.setForeground(Color.BLACK);
 		lblCategory.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -159,7 +159,7 @@ public class AjouterUnProduitFenetre extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				addProduct();
-				OuvrirMainWindow();
+				OuvrirProduitsFenetre();
 			}
 		});
 		btnAddProduct.setBounds(379, 549, 193, 40);
@@ -172,8 +172,9 @@ public class AjouterUnProduitFenetre extends JDialog {
 		btnNewCat.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-				openCategories();
+				
+				dispose();
+				openCategories();		
 
 			}
 		});
@@ -245,7 +246,7 @@ public class AjouterUnProduitFenetre extends JDialog {
 		btnRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
-				OuvrirMainWindow();
+				OuvrirProduitsFenetre();
 			}
 		});
 		btnRetour.setBounds(12, 13, 97, 25);
@@ -279,10 +280,10 @@ public class AjouterUnProduitFenetre extends JDialog {
 
 	}
 
-	private void OuvrirMainWindow() {
+	private void OuvrirProduitsFenetre() {
 		
-		MainWindow mainwindow = new MainWindow();
-		mainwindow.setVisible(true);
+		ProduitsFenetre produitsFenetre = new ProduitsFenetre();
+		produitsFenetre.setVisible(true);
 	}
 
 	// get all categories to comboBox

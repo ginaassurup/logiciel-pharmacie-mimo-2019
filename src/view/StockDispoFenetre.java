@@ -1,5 +1,5 @@
 /*
- * In - MainWindow class
+ * In - ProduitsFenetre class
  */
 
 package view;
@@ -550,7 +550,7 @@ public class StockDispoFenetre extends JFrame {
 
 			List<ProduitDetail> produitDetails = null;
 
-			produitDetails = conn.getAllProducts();
+			produitDetails = conn.getTousProduits();
 
 			ProductTableModel model = new ProductTableModel(produitDetails);
 			tableProduct.setModel(model);

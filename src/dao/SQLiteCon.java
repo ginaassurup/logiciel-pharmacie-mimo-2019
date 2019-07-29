@@ -713,17 +713,18 @@ public class SQLiteCon {
 		}
 	}
 	
-	
+	// Cr�er un Ticket query	
 	public Ticket createTicketQuery(Ticket t) throws SQLException {
 		
 		try {
 			myStmt = myConn.prepareStatement(
-					"INSERT INTO ticket (libelle, montant_ticket)"
+					"INSERT INTO Ticket (libelle, montant_ticket)"
 							+ "VALUES (?,?)", Statement.RETURN_GENERATED_KEYS);
 
 //			myStmt.setInt(1, t.getId_ticket());
 			myStmt.setString(1, t.getName());
 			myStmt.setFloat(2, t.getTotal());
+			System.out.println("Montant: " + t.getTotal() );
 			
 			myStmt.executeUpdate();
 			
@@ -741,7 +742,29 @@ public class SQLiteCon {
 		}
 	}
 	
+	//	Mettre � jour le montant d'un ticket
+	public void majMontantTicketQuery(int id_ticket, String libelle, float montant_ticket)
+			throws Exception {
+
+		PreparedStatement myStmt = null;
+
+		try {
+
+			myStmt = myConn.prepareStatement(
+					"UPDATE Ticket SET montant_ticket = ?, libelle = ?"
+							+ "WHERE id_ticket = ?");
+
+			myStmt.setFloat(1, montant_ticket);
+			myStmt.setString(2, libelle);
+			myStmt.setInt(3, id_ticket);
+
+			myStmt.executeUpdate();
+		} finally {
+			close(myStmt, null);
+		}
+	}
 	
+	//	Cr�er une Ligne de ticket query
 	public void createTicketLigneQuery(List<LigneTicket> tickets) throws SQLException {
 		
 		try {
@@ -756,7 +779,9 @@ public class SQLiteCon {
 			myStmt.setFloat(3, l.getMontant());
 			myStmt.setInt(4, l.getId_ticket());
 			
+			
 			myStmt.executeUpdate();
+			
 			
 			}
 			
@@ -941,8 +966,8 @@ public class SQLiteCon {
 	}
 
 	// add stock
-	public void addStockQuery(String prodId, String prodName, int quantity) throws Exception {
-
+	//public void addStockQuery(String prodId, String prodName, int quantity) throws Exception {
+	public void addStockQuery(String prodId, int quantity) throws Exception {
 		PreparedStatement myStmt = null;
 
 		String qString = "" + quantity;
@@ -950,11 +975,11 @@ public class SQLiteCon {
 		try {
 
 			myStmt = myConn.prepareStatement(
-					"UPDATE ProduitDetail SET Stock = (ProduitDetail.Stock + ?) " + "WHERE Id = ? AND Name = ?");
-
-			myStmt.setString(1, qString);
+					//"UPDATE ProduitDetail SET qtte_stock = ProduitDetail.qtte_stock + ? " + "WHERE num_prod = ? AND libelle_produit = ?");
+			"UPDATE ProduitDetail SET qtte_stock = ProduitDetail.qtte_stock + ? " + "WHERE num_prod = ? ");
+			myStmt.setInt(1, quantity);
 			myStmt.setString(2, prodId);
-			myStmt.setString(3, prodName);
+			//myStmt.setString(3, prodName);
 
 			myStmt.executeUpdate();
 		} finally {
@@ -983,16 +1008,17 @@ public class SQLiteCon {
 
 			PreparedStatement myStmt = null;
 
-			String qString = "" + quantity;
+			//String qString = "" + quantity;
 
 			try {
 
 				myStmt = myConn.prepareStatement(
-						"UPDATE ProduitDetail SET Stock = (ProduitDetail.Stock - ?) " + "WHERE Id = ? AND Name = ?");
+						//"UPDATE ProduitDetail SET Stock = (ProduitDetail.Stock - ?) " + "WHERE Id = ? AND Name = ?");
+				"UPDATE ProduitDetail SET qtte_stock = (ProduitDetail.qtte_stock - ?) " + "WHERE num_prod = ?");
 
-				myStmt.setString(1, qString);
+				myStmt.setInt(1, quantity);
 				myStmt.setString(2, prodId);
-				myStmt.setString(3, prodName);
+				//myStmt.setString(3, prodName);
 
 				myStmt.executeUpdate();
 			} finally {
@@ -1031,7 +1057,7 @@ public class SQLiteCon {
 	// //////////////////////
 
 	// get all products
-	public List<ProduitDetail> getAllProducts() throws Exception {
+	public List<ProduitDetail> getTousProduits() throws Exception {
 
 		List<ProduitDetail> list = new ArrayList<>();
 

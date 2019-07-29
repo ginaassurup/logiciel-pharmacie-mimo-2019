@@ -78,7 +78,7 @@ public class PharmaciensFenetre extends JDialog {
 		conn = new SQLiteCon();
 
 		setIconImage(Toolkit.getDefaultToolkit().getImage(PharmaciensFenetre.class.getResource("/view/User.png")));
-		setTitle("Liste des pharmaciens");
+		setTitle("Liste des pharmaciens | Utilisateur : " + conn.currentUser);
 		setModal(true);
 		setBounds(100, 100, 968, 703);
 		getContentPane().setBackground(Color.WHITE);
