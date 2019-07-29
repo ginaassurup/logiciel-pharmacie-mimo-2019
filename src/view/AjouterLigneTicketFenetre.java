@@ -159,7 +159,7 @@ public class AjouterLigneTicketFenetre extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				addProduct();
-				OuvrirMainWindow();
+				OuvrirProduitsFenetre();
 			}
 		});
 		btnAddProduct.setBounds(379, 549, 193, 40);
@@ -245,7 +245,7 @@ public class AjouterLigneTicketFenetre extends JDialog {
 		btnRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
-				OuvrirMainWindow();
+				OuvrirProduitsFenetre();
 			}
 		});
 		btnRetour.setBounds(12, 13, 97, 25);
@@ -279,10 +279,10 @@ public class AjouterLigneTicketFenetre extends JDialog {
 
 	}
 
-	private void OuvrirMainWindow() {
+	private void OuvrirProduitsFenetre() {
 		
-		MainWindow mainwindow = new MainWindow();
-		mainwindow.setVisible(true);
+		ProduitsFenetre produitsFenetre = new ProduitsFenetre();
+		produitsFenetre.setVisible(true);
 	}
 
 	// get all categories to comboBox

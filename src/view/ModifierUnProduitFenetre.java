@@ -162,7 +162,7 @@ public class ModifierUnProduitFenetre extends JDialog {
 			public void actionPerformed(ActionEvent arg0) {
 				// update product
 				updateProduct();
-				OuvrirMainWindow();
+				OuvrirProduitsFenetre();
 			}
 		});
 		btnAddProduct.setBounds(379, 549, 193, 40);
@@ -248,7 +248,7 @@ public class ModifierUnProduitFenetre extends JDialog {
 		btnRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
-				OuvrirMainWindow();
+				OuvrirProduitsFenetre();
 			}
 		});
 		btnRetour.setBounds(12, 13, 97, 25);
@@ -282,9 +282,9 @@ public class ModifierUnProduitFenetre extends JDialog {
 
 	}
 
-	private void OuvrirMainWindow() {
+	private void OuvrirProduitsFenetre() {
 		
-		MainWindow mainwindow = new MainWindow();
+		ProduitsFenetre mainwindow = new ProduitsFenetre();
 		mainwindow.setVisible(true);
 	}
 

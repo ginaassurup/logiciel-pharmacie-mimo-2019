@@ -1,5 +1,5 @@
 /*
- * In - MainWindow class
+ * In - ProduitsFenetre class
  */
 
 package view;
@@ -119,7 +119,7 @@ public class SaisirUnTicketFenetre extends JFrame {
 		createMenuBar();
 		setResizable(false);
 
-		setTitle("Saisir un ticket | Utilisateur : ");
+		setTitle("Saisir un ticket | Utilisateur : " + conn.currentUser);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 968, 700);
 		contentPane = new JPanel();
@@ -345,7 +345,7 @@ public class SaisirUnTicketFenetre extends JFrame {
 		codeBarreColumn.setCellEditor(new DefaultCellEditor(comboBox));
 	}
 
-	// Mettre à jour le montant du ticket après avoir validé
+	// Mettre ï¿½ jour le montant du ticket aprï¿½s avoir validï¿½
 	private void majMontantTicket() {
 
 		try {
@@ -462,7 +462,7 @@ public class SaisirUnTicketFenetre extends JFrame {
 
 			List<ProduitDetail> produitDetails = null;
 
-			produitDetails = conn.getAllProducts();
+			produitDetails = conn.getTousProduits();
 
 			ProductTableModel model = new ProductTableModel(produitDetails);
 			tableTicket.setModel(model);

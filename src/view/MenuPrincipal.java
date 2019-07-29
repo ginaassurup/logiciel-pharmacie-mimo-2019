@@ -126,8 +126,8 @@ public class MenuPrincipal extends JFrame{
 
 			// opens liste Produits window
 			private void openMainWindow() {
-				MainWindow mainWindow = new MainWindow();
-				mainWindow.setVisible(true);
+				ProduitsFenetre produitsFenetre = new ProduitsFenetre();
+				produitsFenetre.setVisible(true);
 			}
 		});
 		

@@ -713,7 +713,7 @@ public class SQLiteCon {
 		}
 	}
 	
-	// Créer un Ticket query	
+	// Crï¿½er un Ticket query	
 	public Ticket createTicketQuery(Ticket t) throws SQLException {
 		
 		try {
@@ -742,7 +742,7 @@ public class SQLiteCon {
 		}
 	}
 	
-	//	Mettre à jour le montant d'un ticket
+	//	Mettre ï¿½ jour le montant d'un ticket
 	public void majMontantTicketQuery(int id_ticket, String libelle, float montant_ticket)
 			throws Exception {
 
@@ -764,7 +764,7 @@ public class SQLiteCon {
 		}
 	}
 	
-	//	Créer une Ligne de ticket query
+	//	Crï¿½er une Ligne de ticket query
 	public void createTicketLigneQuery(List<LigneTicket> tickets) throws SQLException {
 		
 		try {
@@ -1057,7 +1057,7 @@ public class SQLiteCon {
 	// //////////////////////
 
 	// get all products
-	public List<ProduitDetail> getAllProducts() throws Exception {
+	public List<ProduitDetail> getTousProduits() throws Exception {
 
 		List<ProduitDetail> list = new ArrayList<>();
 
