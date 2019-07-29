@@ -73,7 +73,7 @@ public class LigneTicketTableModel extends AbstractTableModel {
 	@Override
 	public void setValueAt(Object value, int row, int col) {
 		LigneTicket ligne = ligneTicket.get(row);
-		fireTableCellUpdated(row, col);
+		
 
 		switch (col) {
 		case CODE_BARRE_COL:
@@ -92,6 +92,8 @@ public class LigneTicketTableModel extends AbstractTableModel {
 			ligne.setProduct((ProductJoin) value);
 			break;
 		}
+		
+		fireTableCellUpdated(row, col);
 
 	}
 

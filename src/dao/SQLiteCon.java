@@ -765,22 +765,34 @@ public class SQLiteCon {
 	}
 	
 	//	Cr�er une Ligne de ticket query
-	public void createTicketLigneQuery(List<LigneTicket> tickets) throws SQLException {
+	public void createTicketLigneQuery(Ticket t) throws SQLException {
 		
+		myStmt = myConn.prepareStatement(
+				"INSERT INTO LigneTicket (num_prod, qtte_vendu, montant_ligne, id_ticket)"
+		
+						+ "VALUES (?,?,?,?)");
+		
+		PreparedStatement myStmt2 = myConn.prepareStatement(
+				"UPDATE ProduitDetail SET qtte_stock = ?  WHERE num_prod = ?");
 		try {
-			for(LigneTicket l : tickets)
+			for(LigneTicket l : t.getLignes())
 			{
-			myStmt = myConn.prepareStatement(
-					"INSERT INTO LigneTicket (num_prod, qtte_vendu, montant_ligne, id_ticket)"
-							+ "VALUES (?,?,?,?)");
+			
 
 			myStmt.setInt(1, l.getNum_prod());
 			myStmt.setInt(2, l.getQtte_vendu());
 			myStmt.setFloat(3, l.getMontant());
-			myStmt.setInt(4, l.getId_ticket());
+			myStmt.setInt(4, t.getId_ticket());
 			
 			
 			myStmt.executeUpdate();
+			
+			// 
+			int remainsStock = l.getProduct().getQtte_stock() - l.getQtte_vendu();
+			myStmt2.setInt(1, remainsStock);
+			myStmt2.setInt(2, l.getNum_prod());
+			
+			myStmt2.executeUpdate();
 			
 			
 			}

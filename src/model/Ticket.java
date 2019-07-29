@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Ticket {
 	private int id_ticket;
-	private String name;
+	private String name = "";
 //	private float montant_ticket;
 	private List<LigneTicket> lignes;
 	
