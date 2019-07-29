@@ -27,7 +27,7 @@ public class ProduitJoinTableModel extends AbstractTableModel {
 
 
 	private String[] columnNames = { "Num Produit","Code barre","Libellé", "Catégorie", "Forme",
-			"Stock", "Alarme", "Prix de vente",  "Prix d'achat", "FournisseurDetail"};
+			"Stock", "Alarme", "Prix de vente",  "Prix d'achat", "Fournisseur"};
 	
 	private List<ProduitJoin> productsJoin;
 
