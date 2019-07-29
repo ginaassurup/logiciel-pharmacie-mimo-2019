@@ -8,11 +8,7 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.text.DateFormat;
-import java.text.MessageFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -33,7 +29,6 @@ import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -41,7 +36,6 @@ import javax.swing.SwingUtilities;
 
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
-import java.awt.Toolkit;
 
 import model.Categorie;
 import model.MyRenderer;
@@ -59,7 +53,6 @@ import java.awt.Color;
 import java.awt.SystemColor;
 
 import javax.swing.JSeparator;
-import javax.swing.ImageIcon;
 
 public class StockDispoFenetre extends JFrame {
 
@@ -123,14 +116,14 @@ public class StockDispoFenetre extends JFrame {
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes", "static-access" })
 	public StockDispoFenetre() {
-		
+
 		// initialise connection
 		conn = new SQLiteCon();
 
 		createMenuBar();
 		setResizable(false);
 
-		setTitle("Stock disponible | Utilisateur : ");
+		setTitle("Stock disponible | Utilisateur : " + conn.currentUser);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1180, 828);
 		contentPane = new JPanel();
@@ -150,8 +143,7 @@ public class StockDispoFenetre extends JFrame {
 			 */
 			private static final long serialVersionUID = 1L;
 
-			public void changeSelection(int rowIndex, int columnIndex,
-					boolean toggle, boolean extend) {
+			public void changeSelection(int rowIndex, int columnIndex, boolean toggle, boolean extend) {
 				// Always toggle on single selection
 				super.changeSelection(rowIndex, columnIndex, !extend, extend);
 			}
@@ -169,11 +161,10 @@ public class StockDispoFenetre extends JFrame {
 
 		// combobox highlighter color
 		Object child = comboBoxCategory.getAccessibleContext().getAccessibleChild(0);
-		BasicComboPopup popup = (BasicComboPopup)child;
+		BasicComboPopup popup = (BasicComboPopup) child;
 		JList list = popup.getList();
 		list.setSelectionBackground(new Color(204, 204, 204));
-		
-		
+
 		comboBoxCategory.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent evt) {
@@ -239,47 +230,47 @@ public class StockDispoFenetre extends JFrame {
 		btnShowAll.setFocusPainted(false);
 		btnShowAll.setBounds(1023, 121, 113, 30);
 		contentPane.add(btnShowAll);
-		
+
 		JLabel labelLogo = new JLabel("");
 		labelLogo.setIcon(null);
 		labelLogo.setBounds(319, 516, 64, 64);
 		contentPane.add(labelLogo);
-		
+
 		JLabel lblProduits = new JLabel("Stock disponible");
 		lblProduits.setHorizontalAlignment(SwingConstants.CENTER);
 		lblProduits.setForeground(new Color(165, 42, 42));
 		lblProduits.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblProduits.setBounds(338, 57, 498, 25);
 		contentPane.add(lblProduits);
-		
+
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBounds(0, 0, 1174, 30);
 		contentPane.add(menuBar);
-		
+
 		JMenu menu = new JMenu("Param\u00E8tres");
 		menu.setMnemonic(KeyEvent.VK_F);
 		menu.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		menuBar.add(menu);
-		
+
 		JMenuItem menuItem = new JMenuItem("Imprimer");
 		menu.add(menuItem);
-		
+
 		JSeparator separator = new JSeparator();
 		menu.add(separator);
-		
+
 		JMenuItem menuItem_1 = new JMenuItem("Fermer");
 		menuItem_1.setToolTipText("Exit application");
 		menuItem_1.setMnemonic(KeyEvent.VK_E);
 		menu.add(menuItem_1);
-		
+
 		JMenu menu_1 = new JMenu("");
 		menu_1.setMnemonic(KeyEvent.VK_F);
 		menu_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		menuBar.add(menu_1);
-		
+
 		JSeparator separator_1 = new JSeparator();
 		menu_1.add(separator_1);
-				
+
 		JButton btnRetour = new JButton("Retour");
 		btnRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -289,7 +280,7 @@ public class StockDispoFenetre extends JFrame {
 		});
 		btnRetour.setBounds(39, 43, 97, 25);
 		contentPane.add(btnRetour);
-		
+
 		JLabel lblFiltreParCatgorie = new JLabel("Filtrer par cat\u00E9gorie");
 		lblFiltreParCatgorie.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblFiltreParCatgorie.setForeground(Color.BLACK);
@@ -303,7 +294,7 @@ public class StockDispoFenetre extends JFrame {
 
 	// Ouvrir le menu principal
 	private void OuvrirMenuPrincipal() {
-		
+
 		MenuPrincipal menuPrincipal = new MenuPrincipal();
 		menuPrincipal.getFrmMenuPrincipal().setVisible(true);
 	}
@@ -322,16 +313,14 @@ public class StockDispoFenetre extends JFrame {
 		try {
 			List<ProduitJoin> productsJoin = null;
 			productsJoin = conn.getProductsJoin();
-			ProduitJoinTableModel model = new ProduitJoinTableModel(
-					productsJoin);
+			ProduitJoinTableModel model = new ProduitJoinTableModel(productsJoin);
 			tableProduct.setModel(model);
 
-			
 			hideProductIdColumn();
 			hidePrixAchatColumn();
 			allignColumn();
 			colourIfStockAlarm();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -340,9 +329,7 @@ public class StockDispoFenetre extends JFrame {
 	// hides product id column
 	private void hideProductIdColumn() {
 
-		TableColumn productIdColumn = tableProduct.getColumnModel()
-				.getColumn(0);
-		//tableCategories.getColumnModel().removeColumn(myTableColumn0);
+		TableColumn productIdColumn = tableProduct.getColumnModel().getColumn(0);
 		productIdColumn.setMaxWidth(0);
 		productIdColumn.setMinWidth(0);
 		productIdColumn.setPreferredWidth(0);
@@ -352,10 +339,7 @@ public class StockDispoFenetre extends JFrame {
 	// hides prix achat column
 	private void hidePrixAchatColumn() {
 
-		// hides stockAlarm column
-		TableColumn prixAchatColumn = tableProduct.getColumnModel().getColumn(
-				8);
-		// tableCategories.getColumnModel().removeColumn(myTableColumn0);
+		TableColumn prixAchatColumn = tableProduct.getColumnModel().getColumn(8);
 		prixAchatColumn.setMaxWidth(0);
 		prixAchatColumn.setMinWidth(0);
 		prixAchatColumn.setPreferredWidth(0);
@@ -366,15 +350,14 @@ public class StockDispoFenetre extends JFrame {
 	private void allignColumn() {
 		DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
 		leftRenderer.setHorizontalAlignment(SwingConstants.LEFT);
-		tableProduct.getColumnModel().getColumn(4)
-				.setCellRenderer(leftRenderer);
+		tableProduct.getColumnModel().getColumn(4).setCellRenderer(leftRenderer);
 	}
 
 	// change colour if stockAlarm
 	private void colourIfStockAlarm() {
-	
+
 		MyRenderer colorRenderer = new MyRenderer();
-		tableProduct.getColumnModel().getColumn(5).setCellRenderer(colorRenderer);	
+		tableProduct.getColumnModel().getColumn(5).setCellRenderer(colorRenderer);
 	}
 
 	// get all categories to comboBox
@@ -408,8 +391,7 @@ public class StockDispoFenetre extends JFrame {
 			@Override
 			public void run() {
 				@SuppressWarnings({ "rawtypes" })
-				DefaultComboBoxModel model = new DefaultComboBoxModel(
-						getCategoriesToCombo());
+				DefaultComboBoxModel model = new DefaultComboBoxModel(getCategoriesToCombo());
 				comboBoxCategory.setModel(model);
 				comboBoxCategory.setSelectedItem(firstCatStr);
 			}
@@ -438,12 +420,11 @@ public class StockDispoFenetre extends JFrame {
 				System.out.println(temp);
 			}
 
-			ProduitJoinTableModel model = new ProduitJoinTableModel(
-					productsJoin);
+			ProduitJoinTableModel model = new ProduitJoinTableModel(productsJoin);
 
 			tableProduct.setModel(model);
-//			hideProductIdColumn();
-//			hideStockAlarmColumn();
+			hideProductIdColumn();
+			hidePrixAchatColumn();
 			allignColumn();
 			colourIfStockAlarm();
 			currentListProductJoin = productsJoin;
@@ -483,11 +464,10 @@ public class StockDispoFenetre extends JFrame {
 					System.out.println(temp);
 				}
 
-				ProduitJoinTableModel model = new ProduitJoinTableModel(
-						productsJoin);
+				ProduitJoinTableModel model = new ProduitJoinTableModel(productsJoin);
 				tableProduct.setModel(model);
-//				hideProductIdColumn();
-//				hideStockAlarmColumn();
+				hideProductIdColumn();
+				hidePrixAchatColumn();
 				allignColumn();
 				colourIfStockAlarm();
 				currentListProductJoin = productsJoin;
@@ -503,10 +483,10 @@ public class StockDispoFenetre extends JFrame {
 	}
 
 	/*
-	 * Other methods
+	 * AUTRES FONCTIONS
 	 */
 
-	// method that refreshes table after changing stock
+	// Fonction rafraichir la table
 	public void refreshTable() {
 
 		try {
@@ -516,13 +496,10 @@ public class StockDispoFenetre extends JFrame {
 				currentListProductJoin = conn.filterProductsByCat(firstCatStr);
 			}
 
-			if (currentProductSearch != null
-					&& currentProductSearch.trim().length() > 0) {
-				currentListProductJoin = conn.searchProductsJoinCat(
-						currentProductSearch, firstCatStr);
+			if (currentProductSearch != null && currentProductSearch.trim().length() > 0) {
+				currentListProductJoin = conn.searchProductsJoinCat(currentProductSearch, firstCatStr);
 			} else {
-				currentListProductJoin = conn.searchProductsJoinCat("",
-						firstCatStr);
+				currentListProductJoin = conn.searchProductsJoinCat("", firstCatStr);
 			}
 
 		} catch (Exception e) {
@@ -533,17 +510,13 @@ public class StockDispoFenetre extends JFrame {
 		ProduitJoinTableModel model = new ProduitJoinTableModel(currentListProductJoin);
 
 		tableProduct.setModel(model);
-//		hideProductIdColumn();
-//		hideStockAlarmColumn();
+		hideProductIdColumn();
+		hidePrixAchatColumn();
 		allignColumn();
 		colourIfStockAlarm();
 	}
 
-	// //////////////////////
-	// /DEPRECATED METHODS///
-	// //////////////////////
-
-	// get all products to table
+	// get Tous les produits
 	public void getProducts() {
 
 		try {

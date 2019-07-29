@@ -16,7 +16,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicComboPopup;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableColumn;
 
 import dao.SQLiteCon;
 
@@ -413,25 +412,12 @@ public class ProduitsFenetre extends JFrame {
 					productsJoin);
 			tableProduit.setModel(model);
 			
-//			hideProductIdColumn();
 			allignColumn();
 			couleurSiStockAlarme();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	// hides product id column
-	private void hideProductIdColumn() {
-
-		TableColumn productIdColumn = tableProduit.getColumnModel()
-				.getColumn(0);
-		// tableCategories.getColumnModel().removeColumn(myTableColumn0);
-		productIdColumn.setMaxWidth(0);
-		productIdColumn.setMinWidth(0);
-		productIdColumn.setPreferredWidth(0);
-
 	}
 
 	// allignment

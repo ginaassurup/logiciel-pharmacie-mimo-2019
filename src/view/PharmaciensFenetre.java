@@ -19,7 +19,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.ListSelectionModel;
 import javax.swing.WindowConstants;
-import javax.swing.table.TableColumn;
 
 import model.PharmacienDetail;
 import model.ListePharmaciens;

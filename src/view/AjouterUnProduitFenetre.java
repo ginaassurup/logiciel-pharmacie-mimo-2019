@@ -15,21 +15,17 @@ import javax.swing.plaf.basic.BasicComboPopup;
 
 import dao.SQLiteCon;
 
-import java.awt.Toolkit;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import javax.swing.ImageIcon;
-import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 import model.Categorie;
@@ -106,7 +102,7 @@ public class AjouterUnProduitFenetre extends JDialog {
 		textFieldName.setColumns(10);
 
 		comboBoxCategory = new JComboBox(getCategoriesToCombo());
-		comboBoxCategory.setBounds(333, 220, 239, 30);
+		comboBoxCategory.setBounds(333, 220, 350, 30);
 		contentPanel.add(comboBoxCategory);
 		
 		// combobox highlighter color
@@ -165,24 +161,8 @@ public class AjouterUnProduitFenetre extends JDialog {
 		btnAddProduct.setBounds(379, 549, 193, 40);
 		contentPanel.add(btnAddProduct);
 
-		JButton btnNewCat = new JButton("Nouveau");
-		btnNewCat.setFocusPainted(false);
-		btnNewCat.setBackground(new Color(204, 204, 204));
-		btnNewCat.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnNewCat.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				dispose();
-				openCategories();		
-
-			}
-		});
-		btnNewCat.setBounds(586, 220, 97, 30);
-		contentPanel.add(btnNewCat);
-
 		comboBoxUnits = new JComboBox(getUnitsToCombo());
-		comboBoxUnits.setBounds(333, 478, 239, 30);
+		comboBoxUnits.setBounds(333, 478, 350, 30);
 				
 		// combobox highlighter color
 		Object childU = comboBoxUnits.getAccessibleContext().getAccessibleChild(0);
@@ -192,19 +172,7 @@ public class AjouterUnProduitFenetre extends JDialog {
 		
 		contentPanel.add(comboBoxUnits);
 
-		JButton btnNewUnit = new JButton("Nouveau");
-		btnNewUnit.setBackground(new Color(204, 204, 204));
-		btnNewUnit.setFocusPainted(false);
-		btnNewUnit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				openUnits();
-			}
-		});
-		btnNewUnit.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnNewUnit.setBounds(586, 478, 97, 30);
-		contentPanel.add(btnNewUnit);
-
-		JLabel lblUnits = new JLabel("FournisseurDetail");
+		JLabel lblUnits = new JLabel("Fournisseur");
 		lblUnits.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblUnits.setForeground(Color.BLACK);
 		lblUnits.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -479,45 +447,4 @@ public class AjouterUnProduitFenetre extends JDialog {
 
 	}
 
-	// opens Categories window
-	private void openCategories() {
-
-		CategoriesFenetre categoriesFenetre = new CategoriesFenetre();
-		categoriesFenetre.setVisible(true);
-
-		// refreshes combobox after change
-		SwingUtilities.invokeLater(new Runnable() {
-			@SuppressWarnings("unchecked")
-			@Override
-			public void run() {
-				@SuppressWarnings({ "rawtypes" })
-				DefaultComboBoxModel model = new DefaultComboBoxModel(
-						getCategoriesToCombo());
-				comboBoxCategory.setModel(model);
-				comboBoxCategory.setSelectedItem(categoriesFenetre.newCategorie);
-			}
-		});
-
-	}
-
-	// opens Units window
-	private void openUnits() {
-
-		FournisseursFenetre fournisseursFenetre = new FournisseursFenetre();
-		fournisseursFenetre.setVisible(true);
-
-		// refreshes combobox after change
-		SwingUtilities.invokeLater(new Runnable() {
-			@SuppressWarnings("unchecked")
-			@Override
-			public void run() {
-				@SuppressWarnings({ "rawtypes" })
-				DefaultComboBoxModel model = new DefaultComboBoxModel(
-						getUnitsToCombo());
-				comboBoxUnits.setModel(model);
-				comboBoxUnits.setSelectedItem(fournisseursFenetre.newUnit);
-			}
-		});
-
-	}
 }

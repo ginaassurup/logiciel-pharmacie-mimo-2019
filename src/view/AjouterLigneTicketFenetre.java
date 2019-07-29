@@ -15,7 +15,6 @@ import javax.swing.plaf.basic.BasicComboPopup;
 
 import dao.SQLiteCon;
 
-import java.awt.Toolkit;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
 import java.util.ArrayList;
@@ -28,7 +27,6 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import javax.swing.ImageIcon;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 

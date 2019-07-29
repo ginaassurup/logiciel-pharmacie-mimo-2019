@@ -3,29 +3,25 @@ package view;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import java.awt.Color;
 import java.awt.Dimension;
-import javax.swing.border.EmptyBorder;
 
 import dao.SQLiteCon;
 
 import javax.swing.JLabel;
 import java.awt.SystemColor;
 import java.awt.Font;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import java.awt.event.KeyEvent;
-import javax.swing.JMenuItem;
-import javax.swing.JSeparator;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class MenuPrincipal extends JFrame{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JFrame frmMenuPrincipal;
 	// database class declaration
 	SQLiteCon conn;

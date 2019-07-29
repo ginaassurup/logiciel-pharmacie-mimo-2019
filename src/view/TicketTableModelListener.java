@@ -16,7 +16,6 @@ public class TicketTableModelListener implements TableModelListener {
 		{
 			LigneTicketTableModel model = (LigneTicketTableModel) e.getSource();
 			ProduitJoin p = (ProduitJoin) model.getValueAt(e.getFirstRow(), e.getColumn());
-			//model.setValueAt(p.getLibelle_produit(), e.getFirstRow(), 2);
 		}
 
 	}

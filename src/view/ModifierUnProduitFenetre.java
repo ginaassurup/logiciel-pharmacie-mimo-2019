@@ -15,21 +15,17 @@ import javax.swing.plaf.basic.BasicComboPopup;
 
 import dao.SQLiteCon;
 
-import java.awt.Toolkit;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import javax.swing.ImageIcon;
-import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 import model.Categorie;
@@ -59,7 +55,7 @@ public class ModifierUnProduitFenetre extends JDialog {
 	public JTextField textFieldPrixVente;
 	public JTextField textFieldPrixAchat;
 	boolean click;
-	JButton btnAddProduct;
+	JButton btnValider;
 
 	JComboBox<String> comboBoxCategory;
 	JComboBox<String> comboBoxUnits;
@@ -108,7 +104,7 @@ public class ModifierUnProduitFenetre extends JDialog {
 		textFieldName.setColumns(10);
 
 		comboBoxCategory = new JComboBox(getCategoriesToCombo());
-		comboBoxCategory.setBounds(333, 220, 239, 30);
+		comboBoxCategory.setBounds(333, 220, 350, 30);
 		contentPanel.add(comboBoxCategory);
 		
 		// combobox highlighter color
@@ -127,37 +123,37 @@ public class ModifierUnProduitFenetre extends JDialog {
 		textFieldStock.setBounds(333, 306, 350, 30);
 		contentPanel.add(textFieldStock);
 
-		JLabel lblName = new JLabel("Libell\u00E9");
-		lblName.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblName.setForeground(Color.BLACK);
-		lblName.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblName.setBounds(195, 177, 113, 30);
-		contentPanel.add(lblName);
+		JLabel lblLibelle = new JLabel("Libellé");
+		lblLibelle.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblLibelle.setForeground(Color.BLACK);
+		lblLibelle.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblLibelle.setBounds(195, 177, 113, 30);
+		contentPanel.add(lblLibelle);
 
-		JLabel lblCategory = new JLabel("Categorie");
-		lblCategory.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblCategory.setForeground(Color.BLACK);
-		lblCategory.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblCategory.setBounds(195, 220, 113, 30);
-		contentPanel.add(lblCategory);
+		JLabel lblCategorie = new JLabel("Catégorie");
+		lblCategorie.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblCategorie.setForeground(Color.BLACK);
+		lblCategorie.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblCategorie.setBounds(195, 220, 113, 30);
+		contentPanel.add(lblCategorie);
 
-		JLabel lblType = new JLabel("Forme");
-		lblType.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblType.setForeground(Color.BLACK);
-		lblType.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblType.setBounds(195, 263, 113, 30);
-		contentPanel.add(lblType);
+		JLabel lblForme = new JLabel("Forme");
+		lblForme.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblForme.setForeground(Color.BLACK);
+		lblForme.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblForme.setBounds(195, 263, 113, 30);
+		contentPanel.add(lblForme);
 
-		JLabel lblStock = new JLabel("Quantit\u00E9 stock");
+		JLabel lblStock = new JLabel("Quantité stock");
 		lblStock.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblStock.setForeground(Color.BLACK);
 		lblStock.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblStock.setBounds(195, 306, 113, 30);
 		contentPanel.add(lblStock);
 
-		btnAddProduct = new JButton("Valider");
-		btnAddProduct.setBackground(new Color(204, 204, 204));
-		btnAddProduct.addActionListener(new ActionListener() {
+		btnValider = new JButton("Valider");
+		btnValider.setBackground(new Color(204, 204, 204));
+		btnValider.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// update product
@@ -165,26 +161,11 @@ public class ModifierUnProduitFenetre extends JDialog {
 				OuvrirProduitsFenetre();
 			}
 		});
-		btnAddProduct.setBounds(379, 549, 193, 40);
-		contentPanel.add(btnAddProduct);
-
-		JButton btnNewCat = new JButton("Nouveau");
-		btnNewCat.setFocusPainted(false);
-		btnNewCat.setBackground(new Color(204, 204, 204));
-		btnNewCat.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnNewCat.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				openCategories();
-
-			}
-		});
-		btnNewCat.setBounds(586, 220, 97, 30);
-		contentPanel.add(btnNewCat);
+		btnValider.setBounds(379, 549, 193, 40);
+		contentPanel.add(btnValider);
 
 		comboBoxUnits = new JComboBox(getUnitsToCombo());
-		comboBoxUnits.setBounds(333, 478, 239, 30);
+		comboBoxUnits.setBounds(333, 478, 350, 30);
 				
 		// combobox highlighter color
 		Object childU = comboBoxUnits.getAccessibleContext().getAccessibleChild(0);
@@ -194,24 +175,12 @@ public class ModifierUnProduitFenetre extends JDialog {
 		
 		contentPanel.add(comboBoxUnits);
 
-		JButton btnNewUnit = new JButton("Nouveau");
-		btnNewUnit.setBackground(new Color(204, 204, 204));
-		btnNewUnit.setFocusPainted(false);
-		btnNewUnit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				openUnits();
-			}
-		});
-		btnNewUnit.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnNewUnit.setBounds(586, 478, 97, 30);
-		contentPanel.add(btnNewUnit);
-
-		JLabel lblUnits = new JLabel("FournisseurDetail");
-		lblUnits.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblUnits.setForeground(Color.BLACK);
-		lblUnits.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblUnits.setBounds(195, 478, 113, 30);
-		contentPanel.add(lblUnits);
+		JLabel lblFournisseur = new JLabel("FournisseurDetail");
+		lblFournisseur.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblFournisseur.setForeground(Color.BLACK);
+		lblFournisseur.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblFournisseur.setBounds(195, 478, 113, 30);
+		contentPanel.add(lblFournisseur);
 
 		textFieldStockAlarm = new JTextField();
 		textFieldStockAlarm.setColumns(10);
@@ -592,62 +561,6 @@ public class ModifierUnProduitFenetre extends JDialog {
 		} else {
 			return false;
 		}
-
-	}
-
-	// clears fields
-	private void clearFields() {
-		textFieldCodeBarre.setText("");
-		textFieldName.setText("");
-		comboBoxCategory.setSelectedIndex(0);
-		textFieldType.setText("");
-		textFieldStock.setText("");
-		textFieldStockAlarm.setText("");
-		textFieldPrixVente.setText("");
-		textFieldPrixAchat.setText("");
-		comboBoxUnits.setSelectedIndex(0);
-
-	}
-
-	// opens Categories window
-	private void openCategories() {
-
-		CategoriesFenetre categoriesFenetre = new CategoriesFenetre();
-		categoriesFenetre.setVisible(true);
-
-		// refreshes combobox after change
-		SwingUtilities.invokeLater(new Runnable() {
-			@SuppressWarnings("unchecked")
-			@Override
-			public void run() {
-				@SuppressWarnings({ "rawtypes" })
-				DefaultComboBoxModel model = new DefaultComboBoxModel(
-						getCategoriesToCombo());
-				comboBoxCategory.setModel(model);
-				comboBoxCategory.setSelectedItem(categoriesFenetre.newCategorie);
-			}
-		});
-
-	}
-
-	// opens Units window
-	private void openUnits() {
-
-		FournisseursFenetre fournisseursFenetre = new FournisseursFenetre();
-		fournisseursFenetre.setVisible(true);
-
-		// refreshes combobox after change
-		SwingUtilities.invokeLater(new Runnable() {
-			@SuppressWarnings("unchecked")
-			@Override
-			public void run() {
-				@SuppressWarnings({ "rawtypes" })
-				DefaultComboBoxModel model = new DefaultComboBoxModel(
-						getUnitsToCombo());
-				comboBoxUnits.setModel(model);
-				comboBoxUnits.setSelectedItem(fournisseursFenetre.newUnit);
-			}
-		});
 
 	}
 }
