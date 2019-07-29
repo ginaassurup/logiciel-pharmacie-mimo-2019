@@ -8,7 +8,7 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-public class CategoriesTableModel extends AbstractTableModel {
+public class CategorieTableModel extends AbstractTableModel {
 		
 	/**
 	 * 
@@ -22,7 +22,7 @@ public class CategoriesTableModel extends AbstractTableModel {
 	
 	private List<Categorie> categories;
 
-	public CategoriesTableModel(List<Categorie> listCategories) {
+	public CategorieTableModel(List<Categorie> listCategories) {
 		categories = listCategories;
 	} 
 	

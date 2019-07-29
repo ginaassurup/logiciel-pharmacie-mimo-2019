@@ -19,7 +19,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.WindowConstants;
 
 import model.Categorie;
-import model.CategoriesTableModel;
+import model.CategorieTableModel;
 
 import javax.swing.JScrollPane;
 import javax.swing.table.TableColumn;
@@ -185,7 +185,7 @@ public class CategoriesFenetre extends JDialog {
 
 			categories = conn.getAllCategories();
 
-			CategoriesTableModel model = new CategoriesTableModel(categories);
+			CategorieTableModel model = new CategorieTableModel(categories);
 
 			tableCategories.setModel(model);
 

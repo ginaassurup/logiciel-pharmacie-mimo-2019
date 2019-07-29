@@ -36,7 +36,7 @@ public class SQLiteCon {
 	public static String currentPassword = "";
 	private PreparedStatement myStmt;
 
-	// constructor that connects to database
+	// constructor
 	public SQLiteCon() {
 
 		try {
@@ -822,19 +822,12 @@ public class SQLiteCon {
 
 		PreparedStatement myStmt = null;
 
-		// get ID of catName
 		int id_cat = getId_cat(nom_cat);
-	
-		// get ID of unitName
 		int id_four = getId_four(nom_four);
 
 		System.out.println(num_prod);
 				
 		try {
-
-//			myStmt = myConn
-//					.prepareStatement("UPDATE Product SET Name = ?, Category = ?, Type = ?, Stock = ?, FournisseurDetail = ?, StockAlarm = ?"
-//							+ "WHERE Id = ?");
 
 			myStmt = myConn.prepareStatement(
 					"UPDATE ProduitDetail SET code_barre=?, libelle_produit = ?, id_cat = ?, forme = ?, qtte_stock = ?, id_four = ?, qtte_stock_alarme = ?, prix_vente = ?, prix_achat = ?"
@@ -851,14 +844,7 @@ public class SQLiteCon {
 			myStmt.setString(9, prix_achat);
 			myStmt.setString(10, num_prod);
 			
-//			myStmt.setString(1, prodName);
-//			myStmt.setString(2, "" + catId);
-//			myStmt.setString(3, typeName);
-//			myStmt.setString(4, quantityName);
-//			myStmt.setString(5, "" + unitId);
-//			myStmt.setString(6, stockAlarm);
-//			myStmt.setString(7, currentId);
-			System.out.println("Update Product Query");
+			System.out.println("Update Produit Query");
 			myStmt.executeUpdate();
 		} finally {
 			close(myStmt, null);
@@ -894,21 +880,15 @@ public class SQLiteCon {
 		}
 	}
 
-	// add stock
-	//public void addStockQuery(String prodId, String prodName, int quantity) throws Exception {
 	public void addStockQuery(String prodId, int quantity) throws Exception {
 		PreparedStatement myStmt = null;
-
-		//String qString = "" + quantity;
 
 		try {
 
 			myStmt = myConn.prepareStatement(
-					//"UPDATE ProduitDetail SET qtte_stock = ProduitDetail.qtte_stock + ? " + "WHERE num_prod = ? AND libelle_produit = ?");
 			"UPDATE ProduitDetail SET qtte_stock = ProduitDetail.qtte_stock + ? " + "WHERE num_prod = ? ");
 			myStmt.setInt(1, quantity);
 			myStmt.setString(2, prodId);
-			//myStmt.setString(3, prodName);
 
 			myStmt.executeUpdate();
 		} finally {
@@ -937,17 +917,13 @@ public class SQLiteCon {
 
 			PreparedStatement myStmt = null;
 
-			//String qString = "" + quantity;
-
 			try {
 
 				myStmt = myConn.prepareStatement(
-						//"UPDATE ProduitDetail SET Stock = (ProduitDetail.Stock - ?) " + "WHERE Id = ? AND Name = ?");
 				"UPDATE ProduitDetail SET qtte_stock = (ProduitDetail.qtte_stock - ?) " + "WHERE num_prod = ?");
 
 				myStmt.setInt(1, quantity);
 				myStmt.setString(2, prodId);
-				//myStmt.setString(3, prodName);
 
 				myStmt.executeUpdate();
 			} finally {
@@ -960,7 +936,7 @@ public class SQLiteCon {
 	 * Other methods
 	 */
 
-	// close connection
+	// Déconnexion
 	private static void close(Connection myConn, Statement myStmt, ResultSet myRs) throws SQLException {
 
 		if (myRs != null) {
@@ -976,13 +952,12 @@ public class SQLiteCon {
 		}
 	}
 
-	// close when st and rs
 	private void close(Statement myStmt, ResultSet myRs) throws SQLException {
 		close(null, myStmt, myRs);
 	}
 
 	// //////////////////////
-	// /DEPRECATED METHODS///
+	// /AUTRES FONCTIONS ///
 	// //////////////////////
 
 	// get all products
@@ -1018,7 +993,6 @@ public class SQLiteCon {
 		int id_cat = myRs.getInt("id_cat");
 		String forme = myRs.getString("forme");
 		int qtte_stock = myRs.getInt("qtte_stock");
-//		int qtte_stock_alarme= myRs.getInt("qtte_stock_alarme");
 		float prix_vente = myRs.getFloat("prix_vente");
 		float prix_achat = myRs.getFloat("prix_achat");
 
@@ -1026,31 +1000,5 @@ public class SQLiteCon {
 				prix_vente, prix_achat);
 
 		return tempProduct;
-	}
-
-	// search products
-	public List<ProduitDetail> searcshProducts(String prodName) throws Exception {
-		List<ProduitDetail> list = new ArrayList<>();
-
-		PreparedStatement myStmt = null;
-		ResultSet myRs = null;
-
-		try {
-			prodName += "%";
-			myStmt = myConn.prepareStatement("select * from ProduitDetail where Name like ?");
-
-			myStmt.setString(1, prodName);
-
-			myRs = myStmt.executeQuery();
-
-			while (myRs.next()) {
-				ProduitDetail tempProduct = convertRowToProduct(myRs);
-				list.add(tempProduct);
-			}
-
-			return list;
-		} finally {
-			close(myStmt, myRs);
-		}
 	}
 }
