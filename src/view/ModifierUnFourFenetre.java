@@ -19,7 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 
 import dao.SQLiteCon;
-import model.Unit;
+import model.FournisseurDetail;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -36,7 +36,7 @@ public class ModifierUnFourFenetre extends JDialog {
 	// database class declaration
 	SQLiteCon conn;
 
-	List<Unit> listeFour;
+	List<FournisseurDetail> listeFour;
 
 	JTextField textFieldRaisonSociale;
 	JTextField textFieldAdresseFour;

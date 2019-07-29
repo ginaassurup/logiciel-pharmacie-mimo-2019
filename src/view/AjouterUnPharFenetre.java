@@ -230,7 +230,7 @@ public class AjouterUnPharFenetre extends JDialog {
 		String surname = textFieldNom.getText().trim();
 
 		try {
-			listePhar = conn.getAllUsers();
+			listePhar = conn.getTousPhar();
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

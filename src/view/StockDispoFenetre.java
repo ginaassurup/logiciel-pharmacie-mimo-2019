@@ -46,9 +46,9 @@ import java.awt.Toolkit;
 import model.Categorie;
 import model.MyRenderer;
 import model.ProduitDetail;
-import model.ProductJoin;
-import model.ProductJoinTableModel;
-import model.ProductTableModel;
+import model.ProduitJoin;
+import model.ProduitJoinTableModel;
+import model.ProduitTableModel;
 
 import java.awt.event.KeyAdapter;
 import java.awt.Font;
@@ -78,7 +78,7 @@ public class StockDispoFenetre extends JFrame {
 	String currentProductSearch;
 
 	// current product search result
-	List<ProductJoin> currentListProductJoin;
+	List<ProduitJoin> currentListProductJoin;
 
 	// AddProduct Window declaration
 	AjouterUnProduitFenetre ajouterUnProduitFenetre;
@@ -320,9 +320,9 @@ public class StockDispoFenetre extends JFrame {
 	private void getProductsJoin() {
 
 		try {
-			List<ProductJoin> productsJoin = null;
+			List<ProduitJoin> productsJoin = null;
 			productsJoin = conn.getProductsJoin();
-			ProductJoinTableModel model = new ProductJoinTableModel(
+			ProduitJoinTableModel model = new ProduitJoinTableModel(
 					productsJoin);
 			tableProduct.setModel(model);
 
@@ -426,7 +426,7 @@ public class StockDispoFenetre extends JFrame {
 		try {
 			String product = textFieldSearch.getText();
 			currentProductSearch = product;
-			List<ProductJoin> productsJoin = null;
+			List<ProduitJoin> productsJoin = null;
 
 			if (product != null && product.trim().length() > 0) {
 				productsJoin = conn.searchProductsJoinCat(product, firstCatStr);
@@ -434,11 +434,11 @@ public class StockDispoFenetre extends JFrame {
 				productsJoin = conn.searchProductsJoinCat("", firstCatStr);
 			}
 
-			for (ProductJoin temp : productsJoin) {
+			for (ProduitJoin temp : productsJoin) {
 				System.out.println(temp);
 			}
 
-			ProductJoinTableModel model = new ProductJoinTableModel(
+			ProduitJoinTableModel model = new ProduitJoinTableModel(
 					productsJoin);
 
 			tableProduct.setModel(model);
@@ -471,7 +471,7 @@ public class StockDispoFenetre extends JFrame {
 
 				System.out.println(firstCatStr);
 
-				List<ProductJoin> productsJoin = null;
+				List<ProduitJoin> productsJoin = null;
 
 				if (firstCatStr.equalsIgnoreCase("Toutes")) {
 					productsJoin = conn.getProductsJoin();
@@ -479,11 +479,11 @@ public class StockDispoFenetre extends JFrame {
 					productsJoin = conn.filterProductsByCat(firstCatStr);
 				}
 
-				for (ProductJoin temp : productsJoin) {
+				for (ProduitJoin temp : productsJoin) {
 					System.out.println(temp);
 				}
 
-				ProductJoinTableModel model = new ProductJoinTableModel(
+				ProduitJoinTableModel model = new ProduitJoinTableModel(
 						productsJoin);
 				tableProduct.setModel(model);
 //				hideProductIdColumn();
@@ -530,7 +530,7 @@ public class StockDispoFenetre extends JFrame {
 			e.printStackTrace();
 		}
 
-		ProductJoinTableModel model = new ProductJoinTableModel(currentListProductJoin);
+		ProduitJoinTableModel model = new ProduitJoinTableModel(currentListProductJoin);
 
 		tableProduct.setModel(model);
 //		hideProductIdColumn();
@@ -552,7 +552,7 @@ public class StockDispoFenetre extends JFrame {
 
 			produitDetails = conn.getTousProduits();
 
-			ProductTableModel model = new ProductTableModel(produitDetails);
+			ProduitTableModel model = new ProduitTableModel(produitDetails);
 			tableProduct.setModel(model);
 
 		} catch (Exception e) {

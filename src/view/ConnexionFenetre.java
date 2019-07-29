@@ -1,5 +1,5 @@
 /*
- * In - Login Window 
+ * Connexion Fenetre
  */
 
 package view;
@@ -23,10 +23,9 @@ import java.awt.Font;
 
 public class ConnexionFenetre {
 
-	// database connection class declaration
+	// Déclaration de la base de données
 	public SQLiteCon conn;
-	
-	// fields that need access and change
+
 	private JTextField textFieldIdentifiant;
 	private JPasswordField mdpField;
 	JFrame frmConnexion;
@@ -54,7 +53,7 @@ public class ConnexionFenetre {
 	public ConnexionFenetre() {
 
 		initialize();
-		
+
 		// Connexion à la base de données
 		conn = new SQLiteCon();
 	}
@@ -71,7 +70,6 @@ public class ConnexionFenetre {
 		frmConnexion.setLocationRelativeTo(null);
 		frmConnexion.getContentPane().setLayout(null);
 		frmConnexion.getContentPane().setBackground(Color.WHITE);
-		
 
 		JLabel lbIdentifiant = new JLabel("Identfiant");
 		lbIdentifiant.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -106,7 +104,7 @@ public class ConnexionFenetre {
 			public void actionPerformed(ActionEvent arg0) {
 				// verify user and password
 				conn.login(SQLiteCon.myConn, textFieldIdentifiant, mdpField);
-				if(SQLiteCon.isConnected == true) {
+				if (SQLiteCon.isConnected == true) {
 					frmConnexion.dispose();
 				}
 			}
@@ -116,13 +114,13 @@ public class ConnexionFenetre {
 
 		// enter key
 		frmConnexion.getRootPane().setDefaultButton(btnSeConnecter);
-		
+
 		JLabel lblLogicielDePharmacie = new JLabel("Logiciel de pharmacie");
 		lblLogicielDePharmacie.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLogicielDePharmacie.setForeground(new Color(165, 42, 42));
 		lblLogicielDePharmacie.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblLogicielDePharmacie.setBounds(330, 100, 261, 25);
 		frmConnexion.getContentPane().add(lblLogicielDePharmacie);
-		
+
 	}
 }

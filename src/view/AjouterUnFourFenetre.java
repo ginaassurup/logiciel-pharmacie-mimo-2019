@@ -12,14 +12,13 @@ import java.awt.Toolkit;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 
 import dao.SQLiteCon;
-import model.Unit;
+import model.FournisseurDetail;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -36,7 +35,7 @@ public class AjouterUnFourFenetre extends JDialog {
 	// database class declaration
 	SQLiteCon conn;
 
-	List<Unit> listePhar;
+	List<FournisseurDetail> listFour;
 
 	private JTextField textFieldRaisonSociale;
 	private JTextField textFieldAdresseFour;
@@ -95,15 +94,16 @@ public class AjouterUnFourFenetre extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
+	@SuppressWarnings({ "static-access" })
 	public AjouterUnFourFenetre() {
-		
+
 		// initialise database connection
 		conn = new SQLiteCon();
 
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(AjouterUnFourFenetre.class.getResource("/view/User.png")));
 		setModal(true);
-		setTitle("Ajouter un pharmacien");
+		setTitle("Ajouter un fournisseur | Utilisateur : " + conn.currentUser);
 		setBounds(100, 100, 968, 600);
 		getContentPane().setBackground(Color.WHITE);
 		getContentPane().setLayout(null);
@@ -141,8 +141,7 @@ public class AjouterUnFourFenetre extends JDialog {
 
 		JLabel label = new JLabel("");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setIcon(new ImageIcon(AjouterUnFourFenetre.class
-				.getResource("/view/User.png")));
+		label.setIcon(new ImageIcon(AjouterUnFourFenetre.class.getResource("/view/User.png")));
 		label.setBounds(56, 118, 95, 93);
 		getContentPane().add(label);
 
@@ -173,17 +172,17 @@ public class AjouterUnFourFenetre extends JDialog {
 		lbNom.setHorizontalAlignment(SwingConstants.RIGHT);
 		lbNom.setBounds(248, 340, 169, 14);
 		getContentPane().add(lbNom);
-		
+
 		JButton btnRetour = new JButton("Retour");
 		btnRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
 				OuvrirFenetreUnitsWindow();
-			}		
+			}
 		});
 		btnRetour.setBounds(12, 13, 97, 25);
 		getContentPane().add(btnRetour);
-		
+
 		JLabel lblAjouterUnPharmacien = new JLabel("Ajouter un fournisseur");
 		lblAjouterUnPharmacien.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAjouterUnPharmacien.setForeground(new Color(165, 42, 42));
@@ -195,7 +194,7 @@ public class AjouterUnFourFenetre extends JDialog {
 
 	// Ouvrir la fenetre de la liste des Pharmaciens
 	private void OuvrirFenetreUnitsWindow() {
-		
+
 		FournisseursFenetre fournisseursFenetre = new FournisseursFenetre();
 		fournisseursFenetre.setVisible(true);
 	}
@@ -204,26 +203,17 @@ public class AjouterUnFourFenetre extends JDialog {
 	private void addFour() {
 
 		String raison_sociale = textFieldRaisonSociale.getText().trim();
-		@SuppressWarnings("deprecation")
 		String adresse_four = textFieldAdresseFour.getText().trim();
 		String code_postal_four = textFieldCodePostalFour.getText().trim();
 		String ville_four = textFieldVilleFour.getText().trim();
 
 		try {
-			listePhar = conn.getAllUnits();
+			listFour = conn.getTousFour();
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
-		// if not empty
-//		if (!emptyFields()) {
-//			JOptionPane.showMessageDialog(null,
-//					"Veuillez remplir les champs requis.");
-//		}
 
-
-		
 		// if doesn't exist
 		if (!emptyFields()) {
 			try {
@@ -234,26 +224,22 @@ public class AjouterUnFourFenetre extends JDialog {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 		} else {
-			JOptionPane.showMessageDialog(null,
-					"Ce pharmacien existe déjà");
+			JOptionPane.showMessageDialog(null, "Ce pharmacien existe déjà");
 		}
 	}
-	
-	// checks if empty
+
+	// Vérifier si la raison sociale est vide
 	private boolean emptyFields() {
 
 		boolean raison_socialeExists;
 
-		raison_socialeExists = textFieldRaisonSociale.getText().trim().equalsIgnoreCase("") ? true
-				: false;
+		raison_socialeExists = textFieldRaisonSociale.getText().trim().equalsIgnoreCase("") ? true : false;
 
 		if (!raison_socialeExists) {
 			return false;
 		} else
 			return true;
 	}
-
-	
 }

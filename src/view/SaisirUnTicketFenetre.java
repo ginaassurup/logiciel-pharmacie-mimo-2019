@@ -45,9 +45,9 @@ import javax.swing.table.TableColumn;
 import dao.SQLiteCon;
 import model.LigneTicket;
 import model.LigneTicketTableModel;
-import model.ProductJoin;
-import model.ProductJoinTableModel;
-import model.ProductTableModel;
+import model.ProduitJoin;
+import model.ProduitJoinTableModel;
+import model.ProduitTableModel;
 import model.ProduitDetail;
 import model.Ticket;
 
@@ -68,7 +68,7 @@ public class SaisirUnTicketFenetre extends JFrame {
 	String currentProductSearch;
 
 	// current product search result
-	List<ProductJoin> currentListProductJoin;
+	List<ProduitJoin> currentListProductJoin;
 
 	// AddProduct Window declaration
 	AjouterUnProduitFenetre ajouterUnProduitFenetre;
@@ -109,7 +109,7 @@ public class SaisirUnTicketFenetre extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	@SuppressWarnings({ "unchecked", "rawtypes", "static-access" })
+	@SuppressWarnings({"static-access"})
 	public SaisirUnTicketFenetre() {
 
 		// initialise connection
@@ -307,14 +307,14 @@ public class SaisirUnTicketFenetre extends JFrame {
 
 		TableColumn codeBarreColumn = tableTicket.getColumnModel().getColumn(1);
 
-		List<ProductJoin> productsJoin = null;
+		List<ProduitJoin> productsJoin = null;
 		try {
 			productsJoin = conn.getProductsJoin();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		JComboBox<ProductJoin> comboBox = new JComboBox<>();
+		JComboBox<ProduitJoin> comboBox = new JComboBox<>();
 		comboBox.setRenderer(new BasicComboBoxRenderer() {
 			@SuppressWarnings("rawtypes")
 			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected,
@@ -322,12 +322,12 @@ public class SaisirUnTicketFenetre extends JFrame {
 				super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
 				if (value != null) {
-					ProductJoin item = (ProductJoin) value;
+					ProduitJoin item = (ProduitJoin) value;
 					setText(item.getLibelle_produit().toUpperCase());
 				}
 
 				if (index == -1) {
-					ProductJoin item = (ProductJoin) value;
+					ProduitJoin item = (ProduitJoin) value;
 					if (item != null) {
 						setText("" + item.getLibelle_produit());
 					} else {
@@ -345,7 +345,7 @@ public class SaisirUnTicketFenetre extends JFrame {
 				}
 			}
 		});
-		for (ProductJoin pj : productsJoin) {
+		for (ProduitJoin pj : productsJoin) {
 			comboBox.addItem(pj);
 		}
 
@@ -457,7 +457,7 @@ public class SaisirUnTicketFenetre extends JFrame {
 			e.printStackTrace();
 		}
 
-		ProductJoinTableModel model = new ProductJoinTableModel(currentListProductJoin);
+		ProduitJoinTableModel model = new ProduitJoinTableModel(currentListProductJoin);
 
 		tableTicket.setModel(model);
 		allignColumn();
@@ -477,7 +477,7 @@ public class SaisirUnTicketFenetre extends JFrame {
 
 			produitDetails = conn.getTousProduits();
 
-			ProductTableModel model = new ProductTableModel(produitDetails);
+			ProduitTableModel model = new ProduitTableModel(produitDetails);
 			tableTicket.setModel(model);
 
 		} catch (Exception e) {

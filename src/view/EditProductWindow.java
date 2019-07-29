@@ -33,8 +33,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 import model.Categorie;
-import model.ProductJoin;
-import model.Unit;
+import model.ProduitJoin;
+import model.FournisseurDetail;
 
 import java.awt.Font;
 import java.awt.event.ActionListener;
@@ -47,7 +47,7 @@ public class EditProductWindow extends JDialog {
 	// database class declaration
 	SQLiteCon conn;
 
-	List<ProductJoin> products;
+	List<ProduitJoin> products;
 
 	String currentId;
 	String currentProductName = "";
@@ -254,7 +254,7 @@ public class EditProductWindow extends JDialog {
 		lblPrixDachat.setBounds(167, 439, 77, 14);
 		contentPanel.add(lblPrixDachat);
 		
-		JLabel lblFournisseur = new JLabel("Fournisseur");
+		JLabel lblFournisseur = new JLabel("FournisseurDetail");
 		lblFournisseur.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblFournisseur.setForeground(new Color(0, 0, 0));
 		lblFournisseur.setBounds(167, 482, 77, 14);
@@ -298,13 +298,13 @@ public class EditProductWindow extends JDialog {
 	private String[] getUnitsToCombo() {
 
 		try {
-			List<Unit> units = null;
+			List<FournisseurDetail> fournisseurDetails = null;
 			ArrayList<String> comboUnits = new ArrayList<String>();
 			comboUnits.add("");
-			units = conn.getAllUnits();
+			fournisseurDetails = conn.getTousFour();
 
-			for (int i = 0; i < units.size(); i++) {
-				comboUnits.add(units.get(i).getRaison_sociale());
+			for (int i = 0; i < fournisseurDetails.size(); i++) {
+				comboUnits.add(fournisseurDetails.get(i).getRaison_sociale());
 				System.out.println(comboUnits.get(i));
 			}
 

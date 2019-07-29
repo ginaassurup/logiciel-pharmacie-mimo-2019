@@ -88,7 +88,7 @@ public class LigneTicketTableModel extends AbstractTableModel {
 			ligne.setQtte_vendu((int) value);
 			break;
 		case PRODUCT_COL:
-			ligne.setProduct((ProductJoin) value);
+			ligne.setProduct((ProduitJoin) value);
 			break;
 		}
 		
@@ -127,7 +127,7 @@ public class LigneTicketTableModel extends AbstractTableModel {
 	@Override
 	public Class getColumnClass(int c) {
 		if (c == 1)
-			return ProductJoin.class;
+			return ProduitJoin.class;
 		return getValueAt(0, c).getClass();
 	}
 

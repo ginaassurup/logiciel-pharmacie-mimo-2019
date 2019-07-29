@@ -4,7 +4,7 @@ package model;
 public class LigneTicket {
 	
 	private int id_ligne;
-	private ProductJoin product;
+	private ProduitJoin product;
 	private int num_ligne;
 	private int num_prod;
 	private int code_barre;
@@ -81,10 +81,10 @@ public class LigneTicket {
 	public void setId_ticket(int id_ticket) {
 		this.id_ticket = id_ticket;
 	}
-	public ProductJoin getProduct() {
+	public ProduitJoin getProduct() {
 		return product;
 	}
-	public void setProduct(ProductJoin product) {
+	public void setProduct(ProduitJoin product) {
 		this.product = product;
 	}
 	@Override

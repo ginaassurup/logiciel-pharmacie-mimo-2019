@@ -33,8 +33,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 import model.Categorie;
-import model.ProductJoin;
-import model.Unit;
+import model.ProduitJoin;
+import model.FournisseurDetail;
 
 import java.awt.Font;
 import java.awt.event.ActionListener;
@@ -47,7 +47,7 @@ public class AjouterLigneTicketFenetre extends JDialog {
 	// database class declaration
 	SQLiteCon conn;
 
-	List<ProductJoin> products;
+	List<ProduitJoin> products;
 
 	// fields that need access
 	private final JPanel contentPanel = new JPanel();
@@ -203,7 +203,7 @@ public class AjouterLigneTicketFenetre extends JDialog {
 		btnNewUnit.setBounds(522, 476, 97, 30);
 		contentPanel.add(btnNewUnit);
 
-		JLabel lblUnits = new JLabel("Fournisseur");
+		JLabel lblUnits = new JLabel("FournisseurDetail");
 		lblUnits.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblUnits.setForeground(Color.BLACK);
 		lblUnits.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -313,13 +313,13 @@ public class AjouterLigneTicketFenetre extends JDialog {
 	private String[] getUnitsToCombo() {
 
 		try {
-			List<Unit> units = null;
+			List<FournisseurDetail> fournisseurDetails = null;
 			ArrayList<String> comboUnits = new ArrayList<String>();
 			comboUnits.add("");
-			units = conn.getAllUnits();
+			fournisseurDetails = conn.getTousFour();
 
-			for (int i = 0; i < units.size(); i++) {
-				comboUnits.add(units.get(i).getRaison_sociale());
+			for (int i = 0; i < fournisseurDetails.size(); i++) {
+				comboUnits.add(fournisseurDetails.get(i).getRaison_sociale());
 				System.out.println(comboUnits.get(i));
 			}
 
