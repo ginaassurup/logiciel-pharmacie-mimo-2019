@@ -194,6 +194,11 @@ public class PharmaciensFenetre extends JDialog {
 			ListePharmaciens model = new ListePharmaciens(listePhar);
 			tableListePhar.setModel(model);
 
+<<<<<<< HEAD
+=======
+			hideMdpColumn();
+
+>>>>>>> 84da29589b9d7ba91f77e16bf1a4e2847776a1e7
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -215,7 +220,11 @@ public class PharmaciensFenetre extends JDialog {
 		int idCol = 0;
 		int nameCol = 1;
 
+<<<<<<< HEAD
 		// Si une ligne est sélectionnée
+=======
+		// Si une ligne est s�lectionn�e
+>>>>>>> 84da29589b9d7ba91f77e16bf1a4e2847776a1e7
 		if (!(tableListePhar.getSelectedRow() == -1)) {
 
 			int selectedRow = tableListePhar.getSelectedRow();
@@ -238,7 +247,11 @@ public class PharmaciensFenetre extends JDialog {
 						e.printStackTrace();
 					}
 
+<<<<<<< HEAD
 					// Mise à jour la vue
+=======
+					// Mise � jour la vue
+>>>>>>> 84da29589b9d7ba91f77e16bf1a4e2847776a1e7
 					getListePharToTable();
 
 				} else {
@@ -246,8 +259,15 @@ public class PharmaciensFenetre extends JDialog {
 				}
 			}
 		} else {
+<<<<<<< HEAD
 			System.out.println("Aucune ligne est sélectionnée");
 			JOptionPane.showMessageDialog(null, "Veuillez sélectionner un pharmacien à supprimer");
+=======
+			System.out.println("Aucune ligne est s�lectionn�e");
+			JOptionPane
+					.showMessageDialog(null,
+							"Veuillez s�lectionner un pharmacien � supprimer");
+>>>>>>> 84da29589b9d7ba91f77e16bf1a4e2847776a1e7
 		}
 	}
 
@@ -281,6 +301,7 @@ public class PharmaciensFenetre extends JDialog {
 			while (modifierUnPharFenetre.isVisible()) {
 
 			}
+<<<<<<< HEAD
 			
 			getListePharToTable();
 
@@ -289,4 +310,24 @@ public class PharmaciensFenetre extends JDialog {
 		}
 	}
 
+=======
+			// Mise � jour la vue
+			getListePharToTable();
+
+		} else {
+			JOptionPane.showMessageDialog(null,
+					"Veuillez s�lectionner un pharmacien � modifier !");
+		}
+	}
+
+	// hides columns
+	private void hideMdpColumn() {
+		TableColumn myTableColumn2 = tableListePhar.getColumnModel().getColumn(2);
+
+		myTableColumn2.setMaxWidth(0);
+		myTableColumn2.setMinWidth(0);
+		myTableColumn2.setPreferredWidth(0);
+	}
+
+>>>>>>> 84da29589b9d7ba91f77e16bf1a4e2847776a1e7
 }
