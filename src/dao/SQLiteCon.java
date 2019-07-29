@@ -148,7 +148,7 @@ public class SQLiteCon {
 		try {
 			myStmt = myConn.createStatement();
 			myRs = myStmt.executeQuery(
-					"SELECT * FROM PharmacienDetail WHERE num_phar != 1 ORDER BY identifiant COLLATE NOCASE");
+					"SELECT * FROM PharmacienDetail WHERE num_phar != 0 ORDER BY identifiant COLLATE NOCASE");
 
 			while (myRs.next()) {
 				PharmacienDetail tempUser = convertRowToUser(myRs);
@@ -766,7 +766,6 @@ public class SQLiteCon {
 	
 	//	Cr�er une Ligne de ticket query
 	public void createTicketLigneQuery(Ticket t) throws SQLException {
-		
 		myStmt = myConn.prepareStatement(
 				"INSERT INTO LigneTicket (num_prod, qtte_vendu, montant_ligne, id_ticket)"
 		
@@ -982,7 +981,7 @@ public class SQLiteCon {
 	public void addStockQuery(String prodId, int quantity) throws Exception {
 		PreparedStatement myStmt = null;
 
-		String qString = "" + quantity;
+		//String qString = "" + quantity;
 
 		try {
 

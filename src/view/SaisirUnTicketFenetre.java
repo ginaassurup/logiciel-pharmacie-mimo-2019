@@ -26,6 +26,7 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -140,8 +141,6 @@ public class SaisirUnTicketFenetre extends JFrame {
 			public void changeSelection(int rowIndex, int columnIndex, boolean toggle, boolean extend) {
 				// Always toggle on single selection
 				super.changeSelection(rowIndex, columnIndex, !extend, extend);
-				//conn.removeStockQuery(1, 3, quantity, prodStock, prodStockAlarm);
-				
 			}
 		};
 		tableTicket.setFillsViewportHeight(true);
@@ -211,7 +210,6 @@ public class SaisirUnTicketFenetre extends JFrame {
 		btnAddProduct.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				//conn.removeStockQuery(model.get, prodName, quantity, prodStock, prodStockAlarm);
 				addRow();
 			}
 		});
@@ -272,6 +270,7 @@ public class SaisirUnTicketFenetre extends JFrame {
 				validateTicket();
 				majMontantTicket();
 				dispose();
+				OuvrirMenuPrincipal();
 			}
 		});
 
@@ -357,7 +356,6 @@ public class SaisirUnTicketFenetre extends JFrame {
 	private void majMontantTicket() {
 
 		try {
-
 			float montant_ticket = t.getTotal();
 			int id_ticket = t.getId_ticket();
 			String libelle = "Ticket No: " + t.getId_ticket();
@@ -396,11 +394,17 @@ public class SaisirUnTicketFenetre extends JFrame {
 	// add product
 	private void addRow() {
 		System.out.println("Add Row");
-		
+		for (LigneTicket ligne: t.getLignes()) {
+			if (ligne.getQtte_vendu() < ligne.getProduct().getQtte_stock()) {
+				JOptionPane.showMessageDialog(null, "Le stock actuel du produit \"" + ligne.getProduct().getLibelle_produit() + "\" n'est pas suffisant pour la vente. " + 
+						 "Veuillez saisir une quantité inférieure à " + ligne.getProduct().getQtte_stock() + ".");
+				System.out.println("Libelle: "+ligne.getProduct().getLibelle_produit());
+				System.out.println("Qté stock: "+ligne.getProduct().getQtte_stock());
+			}
+		}
 		((LigneTicketTableModel) tableTicket.getModel()).addRow(new LigneTicket(t.getId_ticket(), ""));
 		montantField.setText(String.valueOf(t.getTotal()));
-		
-		//conn.removeStockQuery(, prodName, quantity, prodStock, prodStockAlarm);
+
 		// refreshTable();
 //		refreshComboBox();
 	}
