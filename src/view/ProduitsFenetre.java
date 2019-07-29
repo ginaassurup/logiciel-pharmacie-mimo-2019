@@ -181,7 +181,7 @@ public class ProduitsFenetre extends JFrame {
 			}
 		});
 		comboBoxCategories.setMaximumRowCount(20);
-		comboBoxCategories.setBounds(162, 122, 125, 30);
+		comboBoxCategories.setBounds(162, 120, 125, 30);
 		contentPane.add(comboBoxCategories);
 
 		textFieldRechercher = new JTextField();
@@ -195,7 +195,7 @@ public class ProduitsFenetre extends JFrame {
 			}
 		});
 		textFieldRechercher.setToolTipText("ProduitDetail Name");
-		textFieldRechercher.setBounds(750, 122, 118, 30);
+		textFieldRechercher.setBounds(763, 120, 118, 30);
 		contentPane.add(textFieldRechercher);
 		textFieldRechercher.setColumns(10);
 
@@ -217,14 +217,14 @@ public class ProduitsFenetre extends JFrame {
 			}
 		});
 		btnRechercher.setFocusPainted(false);
-		btnRechercher.setBounds(880, 122, 118, 30);
+		btnRechercher.setBounds(893, 120, 118, 30);
 		contentPane.add(btnRechercher);
 
 		JLabel lblNewLabel = new JLabel("Rechercher par libellé");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblNewLabel.setForeground(Color.BLACK);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel.setBounds(607, 125, 138, 22);
+		lblNewLabel.setBounds(613, 124, 138, 22);
 		contentPane.add(lblNewLabel);
 
 		JButton btnToutAfficher = new JButton("Tout afficher");
@@ -235,9 +235,9 @@ public class ProduitsFenetre extends JFrame {
 				toutAfficher();
 			}
 		});
-		btnToutAfficher.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnToutAfficher.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnToutAfficher.setFocusPainted(false);
-		btnToutAfficher.setBounds(1023, 121, 113, 30);
+		btnToutAfficher.setBounds(1023, 120, 113, 30);
 		contentPane.add(btnToutAfficher);
 
 		JLabel labelProduits = new JLabel("Gestion des produits");
@@ -367,7 +367,7 @@ public class ProduitsFenetre extends JFrame {
 		lblFiltrerParCatgorie.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblFiltrerParCatgorie.setHorizontalAlignment(SwingConstants.LEFT);
 		lblFiltrerParCatgorie.setForeground(Color.BLACK);
-		lblFiltrerParCatgorie.setBounds(39, 124, 125, 25);
+		lblFiltrerParCatgorie.setBounds(39, 123, 125, 25);
 		contentPane.add(lblFiltrerParCatgorie);
 		setLocationRelativeTo(null);
 
