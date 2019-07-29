@@ -340,7 +340,7 @@ public class ModifierUnProduitFenetre extends JDialog {
 
 		if (!emptyfieldsCheck()) {
 			int reply = JOptionPane.showConfirmDialog(null,
-					"Do you really want to update this product?", "Update?",
+					"Voulez-vous vraiment modifier les informations de ce produit ?", "Modifier ?",
 					JOptionPane.YES_NO_OPTION);
 			if (reply == JOptionPane.YES_OPTION) {
 
@@ -430,7 +430,7 @@ public class ModifierUnProduitFenetre extends JDialog {
 					try {
 						conn.updateProductQuery(num_prodActuel, code_barre, libelle_produit, nom_cat,
 							 forme, qtte_stock, qtte_stock_alarme, prix_vente, prix_achat, nom_four);
-						System.out.println("Num_prod mis à jour: "+num_prodActuel);
+						System.out.println("Num_prod mis ï¿½ jour: "+num_prodActuel);
 //						conn.updateProductQuery(currentId, currentProductName,
 //								newProdName, catName, typeName, quantityName,
 //								unitName, stockAlarm);
