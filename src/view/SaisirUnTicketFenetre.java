@@ -26,7 +26,6 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -36,6 +35,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -48,9 +49,6 @@ import model.ProductJoinTableModel;
 import model.ProductTableModel;
 import model.ProduitDetail;
 import model.Ticket;
-import javax.swing.JToggleButton;
-import javax.swing.JTextArea;
-import javax.swing.JTextPane;
 
 public class SaisirUnTicketFenetre extends JFrame {
 
@@ -283,20 +281,30 @@ public class SaisirUnTicketFenetre extends JFrame {
 	@SuppressWarnings({ "serial", "unchecked" })
 	private void initTicket() {
 
-		t.setName("Ticket No : " + t.getId_ticket());
-		try {
-			t = conn.createTicketQuery(t);
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+//		//t.setName("Ticket No : " + t.getId_ticket());
+//		try {
+//		//	t = conn.createTicketQuery(t);
+//		} catch (SQLException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
 
 		LigneTicketTableModel model = new LigneTicketTableModel(t.getLignes());
 		model.addRow(new LigneTicket(t.getId_ticket(), ""));
 		
 
 		tableTicket.setModel(model);
-		tableTicket.getModel().addTableModelListener(new TicketTableModelListener());
+		tableTicket.getModel().addTableModelListener(new TableModelListener() {
+			
+			@Override
+			public void tableChanged(TableModelEvent e) {
+				if(TableModelEvent.UPDATE == e.getType() && (e.getColumn() == 5 || e.getColumn() == 1))
+				{
+					montantField.setText(String.valueOf(t.getTotal()));
+				}
+				
+			}
+		});
 
 		TableColumn codeBarreColumn = tableTicket.getColumnModel().getColumn(1);
 
@@ -400,7 +408,8 @@ public class SaisirUnTicketFenetre extends JFrame {
 	private void validateTicket() {
 
 		try {
-			conn.createTicketLigneQuery(t.getLignes());
+			t = conn.createTicketQuery(t);
+			conn.createTicketLigneQuery(t);
 			System.out.println("Montant: " + t.getTotal());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
