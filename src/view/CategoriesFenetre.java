@@ -1,5 +1,5 @@
 /*
- * Categories Window class
+ * Categories Fenetre class
  */
 package view;
 
@@ -9,19 +9,17 @@ import java.awt.SystemColor;
 
 import javax.swing.JDialog;
 
-import java.awt.Toolkit;
 import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JLabel;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.ListSelectionModel;
 import javax.swing.WindowConstants;
 
 import model.Categorie;
-import model.CategoryTableModel;
+import model.CategorieTableModel;
 
 import javax.swing.JScrollPane;
 import javax.swing.table.TableColumn;
@@ -33,14 +31,14 @@ import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
-public class CategoriesWindow extends JDialog {
+public class CategoriesFenetre extends JDialog {
 
 	/**
-	 * 
+	 * Déclaration des variables
 	 */
 	private static final long serialVersionUID = 1L;
 
-	// database connection declaration
+	// Déclaration la base de données
 	SQLiteCon conn;
 
 	List<Categorie> categories;
@@ -48,17 +46,17 @@ public class CategoriesWindow extends JDialog {
 	// table
 	private JTable tableCategories;
 
-	String newCategory = "";
+	String newCategorie = "";
 
 	/**
-	 * Launch the application.
+	 * Lancer l'application.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
 				try {
-					CategoriesWindow dialog = new CategoriesWindow();
+					CategoriesFenetre dialog = new CategoriesFenetre();
 					dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 					dialog.setVisible(true);
 				} catch (Exception e) {
@@ -71,13 +69,14 @@ public class CategoriesWindow extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public CategoriesWindow() {
+	@SuppressWarnings({ "static-access" })
+	public CategoriesFenetre() {
 		getContentPane().setFocusTraversalKeysEnabled(false);
 
-		// connect to database
+		// Connexion à la base de données
 		conn = new SQLiteCon();
 
-		setTitle("Liste des cat�gories du produit | Utilisateur : " + conn.currentUser);
+		setTitle("Liste des catégories du produit | Utilisateur : " + conn.currentUser);
 		setModal(true);
 		setResizable(false);
 		setBounds(100, 100, 711, 483);
@@ -88,14 +87,10 @@ public class CategoriesWindow extends JDialog {
 		getContentPane().add(scrollPane);
 
 		tableCategories = new JTable() {
-			/**
-			 * 
-			 */
+
 			private static final long serialVersionUID = 1L;
 
-			public void changeSelection(int rowIndex, int columnIndex,
-					boolean toggle, boolean extend) {
-				// Always toggle on single selection
+			public void changeSelection(int rowIndex, int columnIndex, boolean toggle, boolean extend) {
 				super.changeSelection(rowIndex, columnIndex, !extend, extend);
 			}
 		};
@@ -151,25 +146,25 @@ public class CategoriesWindow extends JDialog {
 		btnEdit.setFocusPainted(false);
 		btnEdit.setBounds(14, 222, 100, 23);
 		getContentPane().add(btnEdit);
-		
+
 		JButton btnRetour = new JButton("Retour");
 		btnRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
-				ouvrirAjouterUnProduitFenetre();
-				
+				ouvrirProduitsFenetre();
+
 			}
 
 			// Ouvrir la gestion des produits
-			private void ouvrirAjouterUnProduitFenetre() {
-				
-				AjouterUnProduitFenetre ajoutfenetre = new AjouterUnProduitFenetre();
-				ajoutfenetre.setVisible(true);
+			private void ouvrirProduitsFenetre() {
+
+				ProduitsFenetre produitsFenetre = new ProduitsFenetre();
+				produitsFenetre.setVisible(true);
 			}
 		});
 		btnRetour.setBounds(14, 13, 97, 25);
 		getContentPane().add(btnRetour);
-		
+
 		JLabel lblListeDesCatgories = new JLabel("Liste des cat\u00E9gories de produit");
 		lblListeDesCatgories.setHorizontalAlignment(SwingConstants.CENTER);
 		lblListeDesCatgories.setForeground(new Color(165, 42, 42));
@@ -190,13 +185,12 @@ public class CategoriesWindow extends JDialog {
 
 			categories = conn.getAllCategories();
 
-			CategoryTableModel model = new CategoryTableModel(categories);
+			CategorieTableModel model = new CategorieTableModel(categories);
 
 			tableCategories.setModel(model);
 
 			// remove/hide Id table
-			TableColumn myTableColumn0 = tableCategories.getColumnModel()
-					.getColumn(0);
+			TableColumn myTableColumn0 = tableCategories.getColumnModel().getColumn(0);
 			// tableCategories.getColumnModel().removeColumn(myTableColumn0);
 			myTableColumn0.setMaxWidth(0);
 			myTableColumn0.setMinWidth(0);
@@ -210,18 +204,18 @@ public class CategoriesWindow extends JDialog {
 	// add category
 	private void addCategory() {
 
-		newCategory = JOptionPane.showInputDialog("Entrez le nom de la nouvelle cat�gorie que vous voulez ajouer").trim();
+		newCategorie = JOptionPane.showInputDialog("Entrez le nom de la nouvelle catégorie que vous voulez ajouter")
+				.trim();
 
 		// if not empty
-		if (!newCategory.equalsIgnoreCase("")) {
+		if (!newCategorie.equalsIgnoreCase("")) {
 
 			// check if exists
 			boolean catExists = false;
 			for (int i = 0; i < categories.size(); i++) {
-				if (categories.get(i).getNom_cat().equalsIgnoreCase(newCategory)) {
+				if (categories.get(i).getNom_cat().equalsIgnoreCase(newCategorie)) {
 
-					System.out.println("Exists " + categories.get(i).getNom_cat()
-							+ " " + newCategory);
+					System.out.println("Exists " + categories.get(i).getNom_cat() + " " + newCategorie);
 					catExists = true;
 					break;
 				}
@@ -230,19 +224,17 @@ public class CategoriesWindow extends JDialog {
 			// if doesn't exist
 			if (!catExists) {
 				try {
-					conn.insertCategoryQuery(newCategory);
+					conn.insertCategoryQuery(newCategorie);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				getCategoriesToTable();
 			} else {
-				JOptionPane.showMessageDialog(null,
-						"This category already exists");
+				JOptionPane.showMessageDialog(null, "This category already exists");
 			}
 		} else {
-			JOptionPane.showMessageDialog(null,
-					"Name of category can't be empty");
+			JOptionPane.showMessageDialog(null, "Name of category can't be empty");
 		}
 	}
 
@@ -256,17 +248,14 @@ public class CategoriesWindow extends JDialog {
 
 			int selectedRow = tableCategories.getSelectedRow();
 
-			String catId = tableCategories.getValueAt(selectedRow, idCol)
-					.toString();
+			String catId = tableCategories.getValueAt(selectedRow, idCol).toString();
 
-			String catName = tableCategories.getValueAt(selectedRow, nameCol)
-					.toString();
+			String catName = tableCategories.getValueAt(selectedRow, nameCol).toString();
 
 			System.out.println(catId + " " + catName);
 
-			int reply = JOptionPane.showConfirmDialog(null,
-					"Voulez-vous vraiment supprimer cette cat�gorie ?", "Supprimer ?",
-					JOptionPane.YES_NO_OPTION);
+			int reply = JOptionPane.showConfirmDialog(null, "Voulez-vous vraiment supprimer cette catégorie ?",
+					"Supprimer ?", JOptionPane.YES_NO_OPTION);
 			if (reply == JOptionPane.YES_OPTION) {
 
 				try {
@@ -285,9 +274,7 @@ public class CategoriesWindow extends JDialog {
 
 		} else {
 			System.out.println("Nothing selected");
-			JOptionPane
-					.showMessageDialog(null,
-							"Veuillez choisir une cat�gorie � supprimer");
+			JOptionPane.showMessageDialog(null, "Veuillez choisir une catégorie à supprimer");
 		}
 	}
 
@@ -301,52 +288,43 @@ public class CategoriesWindow extends JDialog {
 			int nameCol = 1;
 			int selectedRow = tableCategories.getSelectedRow();
 
-			String id = tableCategories.getValueAt(selectedRow, idCol)
-					.toString();
-			String currentCategory = tableCategories.getValueAt(selectedRow,
-					nameCol).toString();
+			String id = tableCategories.getValueAt(selectedRow, idCol).toString();
+			String currentCategory = tableCategories.getValueAt(selectedRow, nameCol).toString();
 
-			newCategory = JOptionPane.showInputDialog(
-					"Entrez le nouveau nom de cette cat�gorie", currentCategory);
+			newCategorie = JOptionPane.showInputDialog("Entrez le nouveau nom de cette catégorie", currentCategory);
 			// if not empty
-			if (!newCategory.equalsIgnoreCase("")) {
+			if (!newCategorie.equalsIgnoreCase("")) {
 
 				// check if exists
 				boolean catExists = false;
 				for (int i = 0; i < categories.size(); i++) {
-					if (categories.get(i).getNom_cat()
-							.equalsIgnoreCase(newCategory)) {
+					if (categories.get(i).getNom_cat().equalsIgnoreCase(newCategorie)) {
 
-						System.out.println("Exists "
-								+ categories.get(i).getNom_cat() + " "
-								+ newCategory);
+						System.out.println("Exists " + categories.get(i).getNom_cat() + " " + newCategorie);
 						catExists = true;
 						break;
 					}
 				}
 
 				// if doesn't exist
-				if (!catExists || (newCategory.equalsIgnoreCase(currentCategory))) {
+				if (!catExists || (newCategorie.equalsIgnoreCase(currentCategory))) {
 					try {
-						conn.updateCategoryQuery(currentCategory, newCategory,
-								id);
+						conn.updateCategoryQuery(currentCategory, newCategorie, id);
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					getCategoriesToTable();
 				} else {
-					JOptionPane.showMessageDialog(null,
-							"This category already exists.");
+					JOptionPane.showMessageDialog(null, "Cette catégorie existe déjà !");
 				}
 
 			} else {
-				JOptionPane.showMessageDialog(null,
-						"Name of category can't be empty.");
+				JOptionPane.showMessageDialog(null, "Attention ! Le nom de la catégorie est vide !");
 			}
 
 		} else {
-			JOptionPane.showMessageDialog(null, "Veuillez choisir une ligne de cat�gorie");
+			JOptionPane.showMessageDialog(null, "Veuillez choisir une ligne de catégorie");
 		}
 	}
 }

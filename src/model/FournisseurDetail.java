@@ -1,10 +1,10 @@
 /*
- * Unit model
+ * FournisseurDetail model
  */
 
 package model;
 
-public class Unit {
+public class FournisseurDetail {
 	private int id_four;
 	private String raison_sociale;
 	private String adresse_four;
@@ -12,7 +12,7 @@ public class Unit {
 	private String ville_four;
 	
 	// constructor
-	public Unit(int id_four, String raison_sociale, String adresse_four, int code_postal_four, String ville_four) {
+	public FournisseurDetail(int id_four, String raison_sociale, String adresse_four, int code_postal_four, String ville_four) {
 		super();
 		this.id_four = id_four;
 		this.raison_sociale = raison_sociale;

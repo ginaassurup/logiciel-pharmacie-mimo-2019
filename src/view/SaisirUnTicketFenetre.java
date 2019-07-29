@@ -13,7 +13,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -23,12 +22,9 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -44,9 +40,9 @@ import javax.swing.table.TableColumn;
 import dao.SQLiteCon;
 import model.LigneTicket;
 import model.LigneTicketTableModel;
-import model.ProductJoin;
-import model.ProductJoinTableModel;
-import model.ProductTableModel;
+import model.ProduitJoin;
+import model.ProduitJoinTableModel;
+import model.ProduitTableModel;
 import model.ProduitDetail;
 import model.Ticket;
 
@@ -67,13 +63,13 @@ public class SaisirUnTicketFenetre extends JFrame {
 	String currentProductSearch;
 
 	// current product search result
-	List<ProductJoin> currentListProductJoin;
+	List<ProduitJoin> currentListProductJoin;
 
 	// AddProduct Window declaration
 	AjouterUnProduitFenetre ajouterUnProduitFenetre;
 
 	// Categories Window declaration
-	CategoriesWindow categoriesWindow;
+	CategoriesFenetre categoriesFenetre;
 
 	// Units Window declaration
 	FournisseursFenetre fournisseursFenetre;
@@ -86,10 +82,9 @@ public class SaisirUnTicketFenetre extends JFrame {
 	JTable tableTicket;
 	private JPanel contentPane;
 	private JTextField montantField;
-	//private LigneTicket l = new LigneTicket();
 
 	/**
-	 * Launch the application.
+	 * Lancer l'application.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -108,7 +103,7 @@ public class SaisirUnTicketFenetre extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	@SuppressWarnings({ "unchecked", "rawtypes", "static-access" })
+	@SuppressWarnings({ "static-access" })
 	public SaisirUnTicketFenetre() {
 
 		// initialise connection
@@ -138,10 +133,7 @@ public class SaisirUnTicketFenetre extends JFrame {
 			private static final long serialVersionUID = 1L;
 
 			public void changeSelection(int rowIndex, int columnIndex, boolean toggle, boolean extend) {
-				// Always toggle on single selection
 				super.changeSelection(rowIndex, columnIndex, !extend, extend);
-				//conn.removeStockQuery(1, 3, quantity, prodStock, prodStockAlarm);
-				
 			}
 		};
 		tableTicket.setFillsViewportHeight(true);
@@ -150,12 +142,8 @@ public class SaisirUnTicketFenetre extends JFrame {
 		tableTicket.setRequestFocusEnabled(false);
 
 		tableTicket.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		
 
 		scrollPane.setViewportView(tableTicket);
-//		BasicComboPopup popup = (BasicComboPopup)child;
-//		JList list = popup.getList();
-//		list.setSelectionBackground(new Color(204, 204, 204));
 
 		// request focus
 		SwingUtilities.invokeLater(new Runnable() {
@@ -176,34 +164,6 @@ public class SaisirUnTicketFenetre extends JFrame {
 		lblProduits.setBounds(218, 57, 498, 25);
 		contentPane.add(lblProduits);
 
-		JMenuBar menuBar = new JMenuBar();
-		menuBar.setBounds(0, 0, 962, 30);
-		contentPane.add(menuBar);
-
-		JMenu menu = new JMenu("Param\u00E8tres");
-		menu.setMnemonic(KeyEvent.VK_F);
-		menu.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		menuBar.add(menu);
-
-		JMenuItem menuItem = new JMenuItem("Imprimer");
-		menu.add(menuItem);
-
-		JSeparator separator = new JSeparator();
-		menu.add(separator);
-
-		JMenuItem menuItem_1 = new JMenuItem("Fermer");
-		menuItem_1.setToolTipText("Exit application");
-		menuItem_1.setMnemonic(KeyEvent.VK_E);
-		menu.add(menuItem_1);
-
-		JMenu menu_1 = new JMenu("");
-		menu_1.setMnemonic(KeyEvent.VK_F);
-		menu_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		menuBar.add(menu_1);
-
-		JSeparator separator_1 = new JSeparator();
-		menu_1.add(separator_1);
-
 		JButton btnAddProduct = new JButton("Ajouter");
 		btnAddProduct.setBounds(39, 552, 97, 30);
 		contentPane.add(btnAddProduct);
@@ -211,7 +171,6 @@ public class SaisirUnTicketFenetre extends JFrame {
 		btnAddProduct.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				//conn.removeStockQuery(model.get, prodName, quantity, prodStock, prodStockAlarm);
 				addRow();
 			}
 		});
@@ -248,7 +207,7 @@ public class SaisirUnTicketFenetre extends JFrame {
 		label.setHorizontalAlignment(SwingConstants.LEFT);
 		label.setForeground(new Color(165, 42, 42));
 		label.setFont(new Font("Tahoma", Font.BOLD, 20));
-		label.setBounds(635, 559, 97, 25);
+		label.setBounds(529, 559, 97, 25);
 		contentPane.add(label);
 
 		montantField = new JTextField();
@@ -256,7 +215,7 @@ public class SaisirUnTicketFenetre extends JFrame {
 		montantField.setForeground(new Color(178, 34, 34));
 		montantField.setFont(new Font("Tahoma", Font.BOLD, 16));
 		montantField.setEditable(false);
-		montantField.setBounds(744, 552, 153, 39);
+		montantField.setBounds(638, 552, 153, 39);
 		contentPane.add(montantField);
 		montantField.setColumns(10);
 		montantField.setText(String.valueOf(t.getTotal()));
@@ -264,58 +223,61 @@ public class SaisirUnTicketFenetre extends JFrame {
 		JButton btnValider = new JButton("Valider");
 		btnValider.setForeground(new Color(165, 42, 42));
 		btnValider.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnValider.setBounds(744, 609, 153, 43);
+		btnValider.setBounds(805, 552, 130, 39);
 		contentPane.add(btnValider);
-		setLocationRelativeTo(null);
 		btnValider.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				validateTicket();
 				majMontantTicket();
 				dispose();
+				OuvrirMenuPrincipal();
 			}
 		});
 
 		initTicket();
+
+		JButton btnAnnuler = new JButton("Annuler");
+		btnAnnuler.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnAnnuler.setBounds(805, 604, 130, 30);
+		contentPane.add(btnAnnuler);
+		setLocationRelativeTo(null);
+		btnAnnuler.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+				OuvrirMenuPrincipal();
+			}
+		});
 	}
 
 	@SuppressWarnings({ "serial", "unchecked" })
 	private void initTicket() {
 
-//		//t.setName("Ticket No : " + t.getId_ticket());
-//		try {
-//		//	t = conn.createTicketQuery(t);
-//		} catch (SQLException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
-
 		LigneTicketTableModel model = new LigneTicketTableModel(t.getLignes());
 		model.addRow(new LigneTicket(t.getId_ticket(), ""));
-		
 
 		tableTicket.setModel(model);
 		tableTicket.getModel().addTableModelListener(new TableModelListener() {
-			
+
 			@Override
 			public void tableChanged(TableModelEvent e) {
-				if(TableModelEvent.UPDATE == e.getType() && (e.getColumn() == 5 || e.getColumn() == 1))
-				{
+				if (TableModelEvent.UPDATE == e.getType() && (e.getColumn() == 5 || e.getColumn() == 1)) {
 					montantField.setText(String.valueOf(t.getTotal()));
 				}
-				
+
 			}
 		});
 
 		TableColumn codeBarreColumn = tableTicket.getColumnModel().getColumn(1);
 
-		List<ProductJoin> productsJoin = null;
+		List<ProduitJoin> productsJoin = null;
 		try {
 			productsJoin = conn.getProductsJoin();
+			hideLibelleProduit();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		JComboBox<ProductJoin> comboBox = new JComboBox<>();
+		JComboBox<ProduitJoin> comboBox = new JComboBox<>();
 		comboBox.setRenderer(new BasicComboBoxRenderer() {
 			@SuppressWarnings("rawtypes")
 			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected,
@@ -323,17 +285,17 @@ public class SaisirUnTicketFenetre extends JFrame {
 				super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
 				if (value != null) {
-					ProductJoin item = (ProductJoin) value;
+					ProduitJoin item = (ProduitJoin) value;
 					setText(item.getLibelle_produit().toUpperCase());
 				}
 
 				if (index == -1) {
-					ProductJoin item = (ProductJoin) value;
+					ProduitJoin item = (ProduitJoin) value;
 					if (item != null) {
 						setText("" + item.getLibelle_produit());
 					} else {
 						setText("");
-					}	
+					}
 				}
 
 				return this;
@@ -346,18 +308,17 @@ public class SaisirUnTicketFenetre extends JFrame {
 				}
 			}
 		});
-		for (ProductJoin pj : productsJoin) {
+		for (ProduitJoin pj : productsJoin) {
 			comboBox.addItem(pj);
 		}
 
 		codeBarreColumn.setCellEditor(new DefaultCellEditor(comboBox));
 	}
 
-	// Mettre � jour le montant du ticket apr�s avoir valid�
+	// Mettre à jour le montant du ticket après avoir valid�
 	private void majMontantTicket() {
 
 		try {
-
 			float montant_ticket = t.getTotal();
 			int id_ticket = t.getId_ticket();
 			String libelle = "Ticket No: " + t.getId_ticket();
@@ -396,13 +357,18 @@ public class SaisirUnTicketFenetre extends JFrame {
 	// add product
 	private void addRow() {
 		System.out.println("Add Row");
-		
+		for (LigneTicket ligne : t.getLignes()) {
+			if (ligne.getQtte_vendu() > ligne.getProduct().getQtte_stock()) {
+				JOptionPane.showMessageDialog(null, "Le stock actuel du produit \""
+						+ ligne.getProduct().getLibelle_produit() + "\" n'est pas suffisant pour la vente. "
+						+ "Veuillez saisir une quantité inférieure à " + ligne.getProduct().getQtte_stock() + ".");
+				System.out.println("Libelle: " + ligne.getProduct().getLibelle_produit());
+				System.out.println("Qté stock: " + ligne.getProduct().getQtte_stock());
+			}
+		}
 		((LigneTicketTableModel) tableTicket.getModel()).addRow(new LigneTicket(t.getId_ticket(), ""));
 		montantField.setText(String.valueOf(t.getTotal()));
-		
-		//conn.removeStockQuery(, prodName, quantity, prodStock, prodStockAlarm);
-		// refreshTable();
-//		refreshComboBox();
+
 	}
 
 	private void validateTicket() {
@@ -423,8 +389,6 @@ public class SaisirUnTicketFenetre extends JFrame {
 
 		((LigneTicketTableModel) tableTicket.getModel()).removeRow();
 
-		// refreshTable();
-//		refreshComboBox();
 	}
 
 	/*
@@ -453,11 +417,10 @@ public class SaisirUnTicketFenetre extends JFrame {
 			e.printStackTrace();
 		}
 
-		ProductJoinTableModel model = new ProductJoinTableModel(currentListProductJoin);
+		ProduitJoinTableModel model = new ProduitJoinTableModel(currentListProductJoin);
 
 		tableTicket.setModel(model);
 		allignColumn();
-//		colourIfStockAlarm();
 	}
 
 	// //////////////////////
@@ -473,11 +436,21 @@ public class SaisirUnTicketFenetre extends JFrame {
 
 			produitDetails = conn.getTousProduits();
 
-			ProductTableModel model = new ProductTableModel(produitDetails);
+			ProduitTableModel model = new ProduitTableModel(produitDetails);
 			tableTicket.setModel(model);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	// hides Libellé Produit
+	private void hideLibelleProduit() {
+
+		TableColumn productIdColumn = tableTicket.getColumnModel().getColumn(3);
+		productIdColumn.setMaxWidth(0);
+		productIdColumn.setMinWidth(0);
+		productIdColumn.setPreferredWidth(0);
+
 	}
 }

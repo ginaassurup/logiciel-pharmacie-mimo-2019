@@ -47,7 +47,7 @@ public class ModifierUnPharFenetre extends JDialog {
 	String mdpActuel;
 
 	/**
-	 * Launch the application.
+	 * Lancer l'application.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -185,7 +185,7 @@ public class ModifierUnPharFenetre extends JDialog {
 		pharmaciensFenetre.setVisible(true);
 	}
 
-	// Mettre à jour le profil du pharmacien
+	// Mettre Ã  jour le profil du pharmacien
 	private void majPhar() {
 
 		if (!emptyFields()) {

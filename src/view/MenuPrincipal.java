@@ -3,35 +3,31 @@ package view;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import java.awt.Color;
 import java.awt.Dimension;
-import javax.swing.border.EmptyBorder;
 
 import dao.SQLiteCon;
 
 import javax.swing.JLabel;
 import java.awt.SystemColor;
 import java.awt.Font;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import java.awt.event.KeyEvent;
-import javax.swing.JMenuItem;
-import javax.swing.JSeparator;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class MenuPrincipal extends JFrame{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JFrame frmMenuPrincipal;
 	// database class declaration
 	SQLiteCon conn;
 
 	/**
-	 * Launch the application.
+	 * Lancer l'application.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -50,7 +46,7 @@ public class MenuPrincipal extends JFrame{
 	 * Create the application.
 	 */
 	public MenuPrincipal() {
-		conn = new SQLiteCon();
+//		conn = new SQLiteCon();
 		initialize();
 	}
 
@@ -71,6 +67,7 @@ public class MenuPrincipal extends JFrame{
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	@SuppressWarnings({ "static-access" })
 	private void initialize() {
 		setFrmMenuPrincipal(new JFrame());
 		getFrmMenuPrincipal().setResizable(false);
@@ -82,7 +79,7 @@ public class MenuPrincipal extends JFrame{
 		lblMenuPrincipal.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMenuPrincipal.setForeground(new Color(165, 42, 42));
 		lblMenuPrincipal.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblMenuPrincipal.setBounds(231, 43, 498, 25);
+		lblMenuPrincipal.setBounds(233, 89, 498, 25);
 		getFrmMenuPrincipal().getContentPane().add(lblMenuPrincipal);
 		
 		JButton button_1 = new JButton("Saisir un ticket");
@@ -90,7 +87,7 @@ public class MenuPrincipal extends JFrame{
 		button_1.setPreferredSize(new Dimension(260, 60));
 		button_1.setForeground(Color.BLACK);
 		button_1.setBackground(Color.WHITE);
-		button_1.setBounds(345, 148, 260, 40);
+		button_1.setBounds(147, 192, 260, 40);
 		getFrmMenuPrincipal().getContentPane().add(button_1);
 		
 		button_1.addActionListener(new ActionListener() {
@@ -111,7 +108,7 @@ public class MenuPrincipal extends JFrame{
 		btnInfoProduit.setPreferredSize(new Dimension(260, 60));
 		btnInfoProduit.setForeground(Color.BLACK);
 		btnInfoProduit.setBackground(Color.WHITE);
-		btnInfoProduit.setBounds(345, 237, 260, 40);
+		btnInfoProduit.setBounds(350, 281, 260, 40);
 		getFrmMenuPrincipal().getContentPane().add(btnInfoProduit);
 		if (conn.currentUser.equalsIgnoreCase("admin")) {
 			btnInfoProduit.setEnabled(true);
@@ -136,7 +133,7 @@ public class MenuPrincipal extends JFrame{
 		buttonStockDispo.setPreferredSize(new Dimension(260, 60));
 		buttonStockDispo.setForeground(Color.BLACK);
 		buttonStockDispo.setBackground(Color.WHITE);
-		buttonStockDispo.setBounds(345, 327, 260, 40);
+		buttonStockDispo.setBounds(554, 192, 260, 40);
 		getFrmMenuPrincipal().getContentPane().add(buttonStockDispo);
 		buttonStockDispo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -149,42 +146,6 @@ public class MenuPrincipal extends JFrame{
 				stockWindow.setVisible(true);
 				}
 			});
-		
-		JMenuBar menuBar = new JMenuBar();
-		menuBar.setBounds(0, 0, 962, 30);
-		getFrmMenuPrincipal().getContentPane().add(menuBar);
-		
-		JMenu mnParamtres = new JMenu("Param\u00E8tres");
-		mnParamtres.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		mnParamtres.setMnemonic(KeyEvent.VK_F);
-		menuBar.add(mnParamtres);
-		
-		JMenuItem mntmImprimer = new JMenuItem("Imprimer");
-		mnParamtres.add(mntmImprimer);
-		
-		JSeparator separator = new JSeparator();
-		mnParamtres.add(separator);
-		
-		JMenuItem mntmSeDconnecter = new JMenuItem("Fermer");
-		mntmSeDconnecter.setToolTipText("Exit application");
-		mntmSeDconnecter.setMnemonic(KeyEvent.VK_E);
-		mnParamtres.add(mntmSeDconnecter);
-		
-		JMenu mnSeDconnecter = new JMenu("");
-		mnSeDconnecter.setMnemonic(KeyEvent.VK_F);
-		mnSeDconnecter.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		menuBar.add(mnSeDconnecter);
-		
-		JSeparator separator_1 = new JSeparator();
-		mnSeDconnecter.add(separator_1);
-		
-		JButton btnCommande = new JButton("Commandes");
-		btnCommande.setPreferredSize(new Dimension(260, 60));
-		btnCommande.setForeground(Color.BLACK);
-		btnCommande.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnCommande.setBackground(Color.WHITE);
-		btnCommande.setBounds(33, 327, 260, 40);
-		getFrmMenuPrincipal().getContentPane().add(btnCommande);
 		
 		JButton btnFournisseur = new JButton("Fournisseurs");
 		// Si c'est l'admin, activer le boutton settings
@@ -210,12 +171,12 @@ public class MenuPrincipal extends JFrame{
 		btnFournisseur.setForeground(Color.BLACK);
 		btnFournisseur.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnFournisseur.setBackground(Color.WHITE);
-		btnFournisseur.setBounds(33, 237, 260, 40);
+		btnFournisseur.setBounds(45, 281, 260, 40);
 		getFrmMenuPrincipal().getContentPane().add(btnFournisseur);
 		
 		JButton btnPharmaciens = new JButton("Pharmaciens");
 		
-		// Si c'est l'admin, activer le boutton settings
+		// Si c'est l'admin, activer le bouton Pharmaciens
 		if (conn.currentUser.equalsIgnoreCase("admin")) {
 			btnPharmaciens.setEnabled(true);
 		} else {
@@ -237,16 +198,8 @@ public class MenuPrincipal extends JFrame{
 		btnPharmaciens.setForeground(Color.BLACK);
 		btnPharmaciens.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnPharmaciens.setBackground(Color.WHITE);
-		btnPharmaciens.setBounds(667, 237, 260, 40);
+		btnPharmaciens.setBounds(655, 281, 260, 40);
 		getFrmMenuPrincipal().getContentPane().add(btnPharmaciens);
-		
-		JButton btnStatistiques = new JButton("Statistiques");
-		btnStatistiques.setPreferredSize(new Dimension(260, 60));
-		btnStatistiques.setForeground(Color.BLACK);
-		btnStatistiques.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnStatistiques.setBackground(Color.WHITE);
-		btnStatistiques.setBounds(667, 327, 260, 40);
-		getFrmMenuPrincipal().getContentPane().add(btnStatistiques);
 		
 		JButton btnSeDconnecter = new JButton("Se d\u00E9connecter");
 		btnSeDconnecter.addActionListener(new ActionListener() {

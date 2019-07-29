@@ -4,7 +4,7 @@
 
 package model;
 
-public class ProductJoin {
+public class ProduitJoin {
 	private int num_prod;
 	private int code_barre;
 	private String libelle_produit;
@@ -16,7 +16,7 @@ public class ProductJoin {
 	private float prix_achat;
 	private String raison_sociale;
 	
-	public ProductJoin(int num_prod, int code_barre, String libelle_produit, String nom_cat, String forme, int qtte_stock, int qtte_stock_alarme,
+	public ProduitJoin(int num_prod, int code_barre, String libelle_produit, String nom_cat, String forme, int qtte_stock, int qtte_stock_alarme,
 			float prix_vente, float prix_achat, String raison_sociale) {
 		super();
 		this.num_prod = num_prod;

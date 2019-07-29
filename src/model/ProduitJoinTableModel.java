@@ -8,7 +8,7 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-public class ProductJoinTableModel extends AbstractTableModel {
+public class ProduitJoinTableModel extends AbstractTableModel {
 
 	/**
 	 * 
@@ -26,12 +26,12 @@ public class ProductJoinTableModel extends AbstractTableModel {
 	private static final int RAISON_SOCIALE_COL =9;
 
 
-	private String[] columnNames = { "Num Produit","Code barre","Libellé", "Catégorie", "Forme",
+	private String[] columnNames = { "Num Produit","Code barre","LibellÃ©", "CatÃ©gorie", "Forme",
 			"Stock", "Alarme", "Prix de vente",  "Prix d'achat", "Fournisseur"};
 	
-	private List<ProductJoin> productsJoin;
+	private List<ProduitJoin> productsJoin;
 
-	public ProductJoinTableModel(List<ProductJoin> theProductsJoin) {
+	public ProduitJoinTableModel(List<ProduitJoin> theProductsJoin) {
 		productsJoin = theProductsJoin;
 	} 
 	
@@ -53,7 +53,7 @@ public class ProductJoinTableModel extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int row, int col) {
 
-		ProductJoin tempProductJoin = productsJoin.get(row);
+		ProduitJoin tempProductJoin = productsJoin.get(row);
 
 		switch (col) {
 		

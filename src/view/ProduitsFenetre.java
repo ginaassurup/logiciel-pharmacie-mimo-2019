@@ -8,11 +8,7 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.text.DateFormat;
-import java.text.MessageFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -20,7 +16,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicComboPopup;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableColumn;
 
 import dao.SQLiteCon;
 
@@ -45,9 +40,9 @@ import java.awt.event.ItemEvent;
 import model.Categorie;
 import model.MyRenderer;
 import model.ProduitDetail;
-import model.ProductJoin;
-import model.ProductJoinTableModel;
-import model.ProductTableModel;
+import model.ProduitJoin;
+import model.ProduitJoinTableModel;
+import model.ProduitTableModel;
 
 import java.awt.event.KeyAdapter;
 import java.awt.Font;
@@ -62,7 +57,7 @@ import javax.swing.JSeparator;
 public class ProduitsFenetre extends JFrame {
 
 	/**
-	 * 
+	 * Déclaration des variables
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -76,7 +71,7 @@ public class ProduitsFenetre extends JFrame {
 	String currentProductSearch;
 
 	// current product search result
-	List<ProductJoin> currentListProductJoin;
+	List<ProduitJoin> currentListProductJoin;
 
 	// AddProduct Window declaration
 	AjouterUnProduitFenetre ajouterUnProduitFenetre;
@@ -85,7 +80,7 @@ public class ProduitsFenetre extends JFrame {
 	ModifierUnProduitFenetre modifierUnProduitFenetre;
 
 	// Categories Window declaration
-	CategoriesWindow categoriesWindow;
+	CategoriesFenetre categoriesFenetre;
 
 	// Units Window declaration
 	FournisseursFenetre fournisseursFenetre;
@@ -102,7 +97,7 @@ public class ProduitsFenetre extends JFrame {
 	private JPanel contentPane;
 
 	/**
-	 * Launch the application.
+	 * Lancer l'application.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -369,10 +364,23 @@ public class ProduitsFenetre extends JFrame {
 		lblFiltrerParCatgorie.setForeground(Color.BLACK);
 		lblFiltrerParCatgorie.setBounds(39, 123, 125, 25);
 		contentPane.add(lblFiltrerParCatgorie);
+		
+		JButton btnNouvelleCat = new JButton("Nouvelle catégorie");
+		btnNouvelleCat.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnNouvelleCat.setFocusPainted(false);
+		btnNouvelleCat.setBackground(new Color(204, 204, 204));
+		btnNouvelleCat.setBounds(299, 120, 143, 30);
+		contentPane.add(btnNouvelleCat);
 		setLocationRelativeTo(null);
-
+		btnNouvelleCat.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				openCategories();		
+			}
+		});
+		
 		getProductsJoin();
-		// refreshTable();
 	}
 
 	// Ouvrir le menu principal
@@ -380,6 +388,13 @@ public class ProduitsFenetre extends JFrame {
 		
 		MenuPrincipal menuPrincipal = new MenuPrincipal();
 		menuPrincipal.getFrmMenuPrincipal().setVisible(true);
+	}
+	
+	// Ouvrir CategoriesFenetre
+	private void openCategories() {
+
+		CategoriesFenetre categoriesFenetre = new CategoriesFenetre();
+		categoriesFenetre.setVisible(true);
 	}
 	
 
@@ -391,31 +406,18 @@ public class ProduitsFenetre extends JFrame {
 	private void getProductsJoin() {
 
 		try {
-			List<ProductJoin> productsJoin = null;
+			List<ProduitJoin> productsJoin = null;
 			productsJoin = conn.getProductsJoin();
-			ProductJoinTableModel model = new ProductJoinTableModel(
+			ProduitJoinTableModel model = new ProduitJoinTableModel(
 					productsJoin);
 			tableProduit.setModel(model);
 			
-//			hideProductIdColumn();
 			allignColumn();
 			couleurSiStockAlarme();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	// hides product id column
-	private void hideProductIdColumn() {
-
-		TableColumn productIdColumn = tableProduit.getColumnModel()
-				.getColumn(0);
-		// tableCategories.getColumnModel().removeColumn(myTableColumn0);
-		productIdColumn.setMaxWidth(0);
-		productIdColumn.setMinWidth(0);
-		productIdColumn.setPreferredWidth(0);
-
 	}
 
 	// allignment
@@ -482,7 +484,7 @@ public class ProduitsFenetre extends JFrame {
 		try {
 			String produit = textFieldRechercher.getText();
 			currentProductSearch = produit;
-			List<ProductJoin> productsJoin = null;
+			List<ProduitJoin> productsJoin = null;
 
 			if (produit != null && produit.trim().length() > 0) {
 				productsJoin = conn.searchProductsJoinCat(produit, firstCatStr);
@@ -490,11 +492,11 @@ public class ProduitsFenetre extends JFrame {
 				productsJoin = conn.searchProductsJoinCat("", firstCatStr);
 			}
 
-			for (ProductJoin temp : productsJoin) {
+			for (ProduitJoin temp : productsJoin) {
 				System.out.println(temp);
 			}
 
-			ProductJoinTableModel model = new ProductJoinTableModel(
+			ProduitJoinTableModel model = new ProduitJoinTableModel(
 					productsJoin);
 
 			tableProduit.setModel(model);
@@ -525,7 +527,7 @@ public class ProduitsFenetre extends JFrame {
 
 				System.out.println(firstCatStr);
 
-				List<ProductJoin> productsJoin = null;
+				List<ProduitJoin> productsJoin = null;
 
 				if (firstCatStr.equalsIgnoreCase("Toutes")) {
 					productsJoin = conn.getProductsJoin();
@@ -533,11 +535,11 @@ public class ProduitsFenetre extends JFrame {
 					productsJoin = conn.filterProductsByCat(firstCatStr);
 				}
 
-				for (ProductJoin temp : productsJoin) {
+				for (ProduitJoin temp : productsJoin) {
 					System.out.println(temp);
 				}
 
-				ProductJoinTableModel model = new ProductJoinTableModel(
+				ProduitJoinTableModel model = new ProduitJoinTableModel(
 						productsJoin);
 				tableProduit.setModel(model);
 				allignColumn();
@@ -727,7 +729,7 @@ public class ProduitsFenetre extends JFrame {
 			if (reply == JOptionPane.YES_OPTION) {
 
 				try {
-					conn.removeProductQuery(num_prod, code_barre);
+					conn.supprimerUnProduitQuery(num_prod, code_barre);
 
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -843,7 +845,7 @@ public class ProduitsFenetre extends JFrame {
 			e.printStackTrace();
 		}
 
-		ProductJoinTableModel model = new ProductJoinTableModel(currentListProductJoin);
+		ProduitJoinTableModel model = new ProduitJoinTableModel(currentListProductJoin);
 
 		tableProduit.setModel(model);
 		allignColumn();
@@ -860,7 +862,7 @@ public class ProduitsFenetre extends JFrame {
 
 			produitDetails = conn.getTousProduits();
 
-			ProductTableModel model = new ProductTableModel(produitDetails);
+			ProduitTableModel model = new ProduitTableModel(produitDetails);
 			tableProduit.setModel(model);
 
 		} catch (Exception e) {

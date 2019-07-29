@@ -4,7 +4,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
 import model.LigneTicketTableModel;
-import model.ProductJoin;
+import model.ProduitJoin;
 
 public class TicketTableModelListener implements TableModelListener {
 
@@ -15,8 +15,7 @@ public class TicketTableModelListener implements TableModelListener {
 		if(TableModelEvent.UPDATE == e.getType() && e.getColumn() == 1)
 		{
 			LigneTicketTableModel model = (LigneTicketTableModel) e.getSource();
-			ProductJoin p = (ProductJoin) model.getValueAt(e.getFirstRow(), e.getColumn());
-			//model.setValueAt(p.getLibelle_produit(), e.getFirstRow(), 2);
+			ProduitJoin p = (ProduitJoin) model.getValueAt(e.getFirstRow(), e.getColumn());
 		}
 
 	}

@@ -8,7 +8,7 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-public class ProductTableModel extends AbstractTableModel {
+public class ProduitTableModel extends AbstractTableModel {
 
 	/**
 	 * 
@@ -24,7 +24,7 @@ public class ProductTableModel extends AbstractTableModel {
 	
 	private List<ProduitDetail> produitDetails;
 
-	public ProductTableModel(List<ProduitDetail> theProducts) {
+	public ProduitTableModel(List<ProduitDetail> theProducts) {
 		produitDetails = theProducts;
 	} 
 	

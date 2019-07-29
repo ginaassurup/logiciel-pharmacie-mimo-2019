@@ -1,5 +1,5 @@
 /*
- * Unit table model for join Query
+ * FournisseurDetail table model for join Query
  */
 
 package model;
@@ -8,7 +8,7 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-public class UnitTableModel extends AbstractTableModel {
+public class ListeFournisseurs extends AbstractTableModel {
 		
 	/**
 	 * 
@@ -21,12 +21,12 @@ public class UnitTableModel extends AbstractTableModel {
 	private static final int CODE_POSTAL_FOUR_COL = 3;
 	private static final int VILLE_FOUR_COL = 4;
 
-	private String[] columnNames = {"Numéro", "Raison sociale", "Adresse", "Code postale", "Ville"};
+	private String[] columnNames = {"NumÃ©ro", "Raison sociale", "Adresse", "Code postale", "Ville"};
 	
-	private List<Unit> units;
+	private List<FournisseurDetail> fournisseurDetails;
 
-	public UnitTableModel(List<Unit> theUnits) {
-		units = theUnits;
+	public ListeFournisseurs(List<FournisseurDetail> theUnits) {
+		fournisseurDetails = theUnits;
 	} 
 	
 	@Override
@@ -36,7 +36,7 @@ public class UnitTableModel extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
-		return units.size(); 
+		return fournisseurDetails.size(); 
 	}
 	
 	@Override
@@ -47,7 +47,7 @@ public class UnitTableModel extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int row, int col) {
 
-		Unit tempUnit = units.get(row);
+		FournisseurDetail tempUnit = fournisseurDetails.get(row);
 
 		switch (col) {
 		case UNIT_ID_COL:

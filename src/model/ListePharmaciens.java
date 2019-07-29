@@ -21,8 +21,8 @@ public class ListePharmaciens extends AbstractTableModel {
 	private static final int USER_FIRSTNAME_COL = 3;
 	private static final int USER_SURNAME_COL = 4;
 
-	private String[] columnNames = { "numéro", "Identifiant", "Mot de passe",
-			"Prénom", "Nom" };
+	private String[] columnNames = { "NumÃ©ro", "Identifiant", "Mot de passe",
+			"PrÃ©nom", "Nom" };
 
 	private List<PharmacienDetail> users;
 
