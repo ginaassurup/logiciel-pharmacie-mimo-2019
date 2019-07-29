@@ -908,7 +908,7 @@ public class SQLiteCon {
 //							+ "WHERE Id = ?");
 
 			myStmt = myConn.prepareStatement(
-					"UPDATE ProduitDetail SET code_barre=?, libelle_produit = ?, id_cat = ?, forme = ?, qtte_stock = ?, id_four = ?, qtte_stock_alarme = ?, prix_vente = ?"
+					"UPDATE ProduitDetail SET code_barre=?, libelle_produit = ?, id_cat = ?, forme = ?, qtte_stock = ?, id_four = ?, qtte_stock_alarme = ?, prix_vente = ?, prix_achat = ?"
 							+ "WHERE num_prod = ?");
 
 			myStmt.setString(1, code_barre);
