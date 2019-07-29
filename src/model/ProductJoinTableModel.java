@@ -26,7 +26,7 @@ public class ProductJoinTableModel extends AbstractTableModel {
 	private static final int RAISON_SOCIALE_COL =9;
 
 
-	private String[] columnNames = { "Num Produit","Code barre","Libellé", "Catégorie", "Forme",
+	private String[] columnNames = { "Num Produit","Code barre","LibellÃ©", "CatÃ©gorie", "Forme",
 			"Stock", "Alarme", "Prix de vente",  "Prix d'achat", "Fournisseur"};
 	
 	private List<ProductJoin> productsJoin;

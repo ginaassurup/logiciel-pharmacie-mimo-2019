@@ -66,7 +66,7 @@ public class AjouterUnProduitFenetre extends JDialog {
 	private JTextField textFieldCodeBarre;
 
 	/**
-	 * Launch the application.
+	 * Lancer l'application.
 	 */
 	public static void main(String[] args) {
 		try {
@@ -132,7 +132,7 @@ public class AjouterUnProduitFenetre extends JDialog {
 		lblName.setBounds(195, 177, 113, 30);
 		contentPanel.add(lblName);
 
-		JLabel lblCategory = new JLabel("Catégorie");
+		JLabel lblCategory = new JLabel("CatÃ©gorie");
 		lblCategory.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblCategory.setForeground(Color.BLACK);
 		lblCategory.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -482,8 +482,8 @@ public class AjouterUnProduitFenetre extends JDialog {
 	// opens Categories window
 	private void openCategories() {
 
-		CategoriesWindow categoriesWindow = new CategoriesWindow();
-		categoriesWindow.setVisible(true);
+		CategoriesFenetre categoriesFenetre = new CategoriesFenetre();
+		categoriesFenetre.setVisible(true);
 
 		// refreshes combobox after change
 		SwingUtilities.invokeLater(new Runnable() {
@@ -494,7 +494,7 @@ public class AjouterUnProduitFenetre extends JDialog {
 				DefaultComboBoxModel model = new DefaultComboBoxModel(
 						getCategoriesToCombo());
 				comboBoxCategory.setModel(model);
-				comboBoxCategory.setSelectedItem(categoriesWindow.newCategory);
+				comboBoxCategory.setSelectedItem(categoriesFenetre.newCategorie);
 			}
 		});
 

@@ -32,7 +32,7 @@ public class ConnexionFenetre {
 	JFrame frmConnexion;
 
 	/**
-	 * Launch the application.
+	 * Lancer l'application.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -55,7 +55,7 @@ public class ConnexionFenetre {
 
 		initialize();
 		
-		// connect to database
+		// Connexion à la base de données
 		conn = new SQLiteCon();
 	}
 

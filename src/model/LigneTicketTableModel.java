@@ -7,7 +7,6 @@ package model;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableModel;
 
 public class LigneTicketTableModel extends AbstractTableModel {
 
@@ -23,7 +22,7 @@ public class LigneTicketTableModel extends AbstractTableModel {
 	private static final int MONTANT_COL = 6;
 	private static final int PRODUCT_COL = 1;
 
-	private String[] columnNames = { "Num�ro", "Produit", "Code barre", "Libell�", "Prix de vente", "Quantit�",
+	private String[] columnNames = { "Numéro", "Produit", "Code barre", "Libellé", "Prix de vente", "Quantité",
 			"Montant" };
 
 	private List<LigneTicket> ligneTicket;

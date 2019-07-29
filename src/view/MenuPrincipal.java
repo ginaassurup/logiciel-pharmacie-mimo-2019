@@ -31,7 +31,7 @@ public class MenuPrincipal extends JFrame{
 	SQLiteCon conn;
 
 	/**
-	 * Launch the application.
+	 * Lancer l'application.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -216,11 +216,11 @@ public class MenuPrincipal extends JFrame{
 		JButton btnPharmaciens = new JButton("Pharmaciens");
 		
 		// Si c'est l'admin, activer le boutton settings
-		if (conn.currentUser.equalsIgnoreCase("admin")) {
-			btnPharmaciens.setEnabled(true);
-		} else {
-			btnPharmaciens.setEnabled(false);
-		}
+//		if (conn.currentUser.equalsIgnoreCase("admin")) {
+//			btnPharmaciens.setEnabled(true);
+//		} else {
+//			btnPharmaciens.setEnabled(false);
+//		}
 		btnPharmaciens.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				frmMenuPrincipal.dispose();

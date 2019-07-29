@@ -246,7 +246,7 @@ public class SQLiteCon {
 		}
 	}
 
-	// Mettre � jour le profil d'un pharmacien query
+	// Mettre à jour le profil d'un pharmacien query
 	public void majPharQuery(String num_phar, String identifiant, String mdp, String prenom_phar, String nom_phar)
 			throws Exception {
 
@@ -375,7 +375,7 @@ public class SQLiteCon {
 		}
 	}
 
-	// Supprimer une cat�gorie
+	// Supprimer une catégorie
 	public void removeCategoryQuery(String id_cat, String nom_cat) throws Exception {
 
 		PreparedStatement myStmt = null;
@@ -546,7 +546,7 @@ public class SQLiteCon {
 			myStmt.execute();
 			// JOptionPane.showMessageDialog(null, "Categorie removed");
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Ce fournisseur est attach� � un produit. Impossible de le supprimer !");
+			JOptionPane.showMessageDialog(null, "Ce fournisseur est attaché à un produit. Impossible de le supprimer !");
 		} finally {
 			close(myStmt, null);
 
@@ -713,7 +713,7 @@ public class SQLiteCon {
 		}
 	}
 	
-	// Cr�er un Ticket query	
+	// Créer un Ticket query	
 	public Ticket createTicketQuery(Ticket t) throws SQLException {
 		
 		try {
@@ -742,7 +742,7 @@ public class SQLiteCon {
 		}
 	}
 	
-	//	Mettre � jour le montant d'un ticket
+	//	Mettre à jour le montant d'un ticket
 	public void majMontantTicketQuery(int id_ticket, String libelle, float montant_ticket)
 			throws Exception {
 
@@ -764,7 +764,7 @@ public class SQLiteCon {
 		}
 	}
 	
-	//	Cr�er une Ligne de ticket query
+	//	Créer une Ligne de ticket query
 	public void createTicketLigneQuery(Ticket t) throws SQLException {
 		
 		myStmt = myConn.prepareStatement(

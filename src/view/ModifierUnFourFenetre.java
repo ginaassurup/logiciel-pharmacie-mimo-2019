@@ -47,7 +47,7 @@ public class ModifierUnFourFenetre extends JDialog {
 	
 
 	/**
-	 * Launch the application.
+	 * Lancer l'application.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -177,7 +177,7 @@ public class ModifierUnFourFenetre extends JDialog {
 		fournisseursFenetre.setVisible(true);
 	}
 
-	// Mettre à jour le profil du pharmacien
+	// Mettre Ã  jour le profil du pharmacien
 	private void majFour() {
 
 		if (!emptyFields()) {
@@ -194,7 +194,7 @@ public class ModifierUnFourFenetre extends JDialog {
 			try {
 				conn.majFourQuery(id_four, raison_sociale, adresse_four, code_postal_four, ville_four);
 				System.out.println("updated");
-				System.out.println("Id_four mise à jour: "+id_four);
+				System.out.println("Id_four mise Ã  jour: "+id_four);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

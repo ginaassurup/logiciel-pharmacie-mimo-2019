@@ -33,7 +33,7 @@ public class AboutWindow extends JDialog {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Launch the application.
+	 * Lancer l'application.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

@@ -87,7 +87,7 @@ public class StockDispoFenetre extends JFrame {
 	ModifierUnProduitFenetre modifierUnProduitFenetre;
 
 	// Categories Window declaration
-	CategoriesWindow categoriesWindow;
+	CategoriesFenetre categoriesFenetre;
 
 	// Units Window declaration
 	FournisseursFenetre fournisseursFenetre;
@@ -102,7 +102,7 @@ public class StockDispoFenetre extends JFrame {
 	private JPanel contentPane;
 
 	/**
-	 * Launch the application.
+	 * Lancer l'application.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

@@ -41,7 +41,7 @@ public class FournisseursFenetre extends JDialog {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	// database connection declaration
+	// D√©claration la base de donn√©es
 	SQLiteCon conn;
 
 	List<Unit> listeFour;
@@ -52,7 +52,7 @@ public class FournisseursFenetre extends JDialog {
 	String newUnit = "";
 
 	/**
-	 * Launch the application.
+	 * Lancer l'application.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -76,7 +76,7 @@ public class FournisseursFenetre extends JDialog {
 	public FournisseursFenetre() {
 		getContentPane().setFocusTraversalKeysEnabled(false);
 
-		// connect to database
+		// Connexion √† la base de donn√©es
 		conn = new SQLiteCon();
 
 		setTitle("Liste des fournisseurs | Utilisateur : " + conn.currentUser);
@@ -302,10 +302,10 @@ public class FournisseursFenetre extends JDialog {
 			}
 
 		} else {
-			System.out.println("Aucune ligne est sÈlectionnÈe");
+			System.out.println("Aucune ligne est s√©lectionn√©e");
 			JOptionPane
 					.showMessageDialog(null,
-							"Veuillez sÈlectionner un fournisseur ‡ supprimer");
+							"Veuillez s√©lectionner un fournisseur √† supprimer");
 		}
 	}
 
@@ -342,56 +342,11 @@ public class FournisseursFenetre extends JDialog {
 			while (modifierUnFourFenetre.isVisible()) {
 
 			}
-			// Mise ‡ jour la vue
+			// Mise √† jour la vue
 			getListeFourToTable();
 		} else {
 			JOptionPane.showMessageDialog(null,
-					"Veuillez sÈlectionner un fournisseur ‡ modifier !");
+					"Veuillez s√©lectionner un fournisseur √† modifier !");
 		}
 	}
-//			String id = tableListeFour.getValueAt(selectedRow, idCol)
-//					.toString();
-//			String currentUnit = tableListeFour.getValueAt(selectedRow,
-//					nameCol).toString();
-
-//			newUnit = JOptionPane.showInputDialog(
-//					"Please enter new name of this unit.", currentUnit);
-//			// if not empty
-//			if (!newUnit.equalsIgnoreCase("")) {
-//
-//				// check if exists
-//				boolean unitExists = false;
-//				for (int i = 0; i < listeFour.size(); i++) {
-//					if (listeFour.get(i).getRaison_sociale()
-//							.equalsIgnoreCase(newUnit)) {
-//						unitExists = true;
-//						break;
-//					}
-//				}
-//
-//				// if doesn't exist
-//				if (!unitExists
-//						|| (newUnit.equalsIgnoreCase(currentUnit))) {
-//					try {
-//						conn.majFourQuery(currentUnit, newUnit,
-//								id);
-//					} catch (Exception e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//					getUnitsToTable();
-//				} else {
-//					JOptionPane.showMessageDialog(null,
-//							"This unit already exists.");
-//				}
-//
-//			} else {
-//				JOptionPane.showMessageDialog(null,
-//						"Name of unit can't be empty.");
-//			}
-//
-//		} else {
-//			JOptionPane.showMessageDialog(null, "Please select unit first.");
-//		}
-//	}
 }

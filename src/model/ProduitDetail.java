@@ -26,7 +26,7 @@ public class ProduitDetail {
 		this.prix_achat = prix_achat;
 	}
 	
-	
+	// Getters et setters
 	public int getNum_prod() {
 		return num_prod;
 	}

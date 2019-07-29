@@ -1,5 +1,5 @@
 /*
- * Fenetre Liste des Pharmaciens
+ * Liste des Pharmaciens Fenetre
  */
 package view;
 
@@ -24,7 +24,6 @@ import model.PharmacienDetail;
 import model.ListePharmaciens;
 
 import javax.swing.JScrollPane;
-import javax.swing.table.TableColumn;
 
 import dao.SQLiteCon;
 
@@ -40,7 +39,7 @@ public class PharmaciensFenetre extends JDialog {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	// database connection declaration
+	// D√©claration la base de donn√©es
 	SQLiteCon conn;
 
 	List<PharmacienDetail> listePhar;
@@ -50,7 +49,7 @@ public class PharmaciensFenetre extends JDialog {
 	private JTable tableListePhar;
 
 	/**
-	 * Launch the application.
+	 * Lancer l'application.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -70,11 +69,12 @@ public class PharmaciensFenetre extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
+	@SuppressWarnings({ "static-access" })
 	public PharmaciensFenetre() {
 		setFont(new Font("Tahoma", Font.PLAIN, 14));
 		getContentPane().setFocusTraversalKeysEnabled(false);
 
-		// connect to database
+		// Connexion √† la base de donn√©es
 		conn = new SQLiteCon();
 
 		setIconImage(Toolkit.getDefaultToolkit().getImage(PharmaciensFenetre.class.getResource("/view/User.png")));
@@ -94,9 +94,7 @@ public class PharmaciensFenetre extends JDialog {
 			 */
 			private static final long serialVersionUID = 1L;
 
-			public void changeSelection(int rowIndex, int columnIndex,
-					boolean toggle, boolean extend) {
-				// Always toggle on single selection
+			public void changeSelection(int rowIndex, int columnIndex, boolean toggle, boolean extend) {
 				super.changeSelection(rowIndex, columnIndex, !extend, extend);
 			}
 		};
@@ -112,8 +110,7 @@ public class PharmaciensFenetre extends JDialog {
 
 		JLabel label = new JLabel("");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setIcon(new ImageIcon(PharmaciensFenetre.class
-				.getResource("/view/User.png")));
+		label.setIcon(new ImageIcon(PharmaciensFenetre.class.getResource("/view/User.png")));
 		label.setBounds(56, 118, 95, 93);
 		getContentPane().add(label);
 
@@ -124,7 +121,7 @@ public class PharmaciensFenetre extends JDialog {
 		btnAjouter.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// Add user
+
 				ajouterUnPhar();
 			}
 		});
@@ -156,14 +153,14 @@ public class PharmaciensFenetre extends JDialog {
 		btnModifier.setBackground(new Color(204, 204, 204));
 		btnModifier.setBounds(49, 269, 113, 23);
 		getContentPane().add(btnModifier);
-		
+
 		JLabel lbListeDesPharmaciens = new JLabel("Liste des pharmaciens");
 		lbListeDesPharmaciens.setHorizontalAlignment(SwingConstants.CENTER);
 		lbListeDesPharmaciens.setForeground(new Color(165, 42, 42));
 		lbListeDesPharmaciens.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lbListeDesPharmaciens.setBounds(231, 43, 498, 25);
 		getContentPane().add(lbListeDesPharmaciens);
-		
+
 		JButton btnRetour = new JButton("Retour");
 		btnRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -173,12 +170,12 @@ public class PharmaciensFenetre extends JDialog {
 
 			// Ouvrir le menu principal
 			private void OuvrirMenuPrincipal() {
-				
+
 				MenuPrincipal menuPrincipal = new MenuPrincipal();
 				menuPrincipal.getFrmMenuPrincipal().setVisible(true);
 			}
 		});
-		
+
 		btnRetour.setBounds(12, 13, 97, 25);
 		getContentPane().add(btnRetour);
 
@@ -196,8 +193,6 @@ public class PharmaciensFenetre extends JDialog {
 
 			ListePharmaciens model = new ListePharmaciens(listePhar);
 			tableListePhar.setModel(model);
-
-//			hideColumns();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -220,24 +215,20 @@ public class PharmaciensFenetre extends JDialog {
 		int idCol = 0;
 		int nameCol = 1;
 
-		// Si une ligne est sÈlectionnÈe
+		// Si une ligne est s√©lectionn√©e
 		if (!(tableListePhar.getSelectedRow() == -1)) {
 
 			int selectedRow = tableListePhar.getSelectedRow();
 
-			String num_phar = tableListePhar.getValueAt(selectedRow, idCol)
-					.toString();
+			String num_phar = tableListePhar.getValueAt(selectedRow, idCol).toString();
 
-			String identifiant = tableListePhar.getValueAt(selectedRow, nameCol)
-					.toString();
+			String identifiant = tableListePhar.getValueAt(selectedRow, nameCol).toString();
 
 			if (identifiant.equalsIgnoreCase("admin")) {
-				JOptionPane.showMessageDialog(null,
-						"Impossible de supprimer l'admin");
+				JOptionPane.showMessageDialog(null, "Impossible de supprimer l'admin");
 			} else {
 
-				int reply = JOptionPane.showConfirmDialog(null,
-						"Voulez-vous vraiment le supprimer ?", "Supprimer ?",
+				int reply = JOptionPane.showConfirmDialog(null, "Voulez-vous vraiment le supprimer ?", "Supprimer ?",
 						JOptionPane.YES_NO_OPTION);
 				if (reply == JOptionPane.YES_OPTION) {
 
@@ -247,7 +238,7 @@ public class PharmaciensFenetre extends JDialog {
 						e.printStackTrace();
 					}
 
-					// Mise ‡ jour la vue
+					// Mise √† jour la vue
 					getListePharToTable();
 
 				} else {
@@ -255,10 +246,8 @@ public class PharmaciensFenetre extends JDialog {
 				}
 			}
 		} else {
-			System.out.println("Aucune ligne est sÈlectionnÈe");
-			JOptionPane
-					.showMessageDialog(null,
-							"Veuillez sÈlectionner un pharmacien ‡ supprimer");
+			System.out.println("Aucune ligne est s√©lectionn√©e");
+			JOptionPane.showMessageDialog(null, "Veuillez s√©lectionner un pharmacien √† supprimer");
 		}
 	}
 
@@ -268,54 +257,36 @@ public class PharmaciensFenetre extends JDialog {
 		if (!(tableListePhar.getSelectedRow() == -1)) {
 			ModifierUnPharFenetre modifierUnPharFenetre = new ModifierUnPharFenetre();
 
-			// insert data from table to the fields
 			int idCol = 0;
-			int userNameCol = 1;
-			int passwordCol = 2;
-			int firstNameCol = 3;
-			int surnameCol = 4;
+			int identifiantCol = 1;
+			int mdpCol = 2;
+			int prenomCol = 3;
+			int nomCol = 4;
 
 			int selectedRow = tableListePhar.getSelectedRow();
 
-			modifierUnPharFenetre.textFieldIdentifiant.setText(tableListePhar
-					.getValueAt(selectedRow, userNameCol).toString().trim());
-			modifierUnPharFenetre.mdpField.setText(tableListePhar
-					.getValueAt(selectedRow, passwordCol).toString().trim());
-			modifierUnPharFenetre.textFieldPrenom.setText(tableListePhar
-					.getValueAt(selectedRow, firstNameCol).toString().trim());
-			modifierUnPharFenetre.textFieldNom.setText(tableListePhar
-					.getValueAt(selectedRow, surnameCol).toString().trim());
+			modifierUnPharFenetre.textFieldIdentifiant
+					.setText(tableListePhar.getValueAt(selectedRow, identifiantCol).toString().trim());
+			modifierUnPharFenetre.mdpField
+					.setText(tableListePhar.getValueAt(selectedRow, mdpCol).toString().trim());
+			modifierUnPharFenetre.textFieldPrenom
+					.setText(tableListePhar.getValueAt(selectedRow, prenomCol).toString().trim());
+			modifierUnPharFenetre.textFieldNom
+					.setText(tableListePhar.getValueAt(selectedRow, nomCol).toString().trim());
 
-			modifierUnPharFenetre.mdpActuel = tableListePhar
-					.getValueAt(selectedRow, idCol).toString().trim();
+			modifierUnPharFenetre.mdpActuel = tableListePhar.getValueAt(selectedRow, idCol).toString().trim();
 			dispose();
 			modifierUnPharFenetre.setVisible(true);
 
 			while (modifierUnPharFenetre.isVisible()) {
 
 			}
-			// Mise ‡ jour la vue
+			
 			getListePharToTable();
 
 		} else {
-			JOptionPane.showMessageDialog(null,
-					"Veuillez sÈlectionner un pharmacien ‡ modifier !");
+			JOptionPane.showMessageDialog(null, "Veuillez s√©lectionner un pharmacien √† modifier !");
 		}
 	}
 
-	// hides columns
-//	private void hideColumns() {
-//		// remove/hide Id table
-//		TableColumn myTableColumn0 = tableListePhar.getColumnModel().getColumn(0);
-//		TableColumn myTableColumn2 = tableListePhar.getColumnModel().getColumn(2);
-//
-//		// tableCategories.getColumnModel().removeColumn(myTableColumn0);
-//		myTableColumn0.setMaxWidth(0);
-//		myTableColumn0.setMinWidth(0);
-//		myTableColumn0.setPreferredWidth(0);
-//
-//		myTableColumn2.setMaxWidth(0);
-//		myTableColumn2.setMinWidth(0);
-//		myTableColumn2.setPreferredWidth(0);
-//	}
 }

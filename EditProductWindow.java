@@ -66,7 +66,7 @@ public class EditProductWindow extends JDialog {
 	private JTextField textField_2;
 
 	/**
-	 * Launch the application.
+	 * Lancer l'application.
 	 */
 	public static void main(String[] args) {
 		try {

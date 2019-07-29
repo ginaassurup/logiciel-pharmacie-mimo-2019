@@ -31,7 +31,7 @@ public class PasswordDialog extends JDialog {
 	public static final int OPTION_CANCEL = 0;
 
 	/**
-	 * Launch the application.
+	 * Lancer l'application.
 	 */
 	public static void main(String[] args) {
 		try {

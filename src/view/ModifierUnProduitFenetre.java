@@ -68,7 +68,7 @@ public class ModifierUnProduitFenetre extends JDialog {
 	public String num_prodActuel;
 
 	/**
-	 * Launch the application.
+	 * Lancer l'application.
 	 */
 	public static void main(String[] args) {
 		try {
@@ -430,7 +430,7 @@ public class ModifierUnProduitFenetre extends JDialog {
 					try {
 						conn.updateProductQuery(num_prodActuel, code_barre, libelle_produit, nom_cat,
 							 forme, qtte_stock, qtte_stock_alarme, prix_vente, prix_achat, nom_four);
-						System.out.println("Num_prod mis � jour: "+num_prodActuel);
+						System.out.println("Num_prod mis à jour: "+num_prodActuel);
 //						conn.updateProductQuery(currentId, currentProductName,
 //								newProdName, catName, typeName, quantityName,
 //								unitName, stockAlarm);
@@ -612,8 +612,8 @@ public class ModifierUnProduitFenetre extends JDialog {
 	// opens Categories window
 	private void openCategories() {
 
-		CategoriesWindow categoriesWindow = new CategoriesWindow();
-		categoriesWindow.setVisible(true);
+		CategoriesFenetre categoriesFenetre = new CategoriesFenetre();
+		categoriesFenetre.setVisible(true);
 
 		// refreshes combobox after change
 		SwingUtilities.invokeLater(new Runnable() {
@@ -624,7 +624,7 @@ public class ModifierUnProduitFenetre extends JDialog {
 				DefaultComboBoxModel model = new DefaultComboBoxModel(
 						getCategoriesToCombo());
 				comboBoxCategory.setModel(model);
-				comboBoxCategory.setSelectedItem(categoriesWindow.newCategory);
+				comboBoxCategory.setSelectedItem(categoriesFenetre.newCategorie);
 			}
 		});
 

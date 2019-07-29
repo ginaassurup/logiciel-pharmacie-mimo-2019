@@ -66,7 +66,7 @@ public class AjouterLigneTicketFenetre extends JDialog {
 	private JTextField textFieldCodeBarre;
 
 	/**
-	 * Launch the application.
+	 * Lancer l'application.
 	 */
 	public static void main(String[] args) {
 		try {
@@ -481,8 +481,8 @@ public class AjouterLigneTicketFenetre extends JDialog {
 	// opens Categories window
 	private void openCategories() {
 
-		CategoriesWindow categoriesWindow = new CategoriesWindow();
-		categoriesWindow.setVisible(true);
+		CategoriesFenetre categoriesFenetre = new CategoriesFenetre();
+		categoriesFenetre.setVisible(true);
 
 		// refreshes combobox after change
 		SwingUtilities.invokeLater(new Runnable() {
@@ -493,7 +493,7 @@ public class AjouterLigneTicketFenetre extends JDialog {
 				DefaultComboBoxModel model = new DefaultComboBoxModel(
 						getCategoriesToCombo());
 				comboBoxCategory.setModel(model);
-				comboBoxCategory.setSelectedItem(categoriesWindow.newCategory);
+				comboBoxCategory.setSelectedItem(categoriesFenetre.newCategorie);
 			}
 		});
 

@@ -85,7 +85,7 @@ public class AjouterUnPharFenetre extends JDialog {
 	}
 
 	/**
-	 * Launch the application.
+	 * Lancer l'application.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -258,7 +258,7 @@ public class AjouterUnPharFenetre extends JDialog {
 				if (!userExists) {
 					try {
 						conn.insertUserQuery(userName, password, firstName, surname);
-						System.out.println("Ajout d'un pharmacien dans la BDD avec succËs");
+						System.out.println("Ajout d'un pharmacien dans la BDD avec succ√®s");
 						setVisible(false);
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
@@ -267,7 +267,7 @@ public class AjouterUnPharFenetre extends JDialog {
 					
 				} else {
 					JOptionPane.showMessageDialog(null,
-							"Ce pharmacien existe dÈj‡");
+							"Ce pharmacien existe d√©j√†");
 				}		
 				
 				

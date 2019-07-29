@@ -31,7 +31,7 @@ public class MenuPrincipal extends JFrame{
 	SQLiteCon conn;
 
 	/**
-	 * Launch the application.
+	 * Lancer l'application.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

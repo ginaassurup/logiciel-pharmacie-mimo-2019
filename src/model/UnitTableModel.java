@@ -21,7 +21,7 @@ public class UnitTableModel extends AbstractTableModel {
 	private static final int CODE_POSTAL_FOUR_COL = 3;
 	private static final int VILLE_FOUR_COL = 4;
 
-	private String[] columnNames = {"Numéro", "Raison sociale", "Adresse", "Code postale", "Ville"};
+	private String[] columnNames = {"NumÃ©ro", "Raison sociale", "Adresse", "Code postale", "Ville"};
 	
 	private List<Unit> units;
 

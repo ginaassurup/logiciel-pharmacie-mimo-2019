@@ -66,7 +66,7 @@ public class EditProductWindow extends JDialog {
 	private JTextField textField_2;
 
 	/**
-	 * Launch the application.
+	 * Lancer l'application.
 	 */
 	public static void main(String[] args) {
 		try {
@@ -474,8 +474,8 @@ public class EditProductWindow extends JDialog {
 	// opens categories window
 	private void openCategories() {
 		System.out.println("new category");
-		CategoriesWindow categoriesWindow = new CategoriesWindow();
-		categoriesWindow.setVisible(true);
+		CategoriesFenetre categoriesFenetre = new CategoriesFenetre();
+		categoriesFenetre.setVisible(true);
 
 		// refreshes combobox after change
 		SwingUtilities.invokeLater(new Runnable() {
@@ -486,7 +486,7 @@ public class EditProductWindow extends JDialog {
 				DefaultComboBoxModel model = new DefaultComboBoxModel(
 						getCategoriesToCombo());
 				comboBoxCategory.setModel(model);
-				comboBoxCategory.setSelectedItem(categoriesWindow.newCategory);
+				comboBoxCategory.setSelectedItem(categoriesFenetre.newCategorie);
 			}
 		});
 	}

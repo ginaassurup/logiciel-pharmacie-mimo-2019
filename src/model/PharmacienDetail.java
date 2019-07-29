@@ -10,23 +10,19 @@ public class PharmacienDetail {
 	private String mdp;
 	private String prenom_phar;
 	private String nom_phar;
-//	private boolean statut_manager;
 	
 	// constructor
 	public PharmacienDetail(int num_phar, String identifiant, String mdp, String prenom_phar,
 			String nom_phar) {
-//	public PharmacienDetail(int num_phar, String identifiant, String mdp, String prenom_phar,
-//			String nom_phar, boolean statut_manager) {
 		super();
 		this.num_phar = num_phar;
 		this.identifiant = identifiant;
 		this.mdp = mdp;
 		this.prenom_phar = prenom_phar;
 		this.nom_phar = nom_phar;
-//		this.statut_manager = statut_manager;
 	}
 	
-	// getters and setters
+	// getters et setters
 	public int getNum_phar() {
 		return num_phar;
 	}
@@ -57,21 +53,11 @@ public class PharmacienDetail {
 	public void setNom_phar(String nom_phar) {
 		this.nom_phar = nom_phar;
 	}
-	
-//	public boolean getStatut_manager() {
-//		return statut_manager;
-//	}
-//	public void setStatut_manager(boolean statut_manager) {
-//		this.statut_manager = statut_manager;
-//	}
 
-	
 	@Override
 	public String toString() {
 		return String
 				.format("PharmacienDetail [num_phar=%s, identifiant=%s, mdp=%s, prenom_phar=%s, nom_phar=%s]",
 						num_phar, identifiant, mdp, prenom_phar, nom_phar);
-//				.format("User [id=%s, userName=%s, password=%s, firstName=%s, surname=%s, statut=%s]",
-//						num_phar, identifiant, mdp, prenom_phar, nom_phar, statut_manager);
 	} 
 }

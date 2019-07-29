@@ -73,7 +73,7 @@ public class SaisirUnTicketFenetre extends JFrame {
 	AjouterUnProduitFenetre ajouterUnProduitFenetre;
 
 	// Categories Window declaration
-	CategoriesWindow categoriesWindow;
+	CategoriesFenetre categoriesFenetre;
 
 	// Units Window declaration
 	FournisseursFenetre fournisseursFenetre;
@@ -89,7 +89,7 @@ public class SaisirUnTicketFenetre extends JFrame {
 	//private LigneTicket l = new LigneTicket();
 
 	/**
-	 * Launch the application.
+	 * Lancer l'application.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
